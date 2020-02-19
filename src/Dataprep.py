@@ -204,13 +204,13 @@ def train():
     # Plot the loss over epocs
     plt.plot(range(epochs), aggregated_losses)
     plt.ylabel('Loss')
-    plt.xlabel('epoch');
+    plt.xlabel('epoch')
     
     
     # Predict on the test set
     with torch.no_grad():
         y_val = model(Xcattest, Xnumtest)
-        loss = loss_function(y_val, ytest)
+        #loss = loss_function(y_val, ytest)
     
     
     y_val = np.argmax(y_val, axis=1)
