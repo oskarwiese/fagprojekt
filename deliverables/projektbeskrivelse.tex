@@ -3,46 +3,41 @@
 %\usepackage{siunitx}
 \usepackage{texfiles/SpeedyGonzales}
 \usepackage{texfiles/MediocreMike}
-\title{Projektbeskrivelse}
+\title{Project Description}
 \author{Oskar Eiler Wiese Christensen s183917, Anders Henriksen s183904, Dagh}
 
 \begin{document}
 	\maketitle
-	En beskrivelse på ca. 1 side. Projektbeskrivelsen skal gerne beskrive
-	baggrunden for projektet ledende frem til problemformuleringen/de
-	forskningsspørgsmål der ønskes besvaret. 
+	\newpage
 	
-	\section*{Purpose}
-	Safe AI bliver et større og større talepunkt som det begyder at gå op for for forskere at den generelle befolkning har en tendens til at stole blindt på implementeret kunstig intelligens. 
+	\noindent
+	Safe AI is becomming ever increasingly important as researchers realize that the general public has a tendency to blindly trust the predictions of artificial intelligence. This has especially become evident in the US legal system, where judges have started using recidivism (the tendency to reoffend) classifiers to convict criminals, with the downside that african-americans had a tendency to get longer convictions for the same crime and a larger probabity of recidivism. While this could be a fault occurring from the general rampant racism in the US, the classification algorithm does not seem to improve the situation. The reason for the bias of the algorithm could be that the data used to train the classifer also has an inherent bias. Therefore, we wish to understand how bias comes to be in a dataset, how it is possible to quantify bias and what can be done to remove the bias from the data or from the algoritm. Meanwhile, we also wish to make an ethical discussion of using biased AI and which effect this can have on the population. The research questions for this project are outlined below. The general goal of this project is to perform bias correction on AI trained on the trails of 11.757 americans such that the algorithm does not have a tendency to inprison more african-americans.
 	
-	\section*{Scope}
-	
-	
-	\section*{Success criteria}
-	
-	
-	\section*{Outcome}
+	%\section*{Purpose}
+	%\section*{Scope}
+	%\section*{Success criteria}
+	%\section*{Outcome}
 	
 	
 	
-	\section*{Forskningsspørgsmål til data}
+	\section*{Research Questions}
 	\begin{enumerate}
-		\item Hvordan er data "skæv"? altså: hvilke bias er der i data? 
+		\item How is the data "crooked"? What bias is there in the data?
 		\begin{itemize}
-			\item[--] Hvordan undersøger man, om der er bias i data og hvilken bias der er?
-			\item[--] Hvad betyder det, at der er et bias?
-			\item[--] evt kom tilbage til at finde andre sværere metoder
+			\item[--] How do we analyse whether there is bias in the data and which kind of bias there is? 
+			\item[--] What does it mean that there is a bias in the data?
+			%\item[--] evt. come back to find more difficult methods.
 		\end{itemize}
 		
-		\item Hvad gør det ved min algorithme, at data er skævt/at der er bias i data?
+		\item How does a bias in the data affect the classification algoritm
 		\begin{itemize}
-			\item[--] Hvad betyder det? Hvad betyder bias i en algoritme?
-			\item[--] Hvordan kvantificerer jeg, at der er bias?
+			\item[--] What does it mean? What is bias in an algoritm?
+			\item[--] How do we quantify that there is in fact a bias in the algorithm?
 		\end{itemize}
 		
-		\item Forstå og implementere forskellige bias-metoder bl.a. metoden fra metoden fra "Equality of opportunity in supervised learning".
+		\item Understand and implement a bias-correction method from the paper "Equality of opportunity in supervised learning". \\\\  If time allows for it other bias correction methods will be taken into consideration and evaluated.
 		
-		\item Etisk diskussion
+		\item Which implications could biased algorithms have on society (ethical discussion)?
 		
 	\end{enumerate}
 	
