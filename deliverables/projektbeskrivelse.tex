@@ -11,14 +11,9 @@
 	\maketitle
 	\vspace*{-0.65cm}	
 	\noindent
-	Safe AI is becoming ever increasingly important as researchers realize that the general public has a tendency to blindly trust the predictions of artificial intelligence. This has especially become evident in the US legal system, where judges have started using recidivism (the tendency to re-offend) classifiers to convict criminals, with the downside that African-Americans had a tendency to get longer convictions for the same crime and a larger(predicted) probability of recidivism. While this could be a fault occurring from the general rampant racism in the US, the classification algorithm does not seem to improve the situation. The reason for the bias of the algorithm could be that the data used to train the classifier also has an inherent bias. Therefore, we wish to understand how bias comes to be in a data-set, how it is possible to quantify bias and what can be done to remove the bias from the data or from the algorithm. Meanwhile, we also wish to make an ethical discussion of using biased AI and which effect this can have on the population. The research questions for this project are outlined below. 
+	Safe AI is becoming ever increasingly important as researchers realize that the general public has a tendency to blindly trust the predictions of artificial intelligence. This has especially become evident in the US legal system, where judges have started using recidivism (the tendency to re-offend) classifiers to convict criminals, with the downside that African-Americans had a tendency to get longer convictions for the same crime and a larger predicted probability of recidivism. While this could be a fault occurring from the general rampant racism in the US, the classification algorithm does not seem to improve the situation. The reason for the bias of the algorithm could be that the data used to train the classifier also has an inherent bias. Therefore, we wish to understand how bias comes to be in a data-set, how it is possible to quantify bias and what can be done to remove the bias from the data or from the algorithm. Meanwhile, we also wish to make an ethical discussion of using biased AI and which effect this can have on the population. The research questions for this project are outlined below. 
 	
-	The scope of this project is to implement a binary classifier in order to prove existing bias in the COMPAS data-set. A proof of concept for bias correction will then be demonstrated and evaluated. Hence, the goal of this project is to perform bias correction on a binary classifier trained to predict recidivism of criminals based on the trials of 11.757 Americans, such that the classifier does not have a tendency to imprison more African-Americans than necessary. We will quantify this by analyzing if African-Americans get higher recidivism scores than white people for the same crime based both on the COMPAS algorithm recidivism scores and on our own classifier scores before and after the bias correction. The correction is successful if African-Americans get the same risk of recidivism as white people. The outcome of the project will therefore be to obtain a bias-free classifier.
-	
-	%\section*{Purpose}
-	%\section*{Scope}
-	%\section*{Success criteria}
-	%\section*{Outcome}
+	The scope of this project is to implement a binary classifier in order to prove existing bias in the dataset used for the COMPAS algorithm. A proof of concept for bias correction will then be demonstrated and evaluated. Hence, the goal of this project is to perform bias correction on a binary classifier trained to predict recidivism of criminals based on the trials of 11.757 Americans, such that the classifier does not have a tendency to imprison more African-Americans than necessary. We will quantify this by analyzing if African-Americans get higher recidivism scores than white people for the same crime and by using the ground truth for recidivism from the Propublica analysis to compare to the predicted recidivism scores. The bias correction is successful if the algorithm is close to equally good at predicting recidivism for white and african-american people. The outcome of the project will therefore be to obtain a bias-free classifier.
 	
 	\vspace*{-0.4cm}
 	
@@ -34,7 +29,7 @@
 		
 		\item How does bias in the data affect a classification algorithm?
 		\begin{itemize}
-			\item[i)] What does it mean that an algorithm biased? What is bias in an algorithm?
+			\item[i)] What does it mean that an algorithm is biased?
 			\item[ii)] How do we quantify that there is in fact a bias in the algorithm?
 		\end{itemize}
 		
