@@ -68,47 +68,34 @@
 		
 		
 	\subsection{Visualization of Data}
+	To better get an understanding of the data, a range of plots are shown below. \ref{fig:predictedrecidrace} aims to show wheter there is a difference between the fraction of whites and african-americans that are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. \ref{fig:predictedrecidsex} has the same purpose, utilizing sex instead of race. \ref{fig:truerecid} and \ref{fig:proirs} give some insight into the actual amount of crime done by african-americans and whites and whether the amounts seem to be similar.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/predicted_recid_race}
-		\caption{}
+		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_race}
+		\caption{It is clear from this illustration that the number of caucasian and african-american people in the low group are almost equal. Meanwhile the medium and high groups contain a much larger fraction of african-americans. Since, in total, there are more african-americans in the dataset than whites (3696/2454), it would seem based purely on the data that whites are more often classified as low risk of recidivism while african-americans are often classified as medium or high risk.}
 		\label{fig:predictedrecidrace}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/true_recid}
-		\caption{}
+		\includegraphics[width=0.5\linewidth]{imgs/true_recid}
+		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender. It is clear that close to an equal amount of white and african-american offenders did not recidivate, while a much larger proportion of african-americans re-offended than whites. This makes it difficult to prove bias in the data based only on the data, as it is not necessarily a bias that african-americans more often re-offend.}
 		\label{fig:truerecid}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/predicted_recid_sex}
-		\caption{}
+		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_sex}
+		\caption{This illustration shows the relationship between sex and the COMPAS prediction of recidivism. The first point to be noted is that there are a lot more men in the dataset than women (5819/1395). Aside from this, it does not seem like there is a difference in the proportions of men or women being classified as belonging to each of the categories.}
 		\label{fig:predictedrecidsex}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/proirs}
-		\caption{}
+		\includegraphics[width=0.5\linewidth]{imgs/proirs}
+		\caption{An illustration of the relation between race (african-american or caucasian) and the number of previous felonies prior to the study taking place. This plot gives a clear indication that the number of whites and african-americans who have performed no prior felonies is similar. Otherwise, it is clear that the proportion of african-american to whites becomes larger as the number of previous felonies becomes larger. This seems to indicate that african-americans are more often engaged in criminal activity, which also weakens the indication of a bias from \ref{fig:predictedrecidrace}.}
 		\label{fig:proirs}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/c_charge_degree}
-		\caption{}
-		\label{fig:cchargedegree}
-	\end{figure}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.7\linewidth]{imgs/charge_degree_score}
-		\caption{}
-		\label{fig:chargedegreescore}
 	\end{figure}
 	
 	
@@ -168,6 +155,22 @@
 	
 	
 	\section{Conclusion}
+	
+	\section{Appendix}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/c_charge_degree}
+		\caption{}
+		\label{fig:cchargedegree}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/charge_degree_score}
+		\caption{}
+		\label{fig:chargedegreescore}
+	\end{figure}
 	
 	\newpage
 	\bibliographystyle{IEEEbib}
