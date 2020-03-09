@@ -43,15 +43,48 @@
 	
 	\section{Data}
 	
-	\subsection{Description of Data}
-	
-	\subsection{Visualization of Data}
-	
-	\subsection{Bias in Data}
-	
+		\subsection{Description of Data}
+		The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data as well as their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
+		\noindent The data consists of 53 different variables, 9 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded to be able to feed the necessary variables into the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient problem and to avoid having some variables be of more importance to the final prediction. This will be explained more thoroughly in \ref{Feed-forward neural}. \\
+		The 10 chosen variables, of which one will be used as the target variable are shown and explained below.
+		
+		
+		\begin{table}[H]\label{resultater}
+			\centering
+			\begin{tabular}{l l l}
+				Variable & Description & Type \\ \hline
+				age & The age of the offenders & Continuous ratio \\
+				priors\_count & The number of previous offences & Discrete interval \\
+				juv\_fel\_count & The number of previous juvenile felonies & Discrete interval \\
+				juv\_misd\_count & The number of previous juvenile misdemeanor & Discrete interval \\
+				c\_charge\_degree & The severity of the offence & Discrete nominal \\
+				race & The race of the offender & Discrete nominal \\
+				age\_cat & The age category of the offender & Discrete nominal \\
+				sex & The sex of the offender & Discrete nominal \\
+				score\_text & The COMPAS prediction of chance of recidivism & Discrete interval
+				
+				
+				
+				
+			\end{tabular}
+			%\caption{text}
+		\end{table}
+		%\begin{itemize}
+		%	\item \textbf{age:} The age of the offenders
+		%	\item \textbf{priors\_count:} The number of previous offences
+		%	\item 
+		%\end{itemize}
+		
+		
+		\subsection{Visualization of Data}
+		
+		
+		\subsection{Bias in Data}
+		
+		
 	\section{Methods}
 	 
-	\subsection{Feed-Forward Neural Networks}
+	\subsection{Feed-Forward Neural Networks}\label{Feed-forward neural}
 	Feed-forward neural networks are the simplest form of a neural network. I
 	 
 	\subsection{Bayesian Optimization}
