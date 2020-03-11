@@ -69,6 +69,11 @@
 	\end{enumerate}
 	
 	\subsection{State of the Art}
+	There are currently two main ways to ensure fairness in classification. One is by implementing steps during the training process of the classifier, and second is post-processing. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed. 
+	
+	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the co-variance between predicted labels and the value of features. This is a method that is implemented during the training process.
+	
+	The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by post-processing the estimators of probability for a discriminant classifier to learn thresholds in order to deal with sensitive features or groups in the data. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The idea is to first train an unfair classifier as usual and then using post hoc correction to correct the classifier. 
 	
 	
 	\subsection{Contributions}
@@ -213,6 +218,11 @@
 	\begin{thebibliography}{9}
 		
 		\bibitem{bo_lib} Machine Learning Group, University of Sheffield: "GPyOpt’s documentation", at \url{https://gpyopt.readthedocs.io}
+		
+		\bibitem{equal_of_oppor} M. Hardt, E. Price, and N. Srebro. Equality of Opportunity in Supervised Learning. In NIPS, 2016.
+		
+		\bibitem{Zafar} M. B. Zafar, I. Valera, M. G. Rodriguez, and K. P. Gummadi. Fairness constraints: A mechanism for fair classification.
+		In ICML Workshop on Fairness, Accountability, and Transparency in Machine Learning, 2015.
 		
 		\bibitem{aktiv_gp} 
 		
