@@ -45,28 +45,7 @@
 	\textbf{TODO: \\ Hvad er formålet med projektet? \\ Hvad er problemformuleringen \\ Hvad er state-of-the-art? \\ Hvilken fremgangsmåde bruges til at løse problemet? \\ Hvem har brug for resultaterne?}
 	
 	\subsection{Motivation}
-	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since discrimination in models could lead to reinforced societal discrimination. A saving grace in this case would be to implement bias correction on either the dataset or the model, thereby removing the risk of discrimination. In that sense, it also becomes important to examine whether
-	
-	\begin{enumerate}
-		\item How is the data "crooked" in the data-set used by the COMPAS algorithm? What bias exists in the data?
-		\begin{itemize}
-			\item[i)] How do we analyse whether there is bias in the data and which kind of bias there is? 
-			\item[ii)] What does it mean that there is a bias in the data?
-		\end{itemize}
-		
-		\item How does bias in the data affect a classification algorithm?
-		\begin{itemize}
-			\item[i)] What does it mean that an algorithm is biased?
-			\item[ii)] How do we quantify that there is in fact a bias in the algorithm?
-		\end{itemize}
-		
-		\item Understand and implement a bias-correction method from the paper "Equality of Opportunity in Supervised Learning". 
-		%	\begin{itemize}
-		%		\item[i)] If time allows for it, other bias correction methods will be taken into consideration and evaluated.
-		%	\end{itemize}
-		
-		\item Which applications can bias-correction algorithms as well as AI-models have in society? And how can society gain trust in these models? 
-	\end{enumerate}
+	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since discrimination in models could lead to reinforced societal discrimination. Bias seems to originate from the dataset, meaning that a saving grace would be to either implement bias correction on the dataset to remove the bias from the source of the problem or to remove bias from the model, thereby removing the risk of discrimination when using the model for classification tasks. This report aims to understand bias and how it affects datasets as well as classification models. Furthermore, a set of bias correction methods will be put to use in order to explore the possibilites of keeping discrimination away from important fields. More specifically, the questions to be answered throughout the report are whether there is a bias in the COMPAS recidivism dataset and which kind of bias there is, as well as what this bias means in the dataset. Meanwhile, it is also analyzed how bias affects a classification algorithm, how bias in an algorithm is detected and how to quantify the bias. Lastly, bias correction methods will be implemented and tested and an ethical discussion will be carried out to understand the applications of bias correction algorithms and AI models on society as well as how society can learn to trust these models. 
 	
 	\subsection{State of the Art}
 	
@@ -134,6 +113,9 @@
 	\end{figure}
 	
 	
+	
+	\subsection{Data ethicality}
+	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely, though since all members of the study have agreed to share the data related to this problem, this is not an ethical concern. This is also true for the variables of the data such as age, full name and number of previous felonies, which would otherwise have been of huge ethical concern to share openly. 
 	
 	\subsection{Bias in Data}
 	
