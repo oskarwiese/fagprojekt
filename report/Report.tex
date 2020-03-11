@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{ragged2e}
 \usepackage{booktabs}
+\usepackage{lipsum}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -18,9 +19,8 @@
 \usepackage{subfig}
 \usepackage{graphicx}
 \title{Fairness in Classification}
-\author{Oskar Eiler Wiese Christensen s183917 \\ Anders Henriksen s183904}
+\author{Anders Henriksen \\ Oskar Eiler Wiese Christensen  \\ \texttt{\{s183917, s183904\}@student.dtu.dk}}
 \date{\today}
-	
 
 \pagestyle{plain}
 \fancyhf{}
@@ -31,13 +31,18 @@
 \begin{document}
 	
 	\maketitle
+	\begin{abstract}
+		\textbf{TODO: Skal indeholde motivation, problem, fremgangsmåde, resultater og konklusion.} \\ \lipsum[1-2]
+	\end{abstract}
 	\tableofcontents \newpage
 	%\thispagestyle{fancy}
-	%\tableofcontents
-	\section{Abstract}
+	%\tableofcontents	
 	
+	\section{Abstract}
+	\textbf{TODO: Skal indeholde motivation, problem, fremgangsmåde, resultater og konklusion.}
 	
 	\section{Introduction}
+	\textbf{TODO: \\ Hvad er formålet med projektet? \\ Hvad er problemformuleringen \\ Hvad er state-of-the-art? \\ Hvilken fremgangsmåde bruges til at løse problemet? \\ Hvem har brug for resultaterne?}
 	
 	\subsection{Motivation}
 	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like the American judicial system. In these cases, it becomes of essence to avoid discrimination, as discrimination in models could lead to reinforced societal discrimination. A saving grace in this case would be to implement bias correction on either the dataset or the model, thereby removing the risk of discrimination.
@@ -54,6 +59,7 @@
 	
 	
 	\section{Data}
+	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
 	\subsection{Description of Data}
 	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data as well as their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
@@ -116,7 +122,8 @@
 	
 	
 	\section{Methods}
-	 
+	\textbf{TODO: \\ referér til kode og software \\ brug lang tid på nye metoder, kort tid på gamle metoder}
+	
 	\subsection{Binary Classifier}\label{Feed-forward neural}
 	%initialization schemes
 	\subsubsection{Feed-forward Neural Network}
@@ -162,12 +169,13 @@
 	\subsection{Bias Correction	n Methods}
 	
 	\section{Results}
-	
+	\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
 	\section{Discussion}
-	
+	\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
 	\section{Conclusion}
+	\textbf{TODO: \\ Opsummér resultater og anbefalinger fra projektet \\ Må ikke indeholde noget nyt \\ Skal svare på spørgsmålene fra problemformuleringen \\ Konklusion, abstract og indledning skal give samlet billede af projektet}
 	
 	\section{Appendix}
 	
