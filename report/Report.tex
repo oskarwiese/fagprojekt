@@ -10,6 +10,7 @@
 \usepackage{ragged2e}
 \usepackage{booktabs}
 \usepackage{lipsum}
+\usepackage{csquotes}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -62,7 +63,10 @@
 	\section{Data}
 	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
-	\subsection{Description of Data}
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
+	A general overview of the dataset and how it came to be as well as the variables used for the classifier is given in \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored further in later sections.
+	
+	\subsection{Description of Data} \label{dataDescription}
 	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data as well as their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
 	\noindent The data consists of 53 different variables, 9 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded to be able to feed the necessary variables into the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient problem and to avoid having some variables be of more importance to the final prediction. This will be explained more thoroughly in \ref{Feed-forward neural}. \\
 	The 10 chosen variables, of which one will be used as the target variable are shown and explained below.
@@ -86,7 +90,10 @@
 	\end{table}
 		
 		
-	\subsection{Visualization of Data}
+	\subsection{Explanation of Data Variables} \label{dataExamination}
+	
+		
+	\subsection{Visualization of Data} \label{dataVisuals}
 	To better get an understanding of the data, a range of plots are shown below. \ref{fig:predictedrecidrace} aims to show wheter there is a difference between the fraction of whites and african-americans that are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. \ref{fig:predictedrecidsex} has the same purpose, utilizing sex instead of race. \ref{fig:truerecid} and \ref{fig:proirs} give some insight into the actual amount of crime done by african-americans and whites and whether the amounts seem to be similar.
 	
 	\begin{figure}[H]
@@ -120,7 +127,12 @@
 	
 	
 	\subsection{Data ethicality}
-	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely. This is also true for the variables of the data such as age, full name and number of previous felonies, which give ample opportunity to identify people who have recidivated, leading to compromise of their personal data. This is not a concern though, as the data is collected from Florida, where public records are subject to the broad legislated public right of inspection. According to the law of the State of Florida, "It is the policy of this state that all state, county, and municipal records are open for personal inspection and copying by any person. Providing access to public records is a duty of each agency."
+	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely. This is also true for the variables of the data such as age, full name and number of previous felonies, which give ample opportunity to identify people who have recidivated, leading to compromise of their personal data. This is not a concern though, as the data is collected from Florida, where public records are subject to the broad legislated public right of inspection. According to chapter 119 section 1 of the law of the State of Florida, 
+	\begin{displayquote}
+		"It is the policy of this state that all state, county, and municipal records are open for personal inspection and copying by any person. Providing access to public records is a duty of each agency." \cite{floridaLaw}
+	\end{displayquote}
+	
+	\noindent As such, since ProPublica submitted a public records request for access to the data for use in research \cite{propublicaAnalysis}, which inherently is a type of inspection, they are within the legal ramifications to use the dataset as they please. Another debate entirely, which will in particular be taken up in \ref{discussion}, is the more subjective question of the ethicality of open-record laws and public criminal data in their entirety being shared among whomever and what exactly should be allowed to be done with this data.
 	
 	\subsection{Bias in Data}
 	
@@ -175,7 +187,7 @@
 	\section{Results}
 	\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
-	\section{Discussion}
+	\section{Discussion} \label{discussion}
 	\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
 	\section{Conclusion}
@@ -205,6 +217,10 @@
 		
 		\bibitem{Zafar} M. B. Zafar, I. Valera, M. G. Rodriguez, and K. P. Gummadi. Fairness constraints: A mechanism for fair classification.
 		In ICML Workshop on Fairness, Accountability, and Transparency in Machine Learning, 2015.
+		
+		\bibitem{floridaLaw} The State of Florida, "The 2019 Florida Statutes", 1995,  \url{http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0119/0119.html}, visited 12-03-2020
+		
+		\bibitem{propublicaAnalysis} ProPublica, "How We Analyzed the COMPAS Recidivism Algorithm", 2016, \url{https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm}, visited 12-03-2020
 		
 		\bibitem{aktiv_gp} 
 		
