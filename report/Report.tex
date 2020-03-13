@@ -71,7 +71,7 @@
 	\subsection{Description of Data} \label{dataDescription}
 	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data as well as their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
 	\noindent The data consists of 53 different variables, 9 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded to be able to feed the necessary variables into the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient problem and to avoid having some variables be of more importance to the final prediction. This will be explained more thoroughly in \ref{Feed-forward neural}. \\
-	The 10 chosen variables, of which one will be used as the target variable are shown and explained below.
+	The 10 chosen variables, of which one will be used as the target variable are shown and explained below. To see an exhaustive explanation of all variables from the full dataset, see \ref{dataExamination}.
 	
 	
 	\begin{table}[H]\label{resultater}
@@ -93,10 +93,12 @@
 		
 		
 	\subsection{Explanation of Data Variables} \label{dataExamination}
-	To remove ambiguity about the meaning of the variables in the COMAS recidivism dataset, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and shines light on the true contents of the dataset, as no one else has done this before.
+	To remove ambiguity about the meaning of the variables in the COMAS recidivism dataset, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and shines light on the true contents of the dataset, as no one else has done this before. Some variables, mostly those with \textit{c\_}, \textit{r\_} or \textit{vr\_} prefixes,have been grouped together in the table, as these serve the same purpose in the dataset for \textit{custody}, \textit{recidivism} and \textit{violent recidivism} cases respectively. 
+	
+	\noindent Some variable names have the prefix \textit{v\_}, which has been disregarded as an error. As such, this interpretation of the dataset assumes that these variables are akin to those with the \textit{vr\_} prefix, representing the variables related to violent recidivism. Furthermore, in the case of a few of the variables in the dataset, it has simply not been possible to find a meaningful interpretation, since the entire column is either full of NaN's like in the case of \textit{violent\_recid} or every value of the column one to one with another variable, which is the case between \textit{decile\_score} and \textit{decile\_score\_1} as well as \textit{priors\_count} and \textit{priors\_count\_2}. These variables are kept in the table for completeness but seem to have no discernible purpose in the dataset.
 	
 	
-	\begin{longtable}{l l l}
+	\begin{longtable}{l l l} \label{allVars}
 		Variable & Description & Type \\ \hline
 		id & Index of the column & Discrete interval \\
 		name & Full name of the offender & Discrete nominal \\
@@ -109,11 +111,11 @@
 		age\_cat & Which age category the offender belongs to & Discrete nominal \\
 		race & The offender's race & Discrete nominal \\
 		juv\_fel\_count & The number of previous juvenile felonies & Discrete interval \\
-		Decile\_score & Value from 1-10 representing risk of recidivism & Discrete ordinal \\
 		juv\_misd\_count & The number of previous juvenile misdemeanor & Discrete interval \\
 		juv\_other\_count & The other types of previous juvenile crimes & Discrete interval \\
-		priors\_count & The number of previous offences & Discrete interval \\
 		days\_b\_screening\_arrest & ----- & Discrete interval \\ \hdashline
+		priors\_count & The number of previous offences & Discrete interval \\
+		priors\_count\_2 & & \\ \hdashline
 		c\_jail\_in & The date the offender was jailed & Discrete nominal \\
 		r\_jail\_in & & \\ \hdashline
 		c\_jail\_out & The date the offender was removed from jail & Discrete nominal \\
@@ -124,7 +126,7 @@
 		c\_offense\_date & The date the offense was performed & Discrete nominal \\
 		r\_offense\_date & & \\
 		vr\_offense\_date & & \\ \hdashline
-		c\_charge\_degree & The severity of the offence & Discrete nominal \\
+		c\_charge\_degree & The severity of the offense & Discrete nominal \\
 		r\_charge\_degree & & \\
 		vr\_charge\_degree & & \\ \hdashline
 		c\_charge\_desc & The offense that was performed & Discrete nominal \\
@@ -132,25 +134,25 @@
 		vr\_charge\_desc & & \\ \hdashline
 		c\_arrest\_date & ----- & Discrete nominal \\
 		c\_days\_from\_compas & ------ & Discrete interval \\
-		is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal \\
 		r\_days\_from\_arrest & Recidivism days until arrested for the crime & Discrete interval \\
-		violent\_recid & Completely empty data column & NaN \\
-		is\_violent\_recid & True violent recidivism after two years (0/1) & Discrete nominal \\ \hdashline
+		violent\_recid & Completely empty data column & NaN \\ \hdashline
+		is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal \\
+		is\_violent\_recid & & \\
+		two\_year\_recid & & \\ \hdashline
 		type\_of\_assessment & What the COMPAS algorithm predicted for the offender & Discrete nominal \\
 		v\_type\_of\_assessment & & \\ \hdashline
-		decile\_score\_1 & ------ & Discrete ordinal \\
-		v\_decile\_score & ------ & Discrete ordinal \\ \hdashline
+		decile\_score & Value from 1-10 representing risk of recidivism & Discrete ordinal \\
+		decile\_score\_1 & & \\
+		v\_decile\_score & & \\ \hdashline
 		score\_text & decile score split into three categories & Discrete interval \\
 		v\_score\_text & & \\ \hdashline
 		screening\_date & When the offender was given the assessment & Discrete nominal \\
 		v\_screening\_date & & \\ \hdashline
 		in\_custody & When the offender was placed in custody & Discrete nominal \\
 		out\_custody & When the offender was removed from custody & Discrete nominal \\
-		priors\_count\_2 & The exact same column as priors\_count & Discrete interval \\
 		start & The day the screening started compared to the start of the process & Discrete interval \\
 		end & The day the screening ended compared to the start of the process & Discrete interval \\
-		event & ------ & Discrete interval \\
-		two\_year\_recid & True recidivism (violent or non-violent) after two years & Discrete interval
+		event & ------ & Discrete interval
 	\end{longtable}
 		
 	\subsection{Visualization of Data} \label{dataVisuals}
