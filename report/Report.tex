@@ -11,6 +11,7 @@
 \usepackage{booktabs}
 \usepackage{lipsum}
 \usepackage{csquotes}
+\usepackage{longtable}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -91,7 +92,65 @@
 		
 		
 	\subsection{Explanation of Data Variables} \label{dataExamination}
+	To remove ambiguity about the meaning of the variables in the COMAS recidivism dataset, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and shines light on the true contents of the dataset, as no one else has done this before.
 	
+	
+	\begin{longtable}{l l l}
+		Variable & Description & Type \\ \hline
+		id & Index of the column & Discrete interval \\
+		name & Full name of the offender & Discrete nominal \\
+		first & First name of the offender & Discrete nominal \\
+		last & Last name of the offender & Discrete nominal \\
+		compas\_screening\_date & The date the COMAS score was given & Discrete nominal \\
+		sex & The sex of the offender & Discrete nominal \\
+		dob & The offender's date of birth & Discrete nominal \\
+		age & The offender's age & Continuous ratio \\
+		age\_cat & Which age category the offender belongs to & Discrete nominal \\
+		race & The offender's race & Discrete nominal \\
+		juv\_fel\_count & The number of previous juvenile felonies & Discrete interval \\
+		Decile\_score & Value from 1-10 representing risk of recidivism & Discrete ordinal \\
+		juv\_misd\_count & The number of previous juvenile misdemeanor & Discrete interval \\
+		juv\_other\_count & The other types of previous juvenile crimes & Discrete interval \\
+		priors\_count & The number of previous offences & Discrete interval \\
+		days\_b\_screening\_arrest & ----- & Discrete interval \\
+		c\_jail\_in & The date the offender was placed in custody & Discrete nominal \\
+		c\_jail\_out & The date the offender was removed from custody & Discrete nominal \\
+		c\_case\_number & The custody case number & Discrete nominal \\
+		c\_offense\_date & ----- & Discrete nominal \\
+		c\_arrest\_date & ----- & Discrete nominal \\
+		c\_days\_from\_compas & ------ & Discrete interval \\
+		c\_charge\_degree & The severity of the offence (misdemeanor or felony) & Discrete nominal \\
+		c\_charge\_desc & The offense that was performed & Discrete nominal \\
+		is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal \\
+		r\_case\_number & The recidivism case number & Discrete nominal \\
+		r\_charge\_degree & The recidivism offense severity & Discrete nominal \\
+		r\_days\_from\_arrest & Recidivism days until arrested for the crime & Discrete interval \\
+		r\_offense\_date & The date the recidivism offense was performed & Discrete nominal \\
+		r\_charge\_desc & The recidivism crime commited & Discrete nominal \\
+		r\_jail\_in & The date the offender was jailed & Discrete nominal \\
+		r\_jail\_out & The date the offender was removed from jail & Discrete nominal \\
+		violent\_recid & Completely empty data column & NaN \\
+		is\_violent\_recid & Whether the offender truly recidivated violently after two years (0/1) & Discrete nominal \\
+		vr\_case\_number & The violent recidivism case number & Discrete nominal \\
+		vr\_charge\_degree & The violent recidivism offense severity & Discrete nominal \\
+		vr\_offense\_date & The date the violent recidivism was performed & Discrete nominal \\
+		vr\_charge\_desc & The violent recidivism crime commited & Discrete nominal \\
+		type\_of\_assessment & What the COMPAS algorithm predicted for the offender & Discrete nominal \\
+		decile\_score\_1 & ------ & Discrete ordinal \\
+		score\_text & decile\_score split into three categories & Discrete interval \\
+		screening\_date & When the offender was given the assessment & Discrete nominal \\
+		v\_type\_of\_assessment & COMPAS violent prediction type & Discrete nominal \\
+		v\_decile\_score & ------ & Discrete ordinal \\
+		v\_score\_text & v\_decile\_score split into three categories & Discrete interval \\
+		v\_screening\_date & When teh offender was given the assessment & Discrete nominal \\
+		in\_custody & When the offender was placed in custody & Discrete nominal \\
+		out\_custody & When the offender was removed from custody & Discrete nominal \\
+		priors\_count\_2 & The exact same column as priors\_count & Discrete interval \\
+		start & The day the screening started compared to the start of the process & Discrete interval \\
+		end & The day the screening ended compared to the start of the process & Discrete interval \\
+		event & ------ & Discrete interval \\
+		two\_year\_recid & Whether the offender truly recidivated (violent or non-violent) after two years & Discrete interval
+	\end{longtable}
 		
 	\subsection{Visualization of Data} \label{dataVisuals}
 	To better get an understanding of the data, a range of plots are shown below. \ref{fig:predictedrecidrace} aims to show wheter there is a difference between the fraction of whites and african-americans that are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. \ref{fig:predictedrecidsex} has the same purpose, utilizing sex instead of race. \ref{fig:truerecid} and \ref{fig:proirs} give some insight into the actual amount of crime done by african-americans and whites and whether the amounts seem to be similar.
