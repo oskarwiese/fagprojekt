@@ -53,9 +53,11 @@
 	\subsection{State of the Art}
 	There are currently two main ways to ensure fairness in classification. One is by implementing steps during the training process of the classifier, and second is post-processing. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed. 
 	
-	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the co-variance between predicted labels and the value of features. This is a method that is implemented during the training process.
+	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the co-variance between predicted labels and the value of features. This is a method that is implemented during the training process. Another study agrees with this approach, this is the study "Satisfying Real-world Goals with Dataset Constraints". They propose that by implementing constraints in the training data, and by using the ramp penalty to quantify cost accurately, they succeed in developing an efficient algorithm to optimize the resulting non-convex constrained optimization problem. This state of the art algorithm can be implemented in situations where one may require a classifier to make prediction with a certain rate of positive predictions in order to maintain fairness for a population. \cite{g_goh}
 	
-	The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by post-processing the estimators of probability for a discriminant classifier to learn thresholds in order to deal with sensitive features or groups in the data. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The idea is to first train an unfair classifier as usual and then using post hoc correction to correct the classifier. 
+
+	
+	The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by post-processing the estimators of probability for a discriminant classifier to learn thresholds in order to deal with sensitive features or groups in the data. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The idea is to first train an unfair classifier on the COMPAS data-set and then using post hoc correction to correct the classifier. However, another article, namely "Learning Non Discriminatory Predictors", argue that by only using the post hoc correction, the algorithm will still be unfair. They show, that for several loss-functions such as the 0-1 or hinge loss, then the method proposed by Hardt et al. \cite{equal_of_oppor} can fail. Despite if the Bayes optimal predictor with respect to those losses is learned	in the first step. In the paper, a notion is defined to obtain an approximation of a non-discrimination algorithm. However, this notion is explored during the paper, and it turns out that creating a non-discrimination algorithm is computationally hard. Therefore, a relaxation definition of equalized odds is presented, which is based on a second-moment condition instead of full conditional independence. Throughout the paper, it is shown that under this condition it is possible to learn a nearly optimal non-discriminatory linear predictor with respect to a convex loss without it being to computational to train. \cite{b_woodworth}
 	
 	
 	\subsection{Contributions}
@@ -205,7 +207,7 @@
 	\subsection{Binary Classifier}\label{Feed-forward neural}
 	%initialization schemes
 	\subsubsection{Feed-forward Neural Network}
-	Feed-forward neural networks (FFNN) are the simplest form of a neural network. Information flow in a feed-forward neural is one directional which means that the network has an input layer, and information flow from these nodes through the hidden layers unto the output layer. The main purpose of a FFNN is to approximate a function. In this project $ y = f^*(x) $ maps an input $ \mathbf x $ to a category $ \mathbf y $. The FFNN is thereby a classifier, which goal is to determine the recidvism risk of a person given the input variable $ \mathbf x $. The input variable $ \mathbf x $ contains :::::. The categories of $ \mathbf y $ is either 0 or 1, which corresponds to the classifier classifying a person as either low or medium/high risk of recidivism. Hence, this is a binary classifier which constructs a mapping $ \mathbf y = f(\mathbf x \ ; \mathbf w) $. The goal is to learn the weights that most efficiently approximate the function $ f^* $ through supervised learning. The binary classifier in this project has an input layer, three hidden layers and an output layer. 
+	Feed-forward neural networks (FFNN) are the simplest form of a neural network. Information flow in a feed-forward neural is one directional which means that the network has an input layer, and information flow from these nodes through the hidden layers unto the output layer. The main purpose of a FFNN is to approximate a function. In this project $ y = f^*(x) $ maps an input $ \mathbf x $ to a category $ \mathbf y $. The FFNN is thereby a classifier, which goal is to determine the recidvism risk of a person given the input variable $ \mathbf x $. The input variable $ \mathbf x $ contains \textbf{TODO:}. The categories of $ \mathbf y $ is either 0 or 1, which corresponds to the classifier classifying a person as either low or medium/high risk of recidivism. Hence, this is a binary classifier which constructs a mapping $ \mathbf y = f(\mathbf x \ ; \mathbf w) $. The goal is to learn the weights that most efficiently approximate the function $ f^* $ through supervised learning. The binary classifier in this project has an input layer, three hidden layers and an output layer. \cite{dl}
 	
 	\begin{figure}[H]
 		\centering
@@ -228,7 +230,11 @@
 		\item Dropout probability \(\in [0,1]\)
 		\item Activation function \{tanh, ReLU, ReLU6, Sigmoid\}
 	\end{itemize}
-	The hyperparameters that are not changed are the learning rate, which is set at $ \alpha = 0.001 $. The reason why this parameter is not changed is due to the fact, that the optimizer implemented in this project, is Adaptive Moment Estimation (Adam). Adam is a well known optimizer in the literature and has adaptive learning rate as well as step size. Which is why this learning rate is not an interchangeable hyperparameter. \\ Cross Entropy Loss is used as the cost-function. \textbf{TODO: skriv noget om funktionen. }
+	The hyperparameters that are not changed are the learning rate, which is set at $ \alpha = 0.001 $. The reason why this parameter is not changed is due to the fact, that the optimizer implemented in this project, is Adaptive Moment Estimation (Adam). Adam is a well known optimizer in the literature and has adaptive learning rate as well as step size. Which is why this learning rate is not an interchangeable hyperparameter. \\ Cross Entropy Loss is used as the cost-function. The loss is in the binary classfier is calculated as the following, 
+	\begin{equation}\label{key}
+	L\left(\boldsymbol{y}_{i}, \hat{\boldsymbol{y}}_{i}\right) = -(\mathbf y \log (\mathbf {\hat y})+(1-\mathbf  y) \log (1-\mathbf {\hat y}))
+	\end{equation}
+	The cross entropy loss punishes the algorithm if the predicted value is far from the label. I.e. if the classifier predicts 0.09 and the label is 1, it would result in a very high loss. The ideal model would have a cross entropy loss of zero. The loss function will remain untouched during the Bayesian Optimization. \cite {dl}
 	\\\\
 	Gaussian Process uses the smoothness assumption on the outputs of the network, and its variance and lengthscale parameters are optimized using maximum log-likelihood principle. \cite{aktiv_gp} The acquisition function, that choose the parameters for the model, used is Expected Improvement (EI). EI attempts to quantify the improvement of the parameters chosen. The average improvement is quantified by sampling the objective function at $x$. The acquisition function then computes the expected value of the improvement function at a certain $x$. EI is expressed as 
 	\begin{equation*}
@@ -242,7 +248,9 @@
 	The Bayesian Optimization starts by sampling from the objective function, then it fits the Gaussian Process to the sampled points and then iterates the next points in the hyperparameter space using the fitted GP and Expected Improvement. As for the implementation of Baysesian Optimization the GPyOpt library is used \cite{bo_lib}. The exploration / exploitation trade-off variable \textit{jitter} is set to the default value of 0.01.
 	
 	\subsection{Permutation test}
-	
+	To identify whether or not the data-set is biased, and if this has impacted the constructed binary classifier, a permutation test was conducted. A permutation test is a non-parametric test that has no distributional assumption. Permutation tests can also be used to see the importance of a feature in the data-set. Therefore permutation test was used for both feature selection and identification of bias in the binary classifier. \\\\
+	As for feature selection every feature was randomly shuffled with re-sampling. If the outputs remained unchanged regardless of the permutation the feature was dropped. Every feature is permuted 1000 times.\\\\
+	As for identification of biases in the binary classifier the categorical race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
 	\subsection{Bias Correction	n Methods}
 	
@@ -284,9 +292,15 @@
 		
 		\bibitem{propublicaAnalysis} ProPublica, "How We Analyzed the COMPAS Recidivism Algorithm", 2016, \url{https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm}, visited 12-03-2020
 		
-		\bibitem{aktiv_gp} 
+		\bibitem{aktiv_gp} F. Bergamin. 02463 “Active Machine Learning and Agency” Lecture 1: Gaussian Processes, 2020.
 		
-		\bibitem{aktiv_bo} 
+		\bibitem{aktiv_bo} F. Bergamin. 02463 “Active Machine Learning and Agency” Lecture 2: Bayesian Optimization, 2020.
+		
+		\bibitem{dl} Goodfellow-et-al-2016. Deep Learning, MIT Press in 2016. 
+		
+		\bibitem{b_woodworth} B. Woodworth et al. Learning Non-Discriminatory Predictors, Toyota Technological Institute at Chicago, Chicago, IL 60637, USA.
+		
+		\bibitem{g_goh} G. Goh et al. Satisfying Real-world Goals with Dataset Constraints. In NIPS, 2016.
 		
 	\end{thebibliography}
 	
