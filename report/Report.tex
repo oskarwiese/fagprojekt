@@ -10,6 +10,9 @@
 \usepackage{ragged2e}
 \usepackage{booktabs}
 \usepackage{lipsum}
+\usepackage{csquotes}
+\usepackage{longtable}
+\usepackage{arydshln}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -62,10 +65,13 @@
 	\section{Data}
 	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
-	\subsection{Description of Data}
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
+	A general overview of the dataset and how it came to be as well as the variables used for the classifier is given in \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored further in later sections.
+	
+	\subsection{Description of Data} \label{dataDescription}
 	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data as well as their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
 	\noindent The data consists of 53 different variables, 9 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded to be able to feed the necessary variables into the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient problem and to avoid having some variables be of more importance to the final prediction. This will be explained more thoroughly in \ref{Feed-forward neural}. \\
-	The 10 chosen variables, of which one will be used as the target variable are shown and explained below.
+	The 10 chosen variables, of which one will be used as the target variable are shown and explained below. To see an exhaustive explanation of all variables from the full dataset, see \ref{dataExamination}.
 	
 	
 	\begin{table}[H]\label{resultater}
@@ -86,7 +92,70 @@
 	\end{table}
 		
 		
-	\subsection{Visualization of Data}
+	\subsection{Explanation of Data Variables} \label{dataExamination}
+	To remove ambiguity about the meaning of the variables in the COMAS recidivism dataset, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and shines light on the true contents of the dataset, as no one else has done this before. Some variables, mostly those with \textit{c\_}, \textit{r\_} or \textit{vr\_} prefixes,have been grouped together in the table, as these serve the same purpose in the dataset for \textit{custody}, \textit{recidivism} and \textit{violent recidivism} cases respectively. 
+	
+	\noindent Some variable names have the prefix \textit{v\_}, which has been disregarded as an error. As such, this interpretation of the dataset assumes that these variables are akin to those with the \textit{vr\_} prefix, representing the variables related to violent recidivism. Furthermore, in the case of a few of the variables in the dataset, it has simply not been possible to find a meaningful interpretation, since the entire column is either full of NaN's like in the case of \textit{violent\_recid} or every value of the column one to one with another variable, which is the case between \textit{decile\_score} and \textit{decile\_score\_1} as well as \textit{priors\_count} and \textit{priors\_count\_2}. These variables are kept in the table for completeness but seem to have no discernible purpose in the dataset.
+	
+	
+	\begin{longtable}{l l l} \label{allVars}
+		Variable & Description & Type \\ \hline
+		id & Index of the column & Discrete interval \\
+		name & Full name of the offender & Discrete nominal \\
+		first & First name of the offender & Discrete nominal \\
+		last & Last name of the offender & Discrete nominal \\
+		compas\_screening\_date & The date the COMAS score was given & Discrete nominal \\
+		sex & The sex of the offender & Discrete nominal \\
+		dob & The offender's date of birth & Discrete nominal \\
+		age & The offender's age & Continuous ratio \\
+		age\_cat & Which age category the offender belongs to & Discrete nominal \\
+		race & The offender's race & Discrete nominal \\
+		juv\_fel\_count & The number of previous juvenile felonies & Discrete interval \\
+		juv\_misd\_count & The number of previous juvenile misdemeanor & Discrete interval \\
+		juv\_other\_count & The other types of previous juvenile crimes & Discrete interval \\
+		days\_b\_screening\_arrest & ----- & Discrete interval \\ \hdashline
+		priors\_count & The number of previous offences & Discrete interval \\
+		priors\_count\_2 & & \\ \hdashline
+		c\_jail\_in & The date the offender was jailed & Discrete nominal \\
+		r\_jail\_in & & \\ \hdashline
+		c\_jail\_out & The date the offender was removed from jail & Discrete nominal \\
+		r\_jail\_out & & \\ \hdashline
+		c\_case\_number & The offense case number & Discrete nominal \\
+		r\_case\_number & & \\
+		vr\_case\_number & & \\ \hdashline
+		c\_offense\_date & The date the offense was performed & Discrete nominal \\
+		r\_offense\_date & & \\
+		vr\_offense\_date & & \\ \hdashline
+		c\_charge\_degree & The severity of the offense & Discrete nominal \\
+		r\_charge\_degree & & \\
+		vr\_charge\_degree & & \\ \hdashline
+		c\_charge\_desc & The offense that was performed & Discrete nominal \\
+		r\_charge\_desc & & \\
+		vr\_charge\_desc & & \\ \hdashline
+		c\_arrest\_date & ----- & Discrete nominal \\
+		c\_days\_from\_compas & ------ & Discrete interval \\
+		r\_days\_from\_arrest & Recidivism days until arrested for the crime & Discrete interval \\
+		violent\_recid & Completely empty data column & NaN \\ \hdashline
+		is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal \\
+		is\_violent\_recid & & \\
+		two\_year\_recid & & \\ \hdashline
+		type\_of\_assessment & What the COMPAS algorithm predicted for the offender & Discrete nominal \\
+		v\_type\_of\_assessment & & \\ \hdashline
+		decile\_score & Value from 1-10 representing risk of recidivism & Discrete ordinal \\
+		decile\_score\_1 & & \\
+		v\_decile\_score & & \\ \hdashline
+		score\_text & decile score split into three categories & Discrete interval \\
+		v\_score\_text & & \\ \hdashline
+		screening\_date & When the offender was given the assessment & Discrete nominal \\
+		v\_screening\_date & & \\ \hdashline
+		in\_custody & When the offender was placed in custody & Discrete nominal \\
+		out\_custody & When the offender was removed from custody & Discrete nominal \\
+		start & The day the screening started compared to the start of the process & Discrete interval \\
+		end & The day the screening ended compared to the start of the process & Discrete interval \\
+		event & ------ & Discrete interval
+	\end{longtable}
+		
+	\subsection{Visualization of Data} \label{dataVisuals}
 	To better get an understanding of the data, a range of plots are shown below. \ref{fig:predictedrecidrace} aims to show wheter there is a difference between the fraction of whites and african-americans that are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. \ref{fig:predictedrecidsex} has the same purpose, utilizing sex instead of race. \ref{fig:truerecid} and \ref{fig:proirs} give some insight into the actual amount of crime done by african-americans and whites and whether the amounts seem to be similar.
 	
 	\begin{figure}[H]
@@ -120,7 +189,12 @@
 	
 	
 	\subsection{Data ethicality}
-	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely, though since all members of the study have agreed to share the data related to this problem, this is not an ethical concern. This is also true for the variables of the data such as age, full name and number of previous felonies, which would otherwise have been of huge ethical concern to share openly. 
+	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely. This is also true for the variables of the data such as age, full name and number of previous felonies, which give ample opportunity to identify people who have recidivated, leading to compromise of their personal data. This is not a concern though, as the data is collected from Florida, where public records are subject to the broad legislated public right of inspection. According to chapter 119 section 1 of the law of the State of Florida, 
+	\begin{displayquote}
+		"It is the policy of this state that all state, county, and municipal records are open for personal inspection and copying by any person. Providing access to public records is a duty of each agency." \cite{floridaLaw}
+	\end{displayquote}
+	
+	\noindent As such, since ProPublica submitted a public records request for access to the data for use in research \cite{propublicaAnalysis}, which inherently is a type of inspection, they are within the legal ramifications to use the dataset as they please. Another debate entirely, which will in particular be taken up in \ref{discussion}, is the more subjective question of the ethicality of open-record laws and public criminal data in their entirety being shared among whomever and what exactly should be allowed to be done with this data.
 	
 	\subsection{Bias in Data}
 	
@@ -175,7 +249,7 @@
 	\section{Results}
 	\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
-	\section{Discussion}
+	\section{Discussion} \label{discussion}
 	\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
 	\section{Conclusion}
@@ -205,6 +279,10 @@
 		
 		\bibitem{Zafar} M. B. Zafar, I. Valera, M. G. Rodriguez, and K. P. Gummadi. Fairness constraints: A mechanism for fair classification.
 		In ICML Workshop on Fairness, Accountability, and Transparency in Machine Learning, 2015.
+		
+		\bibitem{floridaLaw} The State of Florida, "The 2019 Florida Statutes", 1995,  \url{http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0119/0119.html}, visited 12-03-2020
+		
+		\bibitem{propublicaAnalysis} ProPublica, "How We Analyzed the COMPAS Recidivism Algorithm", 2016, \url{https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm}, visited 12-03-2020
 		
 		\bibitem{aktiv_gp} 
 		
