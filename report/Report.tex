@@ -41,30 +41,27 @@
 	%\thispagestyle{fancy}
 	%\tableofcontents	
 	
-	\section{Abstract}
-	\textbf{TODO: Skal indeholde motivation, problem, fremgangsmåde, resultater og konklusion.}
-	
-	\section{Introduction}
+	\section{Introduction} \label{indledning}
 	\textbf{TODO: \\ Hvad er formålet med projektet? \\ Hvad er problemformuleringen \\ Hvad er state-of-the-art? \\ Hvilken fremgangsmåde bruges til at løse problemet? \\ Hvem har brug for resultaterne?}
 	
 	\subsection{Motivation}
-	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since discrimination in models could lead to reinforced societal discrimination. Bias seems to originate from the dataset, meaning that a saving grace would be to either implement bias correction on the dataset to remove the bias from the source of the problem or to remove bias from the model, thereby removing the risk of discrimination when using the model for classification tasks. This report aims to understand bias and how it affects datasets as well as classification models. Furthermore, a set of bias correction methods will be put to use in order to explore the possibilites of keeping discrimination away from important fields. More specifically, the questions to be answered throughout the report are whether there is a bias in the COMPAS recidivism dataset and which kind of bias there is, as well as what this bias means in the dataset. Meanwhile, it is also analyzed how bias affects a classification algorithm, how bias in an algorithm is detected and how to quantify the bias. Lastly, bias correction methods will be implemented and tested and an ethical discussion will be carried out to understand the applications of bias correction algorithms and AI models on society as well as how society can learn to trust these models. 
+	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system ect. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since model discrimination could lead to reinforced societal discrimination. Bias seems to originate from the dataset, meaning that a saving grace would be to either implement bias correction on the dataset to remove the bias from the source of the problem or to remove bias from the model, thereby removing the risk of discrimination when using the model for classification tasks. This report aims to understand bias and how it affects datasets as well as classification models. Furthermore, a set of bias correction methods will be put to use in order to explore the possibilites of keeping discrimination away from important fields. More specifically, the questions to be answered throughout the report are whether there is a bias in the COMPAS recidivism dataset and which kind of bias there is, as well as what this bias means in the dataset. Meanwhile, it is also analyzed how bias affects a classification algorithm, how bias in an algorithm is detected and how to quantify the bias. Lastly, bias correction methods will be implemented and tested and an ethical discussion will be carried out to understand the applications of bias correction algorithms and AI models on society as well as how society can learn to trust these models. \\
+	
+	\noindent In this report, the rest of section \ref{indledning} will focus on state of the art within the field of bias correction and the contributions from this report. Afterwards, section \ref{data} will present the necessary details of the data including visualizations of the data, explanations of the variables of the dataset and how the data came to be. Section \ref{methods} on methods sets up the necessary background knowledge for the topics of FFNNs, bayesian optimization and permutation tests. Results will be illustrated in section \ref{results} through figures and tables, which will then be discussed and put into a greater perspective in section \ref{discussion}. The discussion also contains the ethical discussion of bias and bias correction as a whole. The whole report will be summed up in section \ref{conclusion}. Some lesser relevant figures and points have been left out of the report but can be found in section \ref{appendix} and the relevant sources are found in section \ref{bibliography}
 	
 	\subsection{State of the Art}
-	There are currently two main ways to ensure fairness in classification. One is by implementing steps during the training process of the classifier, and second is post-processing. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed. 
+	There are currently two main ways to ensure fairness in classification. One is by implementing steps during the training process of the classifier, and the second involves steps post-processing. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed. 
 	
-	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the co-variance between predicted labels and the value of features. This is a method that is implemented during the training process. Another study agrees with this approach, this is the study "Satisfying Real-world Goals with Dataset Constraints". They propose that by implementing constraints in the training data, and by using the ramp penalty to quantify cost accurately, they succeed in developing an efficient algorithm to optimize the resulting non-convex constrained optimization problem. This state of the art algorithm can be implemented in situations where one may require a classifier to make prediction with a certain rate of positive predictions in order to maintain fairness for a population. \cite{g_goh}
+	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the covariance between predicted labels and the value of features. This is a method that is implemented during the training process. "Satisfying Real-world Goals with Dataset Constraints" uses this same tactic to remove bias from the dataset. They propose that by implementing constraints in the training data, and by using the ramp penalty to quantify cost accurately, they succeed in developing an efficient algorithm to optimize the resulting non-convex constrained optimization problem. This state of the art algorithm can be implemented in situations where one may require a classifier to make prediction with a certain rate of positive predictions in order to maintain fairness for a population. \cite{g_goh} \\
 	
-
-	
-	The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by post-processing the estimators of probability for a discriminant classifier to learn thresholds in order to deal with sensitive features or groups in the data. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The idea is to first train an unfair classifier on the COMPAS data-set and then using post hoc correction to correct the classifier. However, another article, namely "Learning Non Discriminatory Predictors", argue that by only using the post hoc correction, the algorithm will still be unfair. They show, that for several loss-functions such as the 0-1 or hinge loss, then the method proposed by Hardt et al. \cite{equal_of_oppor} can fail. Despite if the Bayes optimal predictor with respect to those losses is learned	in the first step. In the paper, a notion is defined to obtain an approximation of a non-discrimination algorithm. However, this notion is explored during the paper, and it turns out that creating a non-discrimination algorithm is computationally hard. Therefore, a relaxation definition of equalized odds is presented, which is based on a second-moment condition instead of full conditional independence. Throughout the paper, it is shown that under this condition it is possible to learn a nearly optimal non-discriminatory linear predictor with respect to a convex loss without it being to computational to train. \cite{b_woodworth}
+	\noindent The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by post-processing the estimators of probability for a discriminant classifier to learn thresholds in order to deal with sensitive features or groups in the data. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The idea is to first train an unfair classifier on the COMPAS data-set and then using post hoc correction to correct the classifier. However, another article, namely "Learning Non Discriminatory Predictors", argue that by only using the post hoc correction, the algorithm will still be unfair. They show that for several loss-functions such as the 0-1 or hinge loss, the method proposed by Hardt et al. \cite{equal_of_oppor} can fail. Despite if the Bayes optimal predictor with respect to those losses is learned	in the first step. In the paper, a notion is defined to obtain an approximation of a non-discrimination algorithm. However, this notion is explored during the paper, and it turns out that creating a non-discrimination algorithm is computationally hard. Therefore, a relaxation definition of equalized odds is presented, which is based on a second-moment condition instead of full conditional independence. Throughout the paper, it is shown that under this condition it is possible to learn a nearly optimal non-discriminatory linear predictor with respect to a convex loss without it being too computational to train. \cite{b_woodworth}
 	
 	
 	\subsection{Contributions}
 
 	
 	
-	\section{Data}
+	\section{Data} \label{data}
 	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
 	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
@@ -101,6 +98,7 @@
 	
 	
 	\begin{longtable}{l l l} \label{allVars}
+		\centering
 		Variable & Description & Type \\ \hline
 		id & Index of the column & Discrete interval \\
 		name & Full name of the offender & Discrete nominal \\
@@ -201,7 +199,7 @@
 	\subsection{Bias in Data}
 	
 	
-	\section{Methods}
+	\section{Methods} \label{methods}
 	\textbf{TODO: \\ referér til kode og software \\ brug lang tid på nye metoder, kort tid på gamle metoder}
 	
 	\subsection{Binary Classifier}\label{Feed-forward neural}
@@ -254,16 +252,16 @@
 	
 	\subsection{Bias Correction	n Methods}
 	
-	\section{Results}
+	\section{Results} \label{results}
 	\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
 	\section{Discussion} \label{discussion}
 	\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
-	\section{Conclusion}
+	\section{Conclusion} \label{conclusion}
 	\textbf{TODO: \\ Opsummér resultater og anbefalinger fra projektet \\ Må ikke indeholde noget nyt \\ Skal svare på spørgsmålene fra problemformuleringen \\ Konklusion, abstract og indledning skal give samlet billede af projektet}
 	
-	\section{Appendix}
+	\section{Appendix} \label{appendix}
 	
 	\begin{figure}[H]
 		\centering
@@ -279,7 +277,7 @@
 		\label{fig:chargedegreescore}
 	\end{figure}
 	
-	\begin{thebibliography}{9}
+	\begin{thebibliography}{9} \label{bibliography}
 		
 		\bibitem{bo_lib} Machine Learning Group, University of Sheffield: "GPyOpt’s documentation", at \url{https://gpyopt.readthedocs.io}
 		
