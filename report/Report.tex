@@ -42,7 +42,7 @@
 	%\tableofcontents	
 	
 	\section{Introduction} \label{indledning}
-	\textbf{TODO: \\ Hvad er formålet med projektet? \\ Hvad er problemformuleringen \\ Hvad er state-of-the-art? \\ Hvilken fremgangsmåde bruges til at løse problemet? \\ Hvem har brug for resultaterne?}
+	%\textbf{TODO: \\ Hvad er formålet med projektet? \\ Hvad er problemformuleringen \\ Hvad er state-of-the-art? \\ Hvilken fremgangsmåde bruges til at løse problemet? \\ Hvem har brug for resultaterne?}
 	
 	\subsection{Motivation}
 	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system ect. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since model discrimination could lead to reinforced societal discrimination. Bias seems to originate from the dataset, meaning that a saving grace would be to either implement bias correction on the dataset to remove the bias from the source of the problem or to remove bias from the model, thereby removing the risk of discrimination when using the model for classification tasks. This report aims to understand bias and how it affects datasets as well as classification models. Furthermore, a bias correction method will be put to use in order to explore the possibilites of keeping discrimination away from important fields. More specifically, the questions to be answered throughout the report are whether there is a bias in the COMPAS recidivism dataset and which kind of bias there is, as well as what this bias means in the dataset. Meanwhile, it is also analyzed how bias affects a classification algorithm, how bias in an algorithm is detected and how to quantify the bias. Lastly, bias correction methods will be implemented and tested and an ethical discussion will be carried out to understand the applications of bias correction algorithms and AI models on society as well as how society can learn to trust these models. \\
@@ -70,7 +70,7 @@
 	
 	
 	\section{Data} \label{data}
-	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
+%	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
 	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
 	A general overview of the dataset and how it came to be as well as the variables used for the classifier is given in \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored further in later sections.
@@ -206,7 +206,7 @@
 	
 		
 	\section{Methods} \label{methods}
-	\textbf{TODO: \\ referér til kode og software \\ brug lang tid på nye metoder, kort tid på gamle metoder}
+%	\textbf{TODO: \\ referér til kode og software \\ brug lang tid på nye %metoder, kort tid på gamle metoder}
 	
 	\subsection{Binary Classifier}\label{Feed-forward neural}
 	%initialization schemes
@@ -219,13 +219,7 @@
 		\caption{Visualization of the binary classifier model. The input layer has dimension $ \mathbb R ^9$ and the output layer has dimension $ \mathbb R^2 $. The number of nodes in the hidden layers is a changeable parameter which is found with Bayesian Optimization. }
 		\label{fig:ffnn}
 	\end{figure}
-	
-	
-	\subsubsection{Bayesian Optimization}
-	%Bayesian Optimization
-	
-	To obtain the pinnacle of accuracy in a neural network, it needs an excellent architecture as well as the potimal hyperparameters. However, the search for these parameters are usually a costly process of uncertainty balancing exploration of parameters and the exploitation of results. Often the process of finding the optimal parameters and network architecture comes from expert knowledge, biased heuristics or exhaustive sampling from the parameter space. To determine the architecture and hyperparameters of the binary classifier Bayesian Optimization is used. 
-	\subparagraph*{Objective Function}
+	\noindent 
 	The objective function that is being optimized in this project is the binary classifier presented above. The fully connected layers are trained on the COMPASS data-set and the validation accuracy of the model is what BO optimizes. The accuracy of the constructed model is evaluated using non-parametric Gaussian Process (GP) as a function fo the following hyperparameters:
 	\begin{itemize}
 		\item Number of units in the first hidden layer \(\in [1, 5000]\) 
@@ -239,7 +233,12 @@
 	L\left(\boldsymbol{y}_{i}, \hat{\boldsymbol{y}}_{i}\right) = -(\mathbf y \log (\mathbf {\hat y})+(1-\mathbf  y) \log (1-\mathbf {\hat y}))
 	\end{equation}
 	The cross entropy loss punishes the algorithm if the predicted value is far from the label. I.e. if the classifier predicts 0.09 and the label is 1, it would result in a very high loss. The ideal model would have a cross entropy loss of zero. The loss function will remain untouched during the Bayesian Optimization. \cite {dl}
-	\\\\
+	
+	\subsubsection{Bayesian Optimization}
+	%Bayesian Optimization
+	
+	To obtain the pinnacle of accuracy in a neural network, it needs an excellent architecture as well as the potimal hyperparameters. However, the search for these parameters are usually a costly process of uncertainty balancing exploration of parameters and the exploitation of results. Often the process of finding the optimal parameters and network architecture comes from expert knowledge, biased heuristics or exhaustive sampling from the parameter space. To determine the architecture and hyperparameters of the binary classifier Bayesian Optimization is used. 
+		\\\\
 	Gaussian Process uses the smoothness assumption on the outputs of the network, and its variance and lengthscale parameters are optimized using maximum log-likelihood principle. \cite{aktiv_gp} The acquisition function, that choose the parameters for the model, used is Expected Improvement (EI). EI attempts to quantify the improvement of the parameters chosen. The average improvement is quantified by sampling the objective function at $x$. The acquisition function then computes the expected value of the improvement function at a certain $x$. EI is expressed as 
 	\begin{equation*}
 	\mathrm{EI}(\mathbf{x})=\left\{\begin{array}{ll}
@@ -256,16 +255,18 @@
 	As for feature selection every feature was randomly shuffled with re-sampling. If the outputs remained unchanged regardless of the permutation the feature was dropped. Every feature is permuted 1000 times.\\\\
 	As for identification of biases in the binary classifier the categorical race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
-	\subsection{Bias Correction	n Methods}
+	\subsection{Bias Correction Methods}
+	
+	The method that is being implemented in this project is introduced by Hard et al. \cite{equal_of_oppor} Post training, the binary classifier is tested with two different data-sets. One that contains only white people and one that contains only African-American. On both of these data-sets a Receiver Operating Characteristic (ROC-curve) will be plotted. From the two ROC-curves the intersection will yield the optimal threshold to ensure Hard et al.'s definition of equalized odds. By implementing this threshold, the classifier should then have minimized if not eliminated existing bias. 
 	
 	\section{Results} \label{results}
-	\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
+	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
 	\section{Discussion} \label{discussion}
-	\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
+	%\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
 	\section{Conclusion} \label{conclusion}
-	\textbf{TODO: \\ Opsummér resultater og anbefalinger fra projektet \\ Må ikke indeholde noget nyt \\ Skal svare på spørgsmålene fra problemformuleringen \\ Konklusion, abstract og indledning skal give samlet billede af projektet}
+	%\textbf{TODO: \\ Opsummér resultater og anbefalinger fra projektet \\ Må ikke indeholde noget nyt \\ Skal svare på spørgsmålene fra problemformuleringen \\ Konklusion, abstract og indledning skal give samlet billede af projektet}
 	
 	\section{Appendix} \label{appendix}
 	
