@@ -219,6 +219,7 @@
 		\caption{Visualization of the binary classifier model. The input layer has dimension $ \mathbb R ^9$ and the output layer has dimension $ \mathbb R^2 $. The number of nodes in the hidden layers is a changeable parameter which is found with Bayesian Optimization. }
 		\label{fig:ffnn}
 	\end{figure}
+
 	\noindent 
 	The objective function that is being optimized in this project is the binary classifier presented above. The fully connected layers are trained on the COMPASS data-set and the validation accuracy of the model is what BO optimizes. The accuracy of the constructed model is evaluated using non-parametric Gaussian Process (GP) as a function fo the following hyperparameters:
 	\begin{itemize}
