@@ -1,7 +1,4 @@
-% !TeX spellcheck = en_US
 \documentclass[11pt, fleqn, titlepage]{article}
-\usepackage{texfiles/SpeedyGonzales}
-\usepackage{texfiles/MediocreMike}
 \newcommand{\so}[2]{{#1}\mathrm{e}{#2}}
 \usepackage{hyperref}
 \usepackage{amsmath}
@@ -19,103 +16,30 @@
 
 \pagestyle{plain}
 \fancyhf{}
-\rfoot{Page \thepage{} of \pageref{LastPage}}
-
+%\rfoot{Page \thepage{} of \pageref{LastPage}}
+\usepackage[margin=2.3cm]{geometry}
 \begin{document}
 	
 	\maketitle
 	
-		\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.4\linewidth]{"billeder/Screenshot from 2020-03-24 08-21-13"}
-	\end{figure}
+	\section*{Skriftlig Formidling}
+	Generelt har i gennem hele rapporten refereret rigtig godt til figurer, hvilket giver figurerne mere relevans i teksten og skaber en bedre rød tråd. Samtidig måtte figur 4 eller 5 gerne være placeret tidligere i sektion 3, da denne ifølge os spiller en central rolle for at forstå myretuen som spil. Det kunne også være en idé at i skriver mere objektivt ved at benytte passiv form i stedet for "we" og nogle gange "I", hvilket skaber en subjektiv fornemmelse. Introduktionen måtte gerne være en smule mere kreativ og nogle gange laver i store opdelinger, hvor det kan være mere passende at benytte newline eller $\backslash \backslash$. I kunne også overveje kun at referere til de ligninger, der er vigtigt, så der ikke bliver lavet referencer til alt. Teksten indeholder en del stavefejl, men dette giver mening når der ikke har været lang tid til gennemlæsning. Til slut er det vigtigt at lægge vægt på, at i tydeligvis har talt sammen i gruppen om, hvor der bliver skrevet hvad, da pointer ikke bliver gentaget og at forkortelser er blevet introduceret rigtigt (skrives fuldt ud første gang og med forkortelsen resten af tiden).
 	
-	\textbf{Husk at bruge burgermodellen og de tre C'er!}
+	\section*{Forside og Introduktion}
+	Forsiden er god da den indeholder de formelle krav (titel, studienumre, data og logo), og da rapporten er skrevet på engelsk kunne det være en ide at titlen også var på engelsk. Derudover skal titlen måske beskrive vinklen på projektet, såsom " Training an Agent to Play Anticipation", "Trying to Reach Superhuman performance with Reinforcement Learning in Anticipation" eller "Reinforcement learning in Anticipation". Introduktionen kunne godt bruge en mere kreativ eller motiverende vinkel for at fange læseren og skabe en rød tråd. I Sektion 1.1 i introduktion kommer der en god motivation af hvorfor reinforcement learning er spændende i forhold til den måde vi som mennekser lære på, samtidigt, kan en state of the art sektion give læseren et indblik i hvad den nyeste forsknings vinkel på reinforcement learning er og hvordan jeres projekt relatere sig til den nyeste forskning. Det giver også læseren et indblik i hvordan i afgrænser emnet. I skriver i introduktionen: "This project aim to explore reinforcement learning methods to implement and train an agent to play the Myretuen as good as possible", hvilket forklarer overordnet hvad jeres projekt går ud på. For at tydeliggøre dette, kan i have en mere klar problemformulering. Denne kan eventuelt komme i forlængelse af sætningen og præsentere læseren for den røde tråd samt hvilke spørgsmål projektet vil svare på. I introduktionen sættes problemformuleringen ikke ind i en større kontekst som forklare hvad resultaterne kan bruges til, såsom selvkørende biler, automatisering af industrifabrikker, dirigering af trafik osv. Introduktionen til projektet er meget kort kontra metode afsnittet og der er rigelig med plads til at skrive en større motivation af emnet samt state of the art. Derudover, kunne der skrives et afsnit, som kort forklarer hvilke metoder i kommer ind på i metode afsnittet, således, at hvis læseren har en forståelse af de metoder behøves man ikke læse dem igennem. 
 	
-	\textbf{Husk mere end en halv sides brødtekst og fem kritiske spørgsmål!}
+	\section*{Metoder}
+	Metoderne er velskrevet og er underbygget af en masse teori bl.a. af matematiske formler. Der bliver dækket over de emner, som kunne være mangelsværdig for en modtager, der har vores uddannelse men ikke har haft om Reinforcement Learning. I sektion 2.2, er "ant vector" blevet illustreret og nævnt før den er blevet præsenteret for læseren, så her kunne det være fedt for læsren at have en ide om selve eviroment, state space, features osv, ellers bliver figur 1 lidt abstrakt. Det er også vigtigt at nævne overordnet hvordan jeres metoder er implementeret, fx ved at nævne det er lavet i PyTorch, Keras, TensorFlow eller Numpy ;). Generelt set, er der nogle steder hvor der bruges lang tid på at beskrive metoder, som i egentlig ikke implementere, eksempler på dette er her: I sektion 2.4 med introduktion til TD, sektion 2.7 med intro til minmax, sektion 2.9 med beskrivelse af sandsynlighed. For at forbedre metode afsnittet bør der kun skrives hvilke metoder i bruger, og ikke hvad i ikke bruger. Der kunne eventuelt skrives i 2.4, at i bruger TD($\lambda$) og så eventuelt uddybe det i appendix, og i 2.7, så bare skriv præcis hvilken en form for minmax i har implementeret i projektet, og i 2.9 igen kun beskriv hvordan i har gjort det, i stedet for at sende læseren på afveje. Derudover bruger i meget plads på at udlede hvordan i opdatere vægtene og dette er super fedt og viser en god forståelse af, at i ved hvad i laver. Dette kan i stadig opnå, ved at flytte udledningen til appendix og så i metode afsnittet bare indsætte jeres vægt opdaterings regel. Det vil både gøre det tydeligt for læseren helt præcist hvad i har implementeret i metoderne, samtidigt med, at hvis læseren er i tvivl om hvordan man kommer frem til den vægt opdatering, så har man mulighed for det i appendix. 
 	
-	\textbf{Husk at der skal være tale om forslag og ikke påtvingelse!}
+	\section*{Environment/Data}
 	
-	\section{Positve}
+	Implementationen af det environment i arbejder med er godt forklaret og går i dybden med pointer som state vector og reward system. 3.2 og figur 5 er en god forklaring af det spil, der bliver implementeret, så vi forstår ikke, hvorfor 3.1 bruges på at beskrive et spil som egentlig slet ikke bliver brugt. Dette er endnu et eksempel på et af de større problemer i rapporten, hvor der bliver skrevet om det i \textit{ikke bruger} i stedet for det i \textit{bruger}, hvilket ender med at være spild af plads og gøre det sværere for læseren at forstå, hvad man skal sætte sig ind i. Altså føler vi, at i kunne droppe (eller rykke til appendix) den generelle forklaring af spillet fra 3.1 og i stedet bruge forklaringen fra 3.2, da det er denne i har tænkt jer at implementere. Samtidig føler vi også, at i kunne rykke sektion 3.2 til introduktionen som undersektion, da dette giver læseren mulighed for at forstå spillets implementation før resten af rapporten. Det kunne i stedet også være en mulighed at rykke hele sektionen om environment op før metoder, da dette ville give læseren et langt bedre indblik i hvordan metoder implementeres, da man så har en forståelse af selve enviroment, state space, features og så videre. Ligesom nævnt i \textit{skriftlig formidling} kunne i overveje at rykke figur 4 og 5 op til starten af sektion 3.1/3.2 og bruge en slags tragtmetode til at beskrive spillets fremgang (starte med det mest nødvendige som regler og layout og herefter gå i detaljer), da vi begge fandt det svært at forstå hvad spillet handlede om efter at have læst rapporten første gang. Herudover er sektionen om implementation i vores mening ikke færdig efter sektion 3.3, da sektion 3.4 og 3.5 jo også handler om hvordan spillet er implementeret, så vi føler, at 3.4 og 3.5 i stedet kunne være undersektioner af implementation. Vi vil også nævne, at der har været brugt en del forskellig nomenklatur gennem rapporten, specifikt når det kommer til hvordan myrer taber/bliver dræbt, så det er nok en god ide at komme til enighed om en fast ordlyd omkring at vinde eller tabe konfrontationer. I sektion 3.4 og 3.5 bliver tabellerne nævnt før de egentlig bliver vist, hvilket kan lede til forvirring da man skal huske på hvad selve tabellerne indeholder imens man får ny information. Derudover, synes vi, at tabel 1 passer rigtig til et afsnit som en del af introduktionen eller eventuelt lave et afsnit der hedder "Implementation" eller "Enviroment" lige efter introduktionen. Grundet til dette, er at vi følte at rapporten var meget mere let læselig under anden gennemlæsning, da vi havde disse informationer tilgængelige. Til slut vil vi nævne, at illustrationer og tabeller i denne sektion er gode og især illustrationerne er med til at skabe et bedre overblik over spillet i sig selv. 
 	
-	\begin{itemize}
-		
-		\item \textbf{Skriftlig formidling} I refererer godt til figurer (bortset fra figur 6) Hele vejen gennem teksten, hvilket hjælper med at give figurerne relevans. 
-		
-		\item \textbf{Forside} Forsiden er god, da den indeholder titel, navne, studienumre, data og logo som forventet.
-		
-		\item Sektion 1.1 i introduktion kommer der en god motivation af hvorfor reinforcement learning er spændende i forhold til den måde vi som mennekser lære på. 
-		
-		\item \textbf{Metoder} Metoderne er godt skrevet og er underbyyget af en masse teori blandt andet gennem matematiske formler. Der bliver dækket over de emner, som kunne være mangelsesværdig for en modtager, der har vores uddannelse men ikke har haft om dette emne før. Teksten kan dog blive en smule langtrukken. 
-		
-	
-		
-	\end{itemize}
-	
-	\section{Negative}
-	
-	
-	\begin{itemize}
-		\item \textbf{Titel} Måske titlen skal være på engelsk nu når rapporten er skrevet på engelsk.
-			
-		
-		\item \textbf{Skriftlig formidling} Sørg for at holde rapporten objektiv ved at bruge passiv form i stedet for "we" og nogle gange "I".
-		
-		\item \textbf{Skriftlig formidling} Referencen til figur 4 burde være meget tidligere i sektionen, men dette nævner vi også med hensyn til den sektion for sig.
-		
-		\item \textbf{Skriftlig formidling} Der er en stor mængde stavefejl, men da teksten ikke er færdigskrevet er dette også forventet.
-		
-		\item Der er virkelig mange $\backslash$$\backslash$$\backslash$$\backslash$ og næsten ingen $\backslash$$\backslash$. Dette kan få teksten til at se en smule for usammenhængende ud.
-		
-		\item \textbf{Forside} Titlen kan godt være en smule mere specifik.
-		
-		\item \textbf{Abstract} Husk at skrive et abstract og evt. forord, når i når dertil. En indholdsfortegnelse med højst 2-3 indryk kunne også være en god ide.
-		
-		\item \textbf{Introduktion} Ifølge os kunne introduktionen godt bruge noget mere kreativitet for at hooke læseren.
-		
-		\item \textbf{Introduktion} Der er ikke som sådan nogen tydelig afgrænsning af emnet. Det er ikke tydeligt, hvad rapporten kommer til at handle om.
-		
-		\item \textbf{Introduktion} I ser umiddelbart ud til ikke at have en state of the art-sektion (dog har i skrevet om tidligere arbejde i metoder).
-		
-		\item \textbf{Introduktion} I mangler en problemformulering. Det er okay at skrive denne ud rent som spørgsmål da det lægger vægt på, hvad der skal svares på.
-		
-		\item \textbf{Introduktion} I kommer heller ikke ind på hvem der har brug for resultaterne og nogle af metoderne kunne godt blive bedre introduceret i introduktionen.
-		
-		\item \textbf{Introduktion} I virkeligheden kunne det være en god ide at forklare hele spillet fra starten af i stedet for at henvise til en gennemgang i bunden af introduktionen.
-		
-		\item \textbf{Introduktion} Mange af punkterne i introen kommer til at virke som et metodeafsnit, fordi der bliver talt om metoderne men det ikke bliver sat i en større kontekst.
-		
-		\item \textbf{Introduktion} Hvis i føler, at i hat brug for det, burde i lave en sektion dedikeret itl at forklare, hvad der kommer til at ske i resten af rapporten.
-		
-		\item \textbf{Introduktion} Introduktionen er meget kort i forhold til metode afsnitet. Der kunne sagtens skrives en større motivation samt som tidligere nævnt en mere konkret state of the art.
-		
-		\item \textbf{Metoder} Husk at komme ind på hvordan jeres metoder er implementeret i forhold til programmeringen, når i når dertil.
-		
-		\item \textbf{Metoder} I virker til mange steder i rapporten at bruge lang til på at beskrive metoder, i ikke har tænkt jer at bruge. Det kan ødelægge den røde tråd og gøre det svært at følge med i forklaringen. Et eksempel er i sektion 2.9
-		
-		\item \textbf{Metoder} Da dette ikke nødvendigvis er en matematik retning, ville jeg måske forslå, at nogle af udledningerne af fx update rule samt andre udledninger skal i appendix, så det virkelig står klart for læseren hvilken weight update i bruger. 
-		
-		\item 
-		
-		\item \textbf{Data/environment} Her bruger i også lang tid på at beskrive principper, i ikke har brug for.
-		
-		\item \textbf{Data/environment} Det ville være en ide at rykke illustrationer til toppen af 3.1 og understrege de helt grundlæggende regler og opbygningen før alt andet. Ellers er det svært at følge med i en forklaring om spillet.
-		
-		\item \textbf{Data/environment} Implementation er i virkeligheden ikke færdigt efter 3.3, så i kunne overveje at gøre resten af sektionerne i 3 til undersektioner af 3.3.
-		
-		\item \textbf{Data/environment} I bruger forskellige nomenklatur for det at angribe en anden myre, det kunne være en god ide at blive enige om.
-		
-		\item \textbf{Referencer} Husk kun at sætte referencer på ligninger hvis i rent faktisk refererer til dem, ellers er de ligegyldige.
-		
-	\end{itemize}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.9\linewidth]{"billeder/Screenshot from 2020-03-24 08-21-22".png}
-	\end{figure}
-	
-	
-	
-	
+	\section*{Kritiske Spørgsmål}
+	Hvordan ville projektet ændre sig, hvis i fjerner gennemgangen af metoder og pointer som i ikke bruger? \\\\
+	\noindent Er det nemmere at læse rapporten, hvis environment/implementation bliver rykket op under introduktionen eller som et separat afsnit efter introduktionen? \\\\
+	\noindent Hvad er jeres problemformulering, og stiler i på nuværende tidspunkt mod en rapport, der har mulighed for at svare på denne? \\\\
+	\noindent Hvad er state of the art og hvordan ser jeres metoder og data ud sammenlignet med en masse andre papers på samme område? \\\\
+	\noindent Hvordan og hvorfor kan en tydelig opdeling af afsnit være en god ide at implementere? Se f.eks. sektion 2.6 og hvad er idéen med at lave et nyt afsnit?
 	
 \end{document}
