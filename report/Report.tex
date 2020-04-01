@@ -254,7 +254,7 @@
 	\subsection{Permutation test}
 	To identify whether or not the data-set is biased, and if this has impacted the constructed binary classifier, a permutation test was conducted. A permutation test is a non-parametric test that has no distributional assumption. Permutation tests can also be used to see the importance of a feature in the data-set. Therefore permutation test was used for both feature selection and identification of bias in the binary classifier. \\\\
 	As for feature selection every feature was randomly shuffled with re-sampling. If the outputs remained unchanged regardless of the permutation the feature was dropped. Every feature is permuted 1000 times.\\\\
-	As for identification of biases in the binary classifier the categorical race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
+	As for identification of biases in the binary classifier the categorical variable race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
 	\subsection{Bias Correction Methods}
 	
