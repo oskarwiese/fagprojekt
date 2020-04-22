@@ -80,7 +80,7 @@
 	\section{Data} \label{data}
 %	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
-	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. An important note on the further work in this report on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector. This method was also used by ProPublica during their analysis and since the bias correction methods only work on binary data, turning the output into a binary vector was logical. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism into zeros and the \texttt{Low} risk of recidivism into ones, as has been in the ProPublica analysis. \\
 	A general overview of the dataset and how it came to be as well as the variables used for the classifier is given in \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored further in later sections.
 	
 	\subsection{Description of Data} \label{dataDescription}
@@ -204,7 +204,7 @@
 	
 	
 	
-	\subsection{Data ethicality}
+	\subsection{Data Origin}
 	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely. This is also true for the variables of the data such as age, full name and number of previous felonies, which give ample opportunity to identify people who have recidivated, leading to compromise of their personal data. This is not a concern though, as the data is collected from Florida, where public records are subject to the broad legislated public right of inspection. According to chapter 119 section 1 of the law of the State of Florida, 
 	\begin{displayquote}
 		"It is the policy of this state that all state, county, and municipal records are open for personal inspection and copying by any person. Providing access to public records is a duty of each agency." \cite{floridaLaw}
@@ -219,7 +219,7 @@
 	\subsection{Binary Classifier}\label{Feed-forward neural}
 	%initialization schemes
 	\subsubsection{Feed-forward Neural Network}
-	Feed-forward neural networks (FFNN) are the simplest form of a neural network. Information flow in a feed-forward neural is one directional which means that the network has an input layer, and information flow from these nodes through the hidden layers unto the output layer. The main purpose of a FFNN is to approximate a function. In this project $ y = f^*(x) $ maps an input $ \mathbf x $ to a category $ \mathbf y $. The FFNN is thereby a classifier, which goal is to determine the recidvism risk of a person given the input variable $ \mathbf x $. The input variable $ \mathbf x $ contains \textbf{TODO:}. The categories of $ \mathbf y $ is either 0 or 1, which corresponds to the classifier classifying a person as either low or medium/high risk of recidivism. Hence, this is a binary classifier which constructs a mapping $ \mathbf y = f(\mathbf x \ ; \mathbf w) $. The goal is to learn the weights that most efficiently approximate the function $ f^* $ through supervised learning. The binary classifier in this project has an input layer, three hidden layers and an output layer. \cite{dl}
+	Feed-Forward neural networks (FFNN) are the simplest type of neural network. Information flow in a feed-forward neural is one-directional, which means that the network has an input layer, and information flow from these nodes through the hidden layers unto the output layer. The main purpose of a FFNN is to approximate a function. In this project $ y = f^*(x) $ maps an input $ \mathbf x $ to a category $ \mathbf y $. The FFNN is thereby a classifier, the goal of which is to determine the recidivism risk of a person given the input $ \mathbf x $. $ \mathbf x $ contains \textbf{TODO:}. The categories of $ \mathbf y $ are either 0 or 1, which corresponds to the classifier classifying a person as either low or medium/high risk of recidivism. Hence, this is a binary classifier, which constructs a mapping $ \mathbf y = f(\mathbf x \ ; \mathbf w) $. The goal is to learn the weights that most efficiently approximate the function $ f^* $ through supervised learning. The binary classifier in this project has an input layer, three hidden layers and an output layer. \cite{dl}
 	
 	\begin{figure}[H]
 		\centering
