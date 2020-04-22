@@ -70,17 +70,17 @@
 	This report aims to give an approachable account of the effect of bias as well as the most promising methods of removing bias and avoiding discrimination from learned supervised learning models in datasets. As such, the reader can expect to get the following from this report.
 	
 	\begin{itemize}
-		\item The effects of bias in data
-		\item Comprehensive guide to COMPAS data variables
-		\item Bias correction methods
-		\item ethical discussion of bias and discriminating models
-		
+		\item Using permutation and illustrations, an overview of the bias present in the modified COMPAS recidivism dataset as well as the effect of this bias on the classifiers implemented in this report will be made. 
+		\item A comprehensive table of all variables present in the modified COMPAS recidivism dataset will be provided. This table includes the name of the variable, a short description of the purpose of the variable as well as the type of variable in order to remove ambiguity for the definitions of the variables.
+		\item Two bias correction methods, equalized odds and equal opportunity, will be presented, both through text and mathematical definition, and implemented in order to show the effect of the bias corrections on a variety of classification models including a neural network, random forest, guassian naive bayes and logistic regression.
+		\item To put the other contributions into a real-world context, an ethical discussion of the quantified bias and discrimination models will be carried out.
 	\end{itemize}
+	The general goal of the contributions given above is to avoid models that discriminate with respect to some protected attribute. In this report, race plays the biggest role as a protected attribute, but the findings of the discriminating models and bias correction can equally be transferred to other variables that are suspected to be discriminated against.
 	
 	\section{Data} \label{data}
 %	\textbf{TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues}
 	
-	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. \\
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMAS recidivism dataset from ProPublica has been used. An important note on the further work in this report on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector. This method was also used by ProPublica during their analysis and since the bias correction methods only work on binary data, turning the output into a binary vector was logical. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism into zeros and the \texttt{Low} risk of recidivism into ones, as has been in the ProPublica analysis. \\
 	A general overview of the dataset and how it came to be as well as the variables used for the classifier is given in \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored further in later sections.
 	
 	\subsection{Description of Data} \label{dataDescription}
@@ -176,14 +176,33 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_race}
+		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_race}	
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				& Low   & Medium & High  \\ \hline
+				Caucasian        & 0.652 & 0.236  & 0.112 \\ \hline
+				African-American & 0.412 & 0.311  & 0.277 \\ \hline
+			\end{tabular}
+		\end{table}
 		\caption{It is clear from this illustration that the number of caucasian and african-american people in the low group are almost equal. Meanwhile the medium and high groups contain a much larger fraction of african-americans. Since, in total, there are more african-americans in the dataset than whites (3696/2454), it would seem based purely on the data that whites are more often classified as low risk of recidivism while african-americans are often classified as medium or high risk.}
 		\label{fig:predictedrecidrace}
 	\end{figure}
+
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/true_recid}
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|l|l|l|}
+				\hline
+				& 0   & 1  \\ \hline
+				Caucasian        & 0.582 & 0.418  \\ \hline
+				African-American & 0.449 & 0.551  \\ \hline
+			\end{tabular}
+		\end{table}
 		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender. It is clear that close to an equal amount of white and african-american offenders did not recidivate, while a much larger proportion of african-americans re-offended than whites. This makes it difficult to prove bias in the data based only on the data, as it is not necessarily a bias that african-americans more often re-offend.}
 		\label{fig:truerecid}
 	\end{figure}
@@ -191,6 +210,15 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_sex}
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				& Low   & Medium & High  \\ \hline
+				Male      & 0.500 & 0.274  & 0.226 \\ \hline
+				Female    & 0.540 & 0.301  & 0.152 \\ \hline
+			\end{tabular}
+		\end{table}
 		\caption{This illustration shows the relationship between sex and the COMPAS prediction of recidivism. The first point to be noted is that there are a lot more men in the dataset than women (5819/1395). Aside from this, it does not seem like there is a difference in the proportions of men or women being classified as belonging to each of the categories.}
 		\label{fig:predictedrecidsex}
 	\end{figure}
@@ -204,7 +232,7 @@
 	
 	
 	
-	\subsection{Data ethicality}
+	\subsection{Data Origin}
 	The COMPAS dataset as well as ProPublica's expanded data and analysis of this data is freely available from their public GitHub repository. As such, the data is not stored safely. This is also true for the variables of the data such as age, full name and number of previous felonies, which give ample opportunity to identify people who have recidivated, leading to compromise of their personal data. This is not a concern though, as the data is collected from Florida, where public records are subject to the broad legislated public right of inspection. According to chapter 119 section 1 of the law of the State of Florida, 
 	\begin{displayquote}
 		"It is the policy of this state that all state, county, and municipal records are open for personal inspection and copying by any person. Providing access to public records is a duty of each agency." \cite{floridaLaw}
