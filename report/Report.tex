@@ -61,12 +61,12 @@
 	This report aims to give an approachable account of the effect of bias as well as the most promising methods of removing bias and avoiding discrimination from learned supervised learning models in datasets. As such, the reader can expect to get the following from this report.
 	
 	\begin{itemize}
-		\item The effects of bias in data
-		\item Comprehensive guide to COMPAS data variables
-		\item Bias correction methods
-		\item ethical discussion of bias and discriminating models
-		
+		\item Using permutation and illustrations, an overview of the bias present in the modified COMPAS recidivism dataset as well as the effect of this bias on the classifiers implemented in this report will be made. 
+		\item A comprehensive table of all variables present in the modified COMPAS recidivism dataset will be provided. This table includes the name of the variable, a short description of the purpose of the variable as well as the type of variable in order to remove ambiguity for the definitions of the variables.
+		\item Two bias correction methods, equalized odds and equal opportunity, will be presented, both through text and mathematical definition, and implemented in order to show the effect of the bias corrections on a variety of classification models including a neural network, random forest, guassian naive bayes and logistic regression.
+		\item To put the other contributions into a real-world context, an ethical discussion of the quantified bias and discrimination models will be carried out.
 	\end{itemize}
+	The general goal of the contributions given above is to avoid models that discriminate with respect to some protected attribute. In this report, race plays the biggest role as a protected attribute, but the findings of the discriminating models and bias correction can equally be transferred to other variables that are suspected to be discriminated against.
 	
 	
 	\section{Data} \label{data}
