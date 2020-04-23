@@ -1,0 +1,17 @@
+
+Punkter til møde:
+
+punkt 1 - Permutation og hvordan viser det bias, og i forhold lave to data sæt og sammenligne confusion matricer.
+
+punkt 2 - Ny data
+
+punkt 3 - Kan vi gennemgå afsnit 3 i artiklen igen, med fokus på teori og bevis. 
+
+Permutation tets tanker:
+
+Det kan bruges til at se hvor vigtig de enkelte features er, for at opnå den accuracy. Det man gør er, at have en hypotese inden og derefter køre permutation og se hvornår er den over og hvornår er den under. Og forkaste eller acceptere ens nulhypotese.
+
+Hvad hvis roc bliver ens efter permutation? Så konkludere man, at featuren er vigtig! 
+
+
+

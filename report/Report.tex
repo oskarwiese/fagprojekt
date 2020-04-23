@@ -292,12 +292,13 @@
 %	As for feature selection every feature was randomly shuffled with re-sampling. If the outputs remained unchanged regardless of the permutation the feature was dropped. Every feature is permuted 1000 times.\\\\
 	%As for identification of biases in the binary classifier the categorical variable race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
-	\subsection{Bias Identification}
+	\subsection{Bias Identification}\label{bias_id}
 	To identify if the constructed classifier trained on the ProPublica data-set is fair or not, two different data-sets are constructed. A validation-set which only contains the Caucasian race and a validation-set which only contains Afro-Americans. Both of the data-sets were validated by the classifier and the confusion matrix of the two sets are compared. In order for a classifier to be fair it needs to fulfill one or both of the definitions of fairness \ref{bias_def}. Therefore, both the false positive rate (FPR) and true positive rate (TPR) has to be equal in both of the confusion matrices. 
 	
 	\subsection{Bias Correction Methods}
 	
-	The method that is being implemented in this project is introduced by Hard et al. \cite{equal_of_oppor} Post training, the binary classifier is tested with two different data-sets. One that contains only white people and one that contains only African-American. On both of these data-sets a Receiver Operating Characteristic (ROC-curve) will be plotted. From the two ROC-curves the intersection will yield the optimal threshold to ensure Hard et al.'s definition of equalized odds. By implementing this threshold, the classifier should then have minimized if not eliminated existing bias. 
+	The method that is being implemented in this project is introduced by Hard et al. \cite{equal_of_oppor} Post training process the two confusion matrices constructed from the validation data-sets described in section \ref{bias_id} are compared. Hard et al. proposes, that in order for the model to be as fair as it has to ensure equalized odds and equality of opportunity. Per definition equalized odds entails equal opportunity. A predictor can always fulfill equalized 3odds by using a constant predictor, i.e. $ \hat Y = 1 $. However, the goal is a to make a sufficient predictor which ensures non-discriminant behavior. A Receiver Operating Characteristic (ROC-curve) from each demographic is constructed by thresholding between zero and one.
+	
 	
 	\section{Results} \label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
