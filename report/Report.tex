@@ -283,10 +283,40 @@
 	
 	\subsection{Bias Correction Methods}\label{biascorr}
 	
-	The method that is being implemented in this project is introduced by Hard et al. \cite{equal_of_oppor} The proposed fairness implementation is done after the training process. Post training two confusion matrices are constructed from the validation data-sets described in section \ref{bias_id}. Hard et al. proposes, that in order for the model to be as fair as it has to ensure equalized odds and equality of opportunity. Per definition equalized odds entails equal opportunity. A predictor can always fulfill equalized odds by using a constant predictor, i.e. $ \hat Y = 1 $. However, the goal is a to make a sufficient predictor which ensures non-discriminant behavior. A Receiver Operating Characteristic (ROC-curve) from each demographic is constructed by thresholding between zero and one.
+	The method that is being implemented in this project is introduced by Hard et al. \cite{equal_of_oppor} The proposed fairness implementation is done after the training process. Post training two confusion matrices are constructed from the validation data-sets described in section \ref{bias_id}. Hard et al. proposes, that in order for the model to be as fair as possible it has to ensure equalized odds and equality of opportunity. Per definition equalized odds entails equal opportunity. A predictor can always fulfill equalized odds by using a constant predictor, i.e. $ \hat Y = 1 $. However, the goal is a to make a sufficient predictor which ensures non-discriminant behavior. To derive such a predictor a score function is needed. The output node of the network has a value in $ R \in [0,1] $, instead of it being a binary input. Thus, this output value \textit{R}, will be considered as a score function. A way to obtain a binary predictor from this score function \textit{R} is by thresholding the value, where the prediction would be $ \hat Y = \mathbb I (R > \text{threshold}) $. If the score function then satisfies equalized odds and equality of opportunity then the predictor will as well. From this score function the optimal threshold should be chosen to ensure the strict definition of fairness \ref{bias_def}. If the score function does not satisfy this definition then different thresholds needs to be used for different protected groups, which can be stated as $ \tilde Y = \mathbb I ( R > \text{threshold}_A)$, where A is the protected group. 
+	
+	A key in Hard et Al.'s study is the Receiver Operating Characteristic curve (ROC-curve) of the score function. The ROC-curve shows the relationship between the false positive and true positive rate at different threholds. These curves exist in a two dimensional plane where the vertical axis shows the true positive rate and the horizontal axis shows the false positive rate. The ROC-curves that are considered is the A-conditional ROC-curves which are constructed from the data with the Caucasian and Afro-American respectively, 
+	\begin{equation*}\label{key}
+	C_{a}(t) \stackrel{\text { def }}{=}(\operatorname{Pr}\{\widehat{R}>t | A=a, Y=0\}, \operatorname{Pr}\{\widehat{R}>t | A=a, Y=1\})
+	\end{equation*}
+	The conditional curves both specify the conditional distributions of the Caucasion and Afro-Americans therefore a score function obeys equalized odds if and only if the values of the protected attributes agree. There are several scenarios that one can encounter. The simplest case is if the ROC-curves are identical or close to being the same. If this is the case, then any thresholding of R yields an equalized odds predictor. In the case where the ROC-curves do not agree, then different thresholds needs to be chosen for the protected groups. If the resulting predictor has to satisfy equalized odds then the points on the different ROC-curves has to be on the same point in the flase/positve plane. Thus, this is only possible if the two conditional ROC-curves intersect. It can happen that the two ROC-curves do not intersect at all, except for the trivial endpoints. In this case randomization has to be used in order to obtain predictors which fulfill the definition of equalized odds. \cite{equal_of_oppor}
+	
+	\subsubsection{Derivation of an equalized odds threshold predictor}
+	A convex hull for the conditional ROC-curves is defined as, 
+	\begin{equation}\label{key}
+	D_{a} \stackrel{\text { def }}{=} \text { convhull }\left\{C_{a}(t): t \in[0,1]\right\}
+	\end{equation}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{imgs/convex_hull}
+		\caption{The figure illustrates the intersection of the convex hull of the conditional ROC-curves. The intersection is the gray area in the graph.}
+		\label{fig:convexhull}
+	\end{figure}
+	\noindent
+	A chosen point in the convex hull $ D_a $ represents the false/positive rates, conditioned on a certain protected group, of a randomized derived predictor based on the score function R. Due to the fact that the space of the conditional ROC-curves is two dimensional, a predictor $ \tilde Y $ can always be constructed as a mixture of two different threshold predictors. Conditioned on $ A=a $, the predictor will behave as, 
+	\begin{equation*}\label{key}
+	\widetilde{Y}=\mathbb{I}\left\{R>T_{a}\right\}
+	\end{equation*}
+	
+	Where the variable $ T_a $ is the randomized threshold which assumes the value $ \underline{t}_{a} $ with a certain probability $ \underline{p}_a $ and the value $\bar t_{a} $ with probability $ \bar p_a $. To obtain an equalized odds predictor a point in the intersection of the convex hull of each of the conditional ROC-curves has to be chosen and then for each group realize the true/false positive rates with a randomized predictor. For each group this results in either choosing a fixed threshold $ T_a = t_a $ or a mixture of two thresholds $ \underline t_a < t_a $. In the case of mixing two thresholds, if $ A=a $ and $ R < \underline t_a $, the predictor $ \tilde Y $ is set to 0, if $ R > \bar t_a $, the predictor is set to 1. But if $ \underline t_a < R < \bar t_a $, it is reversed and $ \tilde Y = 1 $ with probability $ \bar p_a$. Phrased in words, the sampled value which is a random number between 0 and 1 decides whether to threshold at the upper or lower point.
+	
+	The equalized odds predictors is thus in the intersection of areas under the A-conditional ROC-curves, and above the main diagonal. This area is illustrated in figure \ref{fig:convexhull}. For any loss function the optimal false/positive rate will always be on the upper left boundary otherwise the predictor would be no better than random. This upper left boundary is the possible equalized odds predictors. This ROC-curve which is the upper left boundary of the intersection between the convex hulls is the pointwise minimum of the two A-conditional ROC-curves.  The performance of a predictor that satisfies equalized odds is therefore determined by the minimum performance among the protected groups, and in the case of this project Caucasian and Afro-Americans. In other words, ensuring equalized odds enforces the trained model to build good prediction for all classes. 
+	
+	\subsubsection{Derivation of an optimal equal opportunity predictor}
 	
 	
-	\section{Results} \label{results}
+	\section{Results}\label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
 	\section{Discussion} \label{discussion}
