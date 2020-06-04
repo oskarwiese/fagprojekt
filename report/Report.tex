@@ -293,9 +293,9 @@
 	
 	\subsubsection{Derivation of an equalized odds threshold predictor}
 	A convex hull for the conditional ROC-curves is defined as, 
-	\begin{equation}\label{key}
+	\begin{equation*}\label{key}
 	D_{a} \stackrel{\text { def }}{=} \text { convhull }\left\{C_{a}(t): t \in[0,1]\right\}
-	\end{equation}
+	\end{equation*}
 
 	\begin{figure}[H]
 		\centering
@@ -316,10 +316,10 @@
 	\min _{\forall a: \gamma \in D_{a}} \gamma_{0} \ell(1,0)+\left(1-\gamma_{1}\right) \ell(0,1)
 	\end{equation}
 	Assuming withouth loss of generality $ \ell (0,0) = \ell(1,1)=0 $.
-	The optimization problem \ref{optim_thresh} can be done efficiently by numerically using ternary search.
+	The optimization problem \ref{optim_thresh} can be done efficiently by numerically using ternary search. \cite{equal_of_oppor}
 	\subsubsection{Derivation of an optimal equal opportunity predictor}
 	
-	The construction of an equal opportunity predictor follows the same approach but has one less constraint. From the definition of equality of opportunity the predictor must only satisfy that the true positive rates are equal. This corresponds to the A-conditional ROC-curves having the same y-coordinate in the two dimensional plane. Assuming continuity of the A-conditional ROC-curves it is always possible to find points on the boundary of the conditional ROC-curves. This means, that no randomization is needed unlike when deriving an equalized odds predictor. The optimal equality of opportunity predictor corresponds to two different deterministic thresholds for each of the protected groups. The optimization problem can be solved by using exhaustive ternary search over the true positive values.
+	The construction of an equal opportunity predictor follows the same approach but has one less constraint. From the definition of equality of opportunity the predictor must only satisfy that the true positive rates are equal. This corresponds to the A-conditional ROC-curves having the same y-coordinate in the two dimensional plane. Assuming continuity of the A-conditional ROC-curves it is always possible to find points on the boundary of the conditional ROC-curves. This means, that no randomization is needed unlike when deriving an equalized odds predictor. The optimal equality of opportunity predictor corresponds to two different deterministic thresholds for each of the protected groups. The optimization problem can be solved by using exhaustive ternary search over the true positive values. \cite{equal_of_oppor}
 	
 	\section{Results}\label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
