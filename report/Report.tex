@@ -345,14 +345,14 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/loss_curve.png}
-		\caption{}
+		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epocs. After 400 epocs, the accuracy is close to having converged, but the loss still seems to get a bit lower.}
 		\label{fig:losscurve}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/fpr_tpr_plot.png}
-		\caption{}
+		\caption{An illustration of the true and false positive rates depending on the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias.}
 		\label{fig:fprtprplot}
 	\end{figure}
 		
@@ -360,13 +360,13 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal"}
-		\caption{}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal.}
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equalized Odds Optimal"}
-		\caption{}
+		\caption{An illustration of the optimal equalized odds thresholds.}
 		\label{fig:equalized-odds-optimal}
 	\end{figure}
 	
