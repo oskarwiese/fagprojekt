@@ -263,7 +263,7 @@
 	\end{figure}
 		
 	\noindent 
-	To obtain the pinnacle of accuracy in a neural network, it needs an excellent architecture as well as the optimal hyperparameters. However, the search for these parameters is usually a costly process of uncertainty, balancing exploration of parameters and the exploitation of previous results. Often, the process of finding the optimal parameters and network architecture comes from expert knowledge, biased heuristics or exhaustive sampling from the parameter space. Since the scope of this project is to demonstrate biased algorithms, the goal is to construct a classifier with an accuracy vastly better than random. The hyperparameters used for the model in this project are based on preliminary runs as well as an exhaustive search through the parameter space. The fully connected layers are trained on the COMPAS dataset with a supervised learning strategy. The hyperparameters used are a drop-out value at $p=0.1$, which is used on each layer. The learning rate, $\alpha$, is initialized as $\alpha = 0.001$. However, the optimization algorithm used for this project is Adaptive Moment Estimation (Adam). Adam is a well known optimizer in the literature and has adaptive an learning rate as well as step size. The activation function used is rectified linear unit (ReLU), which is defined as $ y = \text{max}(0,x) $. Thus, the function returns x for positive values and zero otherwise. The activation function ensures non-linearity which allows for a more expressive model. binary cross-entropy Loss is used as the cost function. The loss in the binary classifier is calculated using the expression below. 
+	To obtain the pinnacle of accuracy in a neural network, it needs an excellent architecture as well as the optimal hyperparameters. However, the search for these parameters is usually a costly process of uncertainty, balancing exploration of parameters and the exploitation of previous results. Often, the process of finding the optimal parameters and network architecture comes from expert knowledge, biased heuristics or exhaustive sampling from the parameter space. Since the scope of this project is to demonstrate biased algorithms, the goal is to construct a classifier with an accuracy vastly better than random. The hyperparameters used for the model in this project are based on preliminary runs as well as an exhaustive search through the parameter space. The fully connected layers are trained on the COMPAS dataset with a supervised learning strategy. The hyperparameters used are a drop-out value at $p=0.5$, which is used on each layer. The learning rate, $\alpha$, is initialized as $\alpha = 0.001$. However, the optimization algorithm used for this project is Adaptive Moment Estimation (Adam). Adam is a well known optimizer in the literature and has adaptive an learning rate as well as step size. The activation function used is rectified linear unit (ReLU), which is defined as $ y = \text{max}(0,x) $. Thus, the function returns x for positive values and zero otherwise. The activation function ensures non-linearity which allows for a more expressive model. binary cross-entropy Loss is used as the cost function. The loss in the binary classifier is calculated using the expression below. 
 	\begin{equation}\label{key}
 	L\left(\boldsymbol{y}_{i}, \hat{\boldsymbol{y}}_{i}\right) = -(\mathbf y \log (\mathbf {\hat y})+(1-\mathbf  y) \log (1-\mathbf {\hat y}))
 	\end{equation}
@@ -436,18 +436,6 @@
 		\end{subfigure}
 		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.669 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{African-Americans}} = 0.47 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Caucasian}} $. The threshold assumes the value $\underline t_{\text{Caucasian}} = 1 $  with a probability $ \underline p_{\text{Caucasian}}= 0.76 $ and the value $ \bar t_{\text{Caucasian}} = 0.50 $ with the probability $\bar p_{\text{Caucasian}} = 0.24 $.}
 	\end{figure}
-
-	\begin{equation}
-		\text{Confusion matrix and normalized confusion matrix for the African-American protected  group}
-		\begin{bmatrix}
-			235 & 116 \\
-			147 & 249 \\
-		\end{bmatrix}
-		\begin{bmatrix}
-		0.67 & 0.33 \\
-		0.371 & 0.629 \\
-		\end{bmatrix}
-	\end{equation}
 	
 	\section{Discussion} \label{discussion}
 	%\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
