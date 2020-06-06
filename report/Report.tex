@@ -350,6 +350,8 @@
 	From figure \ref{fig:permtest} it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data. Since there are no permutations larger than the observed value, this would results in a p-value of 0, which is nonsensical. Thus, the p-value can instead be estimated by \cite{p-value}
 	\[p=\frac{1}{M}=0.001,\]
 	which is definitely significant. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. 
+	
+	
 
 
 	\begin{figure}[H]
@@ -387,10 +389,20 @@
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{"imgs/Equalized Odds Optimal"}
-		\caption{An illustration of the optimal equalized odds thresholds. The best accuracy is obtained in a point where the false and true positive rates are almost equal. To make them equal, the blue dottet line shows the possible values of the threshold when mixing the threshold of 1 with the threshold of the blue point. As such, it is possible to make the false and true positive rates exactly equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.}
-		\label{fig:equalized-odds-optimal}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal"}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied"}
+			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. }
 	\end{figure}
+
+	
 	
 	
 	\section{Discussion} \label{discussion}
