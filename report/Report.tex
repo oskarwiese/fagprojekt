@@ -20,6 +20,7 @@
 	filecolor=magenta,      
 	urlcolor=cyan,
 }
+\usepackage{nccmath}
 \usepackage{multicol}
 %\usepackage{subfig}
 \usepackage{graphicx}
@@ -371,41 +372,44 @@
 	\[p=\frac{1}{M}=0.001,\]
 	which is definitely significant. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. 
 	
-	\begin{figure}[H]
+	\begin{figure*}[h]	
 	\begin{multicols}{2}
-		\begin{equation}
+		\begin{ceqn}
+		\begin{equation*}
 		\begin{bmatrix}
 		193 & 103  \\
 		62 & 119 
 		\end{bmatrix} 
-		\end{equation} 
-		\begin{equation}
+		\end{equation*} 
+		\begin{equation*}
 		\begin{bmatrix}
 		0.412 & 0.213  \\
 		0.128 & 0.246 
 		\end{bmatrix} 
-		\end{equation}
+		\end{equation*}
+		\end{ceqn}
 	\end{multicols}
-	\caption{white}
-	\end{figure}
-
-	\begin{figure}[H]
+	{The left matrix shows the confusion matrix of the population conditioned on the Caucasian race with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Caucasian} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Caucasian} $ is the total number of Caucasians in the dataset. Below the confusion matrix, conditioned on the Afro-American population, is shown.}
+	\end{figure*}
+	\begin{figure*}[h]	
 		\begin{multicols}{2}
-			\begin{equation}
+			\begin{ceqn}
+			\begin{equation*}
 			\begin{bmatrix}
 			259 & 92  \\
 			165 & 231 
 			\end{bmatrix} 
-			\end{equation} 
-			\begin{equation}
+			\end{equation*} 
+			\begin{equation*}
 			\begin{bmatrix}
 			0.347 & 0.123 \\
 			0.221 & 0.309 
 			\end{bmatrix} 
-			\end{equation}
+			\end{equation*}
+			\end{ceqn}
 		\end{multicols}
-		\caption{black}
-	\end{figure}
+		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN. It is clear from the two confusion matrices that the proportion of FN for Afro-Americans are notably larger than the proportion of FN for Caucasians. Furthermore, the proportion of FP for Caucasians are vastly larger than the FP for Afro-Americans.}
+	\end{figure*}
 
 	\begin{figure}[H]
 		\centering
