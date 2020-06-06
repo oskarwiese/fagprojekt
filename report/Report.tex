@@ -13,13 +13,14 @@
 \usepackage{csquotes}
 \usepackage{longtable}
 \usepackage{arydshln}
+\usepackage{subcaption}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
 	filecolor=magenta,      
 	urlcolor=cyan,
 }
-\usepackage{subfig}
+%\usepackage{subfig}
 \usepackage{graphicx}
 \title{Fairness in Classification}
 \author{Anders Henriksen \\ Oskar Eiler Wiese Christensen  \\ \texttt{\{s183917, s183904\}@student.dtu.dk}}
@@ -58,16 +59,16 @@
 	\operatorname{Pr}\{\widehat{Y}=1 | A=0, Y=y\}=\operatorname{Pr}\{\hat{Y}=1 | A=1, Y=y\}, \quad y \in\{0,1\}
 	\end{equation*}
 	What equalized odds states is, that if $ \hat Y $ has to be a fair predictor, then if $ y = 1 $, then the predictor has to have equal true positive rates for both classes of A, i.e. $ A = 0 $  and $ A = 1 $. However, if $ y = 0 $ then the predictor $ \hat Y $ has to have equal false positive rates. Equalized odds ensures equal accuracy and bias in all classes, and punishes models that perform well only on the majority.
-	\\\\
+	\\\\subfig
 	\textbf{Definition 1.2}(Equal Opportunity)\textbf{:} A binary predictor $ \hat Y $ satisfies equal opportunity with respect to A if $ \operatorname{Pr}\{\hat{Y}=1 | A=0, Y=1\}=\operatorname{Pr}\{\hat{Y}=1 | A=1, Y=1\} $. The equal opportunity ensures that the probability of predicting $ \hat Y = 1 $ is equal across the classes given the fact that $ Y = 1 $. Equal opportunity is a weaker notion of non-discrimination than Equalized Odds, but still allows for better utility.
 	
 	
 	\subsection{State of the Art}
-	There are currently two main ways to ensure fairness in classification. One of the ways is by implementing steps during the training process of the classifier in order to ensure fairness definitions. The second method, which is the one which will be implemented in this project, involves post-processing steps. Post-processing methods are often desired because the method can be used on models that have been trained and are commercialized. With the vastly increase of Machine Learning models on the market, society calls for ways to ensure that these models do not discriminate any minority or anyone for that matter. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed in the last years. However, this is still a young field of science.\\\\
+	There are currently two main ways to ensure fairness in classification. One of the ways is by implementing steps during the training process of the classifier in order to ensure fairness definitions. The second method, which is the one which will be implemented in this project, involves post-processing steps. Post-processing methods are often desired because the method can be used on models that have been trained and are commercialized. With the vastly increase ofsubfig Machine Learning models on the market, society calls for ways to ensure that these models do not discriminate any minority or anyone for that matter. Many different suggestions of how to implement bias correction algorithms within the field of fair AI have been proposed in the last years. However, this is still a young field of science.\\\\
 	\noindent
 	An approach proposed by Zafar et al. \cite{Zafar}, suggests that a way to achieve fair classifiers is by using linear constraints on the covariance between predicted labels and the value of features. This is a method that is implemented during the training process, which means that trained algorithms would have to be retrained. "Satisfying Real-world Goals with Dataset Constraints" uses the same strategy to remove bias inheritance from the dataset, which is to use linear constraints. The study proposes constraints in the training data, and by using the ramp penalty to quantify cost accurately, they succeed in developing an efficient algorithm to optimize the resulting non-convex constrained optimization problem. This state of the art algorithm can be implemented in situations where one may require a classifier to make predictions with a certain rate of positive predictions in order to maintain fairness for a population. Equality of opportunity is one of such definitions which require the true positive rates of protected attributes to be equal. \cite{g_goh} \\
 	
-	\noindent The main method that will be demonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by a post-processing step. The idea is to learn thresholds in order to deal with sensitive features or groups in the data in a discriminant classifier. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The study proposes, that with the learned thresholds, they can ensure fairness definitions (see \ref{bias_def}) by using different thresholds for certain protected groups. However, another article, namely "Learning Non Discriminatory Predictors", argue that by only using the post-hoc correction (post training methods), the algorithm will still be unfair. \cite{b_woodworth} They show that for several loss-functions such as the 0-1 or hinge loss, the method proposed by Hardt et al. \cite{equal_of_oppor} can fail. In the paper, a notion is defined to obtain an approximation of a non-discrimination algorithm. However, this notion is explored during the paper, and it turns out that creating a non-discrimination algorithm is computationally hard. Therefore, a relaxation definition of equalized odds is presented, which is based on a second-moment condition instead of full conditional independence. Throughout the paper, it is shown that under this condition it is possible to learn a nearly optimal non-discriminatory linear predictor with respect to a convex loss without it being too computational to train. \cite{b_woodworth}\\\\
+	\noindent The main method that will be demsubfigonstrated in this project is proposed by Hardt et al. \cite{equal_of_oppor}. The suggested method can achieve a non-discriminatory classifier by a post-processing step. The idea is to learn thresholds in order to deal with sensitive features or groups in the data in a discriminant classifier. The method requires that the classifier has information about the data at decision-time, which is the case in the experiment conducted in this project. The study proposes, that with the learned thresholds, they can ensure fairness definitions (see \ref{bias_def}) by using different thresholds for certain protected groups. However, another article, namely "Learning Non Discriminatory Predictors", argue that by only using the post-hoc correction (post training methods), the algorithm will still be unfair. \cite{b_woodworth} They show that for several loss-functions such as the 0-1 or hinge loss, the method proposed by Hardt et al. \cite{equal_of_oppor} can fail. In the paper, a notion is defined to obtain an approximation of a non-discrimination algorithm. However, this notion is explored during the paper, and it turns out that creating a non-discrimination algorithm is computationally hard. Therefore, a relaxation definition of equalized odds is presented, which is based on a second-moment condition instead of full conditional independence. Throughout the paper, it is shown that under this condition it is possible to learn a nearly optimal non-discriminatosubfigry linear predictor with respect to a convex loss without it being too computational to train. \cite{b_woodworth}\\\\
 	 The scope of this project is to implement the post-hoc correction method presented by Hard et al. \cite{equal_of_oppor} on a binary classifier trained on the ProPublica dataset. The goal is to obtain a non-discriminatory classifier which still retains a respected accuracy. The motivation behind implementing the work of Moritz Hardt is due to his great success within the field of fairness in Machine Learning. Hardt has more than 7000 citations, is currently writing a book about fairness in ML and has several scientific studies, including Equality of Opportunity in Supervised Learning. Moreover, the fairness definition of Equalized Odds, Equality of Opportunity and Demographic Parity are currently well accepted fairness definitions. Thus, the benefits and trade offs of using Hard et al.'s definitions will be discussed and examined thoroughly.
 	
 	\subsection{Contributions}
@@ -340,7 +341,6 @@
 		\label{fig:losscurve}
 	\end{figure}
 
-	The random permutations and observed accuracy is shown below.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
@@ -350,28 +350,59 @@
 	From figure \ref{fig:permtest} it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data. Since there are no permutations larger than the observed value, this would results in a p-value of 0, which is nonsensical. Thus, the p-value can instead be estimated by \cite{p-value}
 	\[p=\frac{1}{M}=0.001,\]
 	which is definitely significant. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. 
+	
+	
 
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/fpr_tpr_plot.png}
-		\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
-		\label{fig:fprtprplot}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/ROC.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot.png}
+			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the conditional ROC-Curves. Each point on the curve is realized thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. The ROC-curves may at first glance seem very similar, but when the dependency of the specific threshold is taken into consideration they are indeed not similar. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
 	\end{figure}
+
+%
+	
+
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.5\linewidth]{imgs/fpr_tpr_plot.png}
+%		\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+%		\label{fig:fprtprplot}
+%	\end{figure}
 		
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal"}
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal.}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal. This corresponds to the points having equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green point.}
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
+
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{"imgs/Equalized Odds Optimal"}
-		\caption{An illustration of the optimal equalized odds thresholds. The best accuracy is obtained in a point where the false and true positive rates are almost equal. To make them equal, the blue dottet line shows the possible values of the threshold when mixing the threshold of 1 with the threshold of the blue point. As such, it is possible to make the false and true positive rates exactly equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.}
-		\label{fig:equalized-odds-optimal}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal"}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied"}
+			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. }
 	\end{figure}
+
+	
 	
 	
 	\section{Discussion} \label{discussion}
