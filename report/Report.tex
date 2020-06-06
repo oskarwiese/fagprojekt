@@ -312,9 +312,9 @@
 	\end{figure}
 	\noindent
 	A chosen point in the convex hull $ D_a $ represents the false and true positive rates, conditioned on a certain protected group of a randomized derived predictor based on the score function R. Due to the fact that the space of the conditional ROC-curves is two dimensional, a predictor $ \tilde Y $ can always be constructed as a mixture of two different threshold predictors. Conditioned on $ A=a $, the predictor will behave as, 
-	\begin{equation*}\label{key}
+	\begin{equation}\label{odds_pred}
 	\widetilde{Y}=\mathbb{I}\left\{R>T_{a}\right\},
-	\end{equation*}
+	\end{equation}
 	
 	\noindent Where the variable $ T_a $ is the randomized threshold which assumes the value $ \underline{t}_{a} $ with a certain probability $ \underline{p}_a $ and the value $\bar t_{a} $ with probability $ \bar p_a $. To obtain an equalized odds predictor, a point in the intersection of the convex hull of each of the conditional ROC-curves has to be chosen and then for each group realize the true and false positive rates with a randomized predictor. For each group this results in either choosing a fixed threshold $ T_a = t_a $ or a mixture of two thresholds $ \underline t_a < t_a $. In the case of mixing two thresholds, if $ A=a $ and $ R < \underline t_a $, the predictor $ \tilde Y $ is set to 0, if $ R > \bar t_a $, the predictor is set to 1. But if $ \underline t_a < R < \bar t_a $, it is reversed and $ \tilde Y = 1 $ with probability $ \bar p_a$. Phrased in words, the sampled value, which is a random number between 0 and 1, decides whether to threshold at the upper or lower point.
 	
@@ -323,7 +323,7 @@
 	\min _{\forall a: \gamma \in D_{a}} \gamma_{0} \ell(1,0)+\left(1-\gamma_{1}\right) \ell(0,1)
 	\end{equation}
 	Assuming withouth loss of generality $ \ell (0,0) = \ell(1,1)=0 $.
-	The optimization problem \ref{optim_thresh} can be done efficiently by numerically using ternary search. \cite{equal_of_oppor}
+	The optimization problem \ref{optim_thresh} can be done efficiently by numerically using ternary search. The result is two predictors for each protected attribute. For the conditional distribution, where the A-condtional ROC-curve has the lowest TPR value of the two A-conditional ROC-curves, will result in a predictor with one threshold. Where as the other conditional population will result in predictor with a randomized threshold, see equation \ref{odds_pred}. \cite{equal_of_oppor}
 	\subsubsection{Derivation of an optimal equal opportunity predictor}
 	
 	The construction of an equal opportunity predictor follows the same approach as \ref{optimalboi}, but has one less constraint. From the definition of equal opportunity, the predictor must only satisfy that the true positive rates are equal. This corresponds to the A-conditional ROC-curves having the same y-coordinate in the two dimensional plane. Assuming continuity of the A-conditional ROC-curves it is always possible to find points on the boundary of the conditional ROC-curves. This means that no randomization is needed, unlike when deriving an equalized odds predictor. The optimal equality of opportunity predictor corresponds to two different deterministic thresholds for each of the protected groups. The optimization problem can be solved by using exhaustive ternary search over the true positive values. \cite{equal_of_oppor}
@@ -383,7 +383,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal"}
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal. This corresponds to the points having equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green point.}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal. This corresponds to the points having equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green point. The constructed binary classifier will yield an accuracy of $ 0.678 $, where the threshold used for the Caucasian is $T_{\text{Caucasian}}= 0.56 $ and the threshold for Afro-American is $ T_{\text{Afro-American}}=0.510 $, when Equal Opportunity is ensured. }
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
 
@@ -399,7 +399,7 @@
 			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied"}
 			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
 		\end{subfigure}
-		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. }
+		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.669 $, when Equalized Odds are ensured. The threshold for African-Americans is, $ T_{\text{African-Americans}} = 0.47 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Caucasian}} $. The threshold assumes the value $\underline t_{\text{Caucasian}} = 1 $  with a probability $ \underline p_{\text{Caucasian}}= 0.76 $ and the value $ \bar t_{\text{Caucasian}} = 0.50 $ with the probability $\bar p_{\text{Caucasian}} = 0.24 $.}
 	\end{figure}
 
 	
