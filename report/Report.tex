@@ -337,13 +337,17 @@
 	\section{Results}\label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
+	\subsection{Training Loss and Accuracy}
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/loss_curve.png}
 		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epocs. After 400 epochs, the accuracy is close to having converged, but the loss still seems to get a bit lower.}
 		\label{fig:losscurve}
 	\end{figure}
-
+	
+	\subsection{Validation of Model Accuracy}
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
@@ -353,6 +357,8 @@
 	From figure \ref{fig:permtest} it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data. Since there are no permutations larger than the observed value, this would results in a p-value of 0, which is nonsensical. Thus, the p-value can instead be estimated by \cite{p-value}
 	\[p=\frac{1}{M}=0.001,\]
 	which is definitely significant. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. 
+	
+	\subsection{Confusion Matrices}
 	
 	\begin{figure*}[h]	
 	\begin{multicols}{2}
@@ -392,7 +398,9 @@
 		\end{multicols}
 		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN. It is clear from the two confusion matrices that the proportion of FN for Afro-Americans are notably larger than the proportion of FN for Caucasians. Furthermore, the proportion of FP for Caucasians are vastly larger than the FP for Afro-Americans.}
 	\end{figure*}
-
+	
+	\subsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}
+	
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}{0.5\textwidth}
@@ -418,6 +426,7 @@
 %		\label{fig:fprtprplot}
 %	\end{figure}
 		
+	\subsection{Equality of Opportunity}
 	
 	\begin{figure}[H]
 		\centering
@@ -425,7 +434,9 @@
 		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. It is clear that the middle of the ROC-curves seems to yield the best accuracy. It is also clear that a point has been chosen at which both the true and false positive rates are close to equal. This corresponds to the points having equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green point. The constructed binary classifier will yield an accuracy of $ 0.678 $, where the threshold used for the Caucasian is $T_{\text{Caucasian}}= 0.56 $ and the threshold for Afro-American is $ T_{\text{Afro-American}}=0.510 $, when Equal Opportunity is ensured. }
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
-
+	
+	\subsection{Equalized Odds}
+	
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}{0.5\textwidth}
