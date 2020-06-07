@@ -14,6 +14,15 @@
 \usepackage{longtable}
 \usepackage{arydshln}
 \usepackage{subcaption}
+\usepackage{listings}
+\usepackage{pxfonts}
+\lstset{
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={def, for, return, if, else},
+	xleftmargin=-3.0cm
+}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -360,7 +369,7 @@
 	
 	\subsection{Reproducibility}
 	This section aims to give the reader a precise insight into how the methods of this project were implemented and how it would be possible to reproduce these results in the future. Hopefully, this will also simplify the methods. Reproducibility is an important part of writing any project or performing any research. It shows significance of the given result if it is possible for others at a later time to replicate or reproduce the results, since it validates the result of the original study and shows that it was not a fluke. All of the code is written in Python Version 3.7.4, PyTorch version 1.4.0 and Jupyter Notebook 6.0.3. Furthermore, the versions of the packages used in the project are given in the table below. All code for the project is accessible at \url{https://github.com/oskarwiese/fagprojekt/blob/master/src/Classifier_notebook.ipynb}.
-	\begin{table}[]
+	\begin{table}[H]
 		\begin{center}
 			\begin{tabular}{l l l l l l l l l l}
 				\toprule
@@ -377,8 +386,17 @@
 			\end{tabular}
 		\end{center}
 	\end{table}
-	Since the implementation of a binary classifier and equalized odds uses random number generation, random seeds have been set in order to ensure equivalent results for every run of the notebook. The seed number was set to 42 and was used for the python seed \texttt{random.seed}, the numpy seed \texttt{np.random.seed} and the pytorch seed \texttt{torch.manual\_seed}. \\
-	To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to structurize the data easily. Several plots were made using the Seaborn plot library. This code can be found in the Data Visualization cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the Neural Network cell in the notebook. The Binary Classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then executed to show that the acquired accuracy was adequately. The Classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the Classification function at the top of the notebook. In order to implement equalized odds, an exhaustive search was conducted: For each point on the boundary of the intersection of the convex hulls for each of the conditional distributions, the true postive and false postive rate was found. From the point on the boundary, a line was drawn between this point and the point (0,0). The slope is found using $ m=\frac{\Delta y}{\Delta x} $. Then, the intersection between the upper curve and the line was determined. The distance from (0,0) to the point on the lower curve was found and divided by the length from (0,0) to the point of the upper curve. The distance between the point on the lower curve and the intersection of the line and the upper curve is determined as well and divided by the length from (0,0) to the intersection of the line and the upper curve. This will result in two values, which are referred to as $ \bar p_a $ and $ \underline p_a $ in section \ref{optimalboi}. These are values between zero and one which will sum to one, and decides the proportion of sampling from the randomized predictor. This was done for each point on the upper left boundary of the intersection between the convex hull of the two conditional ROC-curves. The code can be seen in the Biascorrection function in the notebook. As for the implementation of Equal Opportunity, it only requires that the TPR is equal for both populations. This was done by using exhaustive search, by choosing a TPR for one population, then subtracting this from the TPR-array for the other population and using \texttt{argmin} to find the one closest to zero. The implementation of equal opportunity can also be seen in the Biascorrection function. 
+	\noindent Since the implementation of a binary classifier and equalized odds uses random number generation, random seeds have been set in order to ensure equivalent results for every run of the notebook. The seed number was set to 42 and was used for the python seed \texttt{random.seed}, the numpy seed \texttt{np.random.seed} and the pytorch seed \texttt{torch.manual\_seed}.
+	
+	In order to make the results as reproducible as possible, the data as well as the way the data was obtained also plays a big role. The way the data was obtained can be seen described in detail in section \ref{dataDescription}. The data comes from the GitHub repository \url{https://github.com/propublica/compas-analysis}, from which the dataset \texttt{compas-scores-two-years.csv} was used as the only dataset for the project. \\
+	
+	\noindent Below, a thorough walkthrough of the most essential parts of the code will be made. To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to easily structurize the data. Several plots of this data were then made using the Seaborn plot library. The code for this can be found in the \texttt{Data Visualization} cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the \texttt{Neural Network} cell in the notebook. The binary classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then performed to show that the acquired accuracy was adequately better than random. The classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the \texttt{Classification} function at the top of the notebook. The next goal was to implement equalized odds and equal opportunity using these conditional ROC-curves. The code for this is located in the \texttt{BiasCorrection} function. The implementation of both equal opportunity and equalized odds is explained both by reading the code and by the pseudo code, which has been supplied in the appendix.
+	
+% Forklaring af implementation af equalized odds
+%	For each point on the boundary of the intersection of the convex hulls for each of the conditional distributions, the true postive and false postive rate were found. From the point on the boundary, a line was drawn between this point and the point (0,0). The slope is found using $ m=\frac{\Delta y}{\Delta x} $. Then, the intersection between the upper curve and the line was determined. The distance from (0,0) to the point on the lower curve was found and divided by the length from (0,0) to the point of the upper curve. The distance between the point on the lower curve and the intersection of the line and the upper curve is determined as well and divided by the length from (0,0) to the intersection of the line and the upper curve. This will result in two values, which are referred to as $ \bar p_a $ and $ \underline p_a $ in section \ref{optimalboi}. These are values between zero and one which will sum to one, and decides the proportion of sampling from the randomized predictor. This was done for each point on the upper left boundary of the intersection between the convex hull of the two conditional ROC-curves.
+
+% Forklaring af implementation af equal opportunity
+%As for the implementation of Equal Opportunity, it only requires that the TPR is equal for both populations. This was done by using exhaustive search, by choosing a TPR for one population, then subtracting this from the TPR-array for the other population and using \texttt{argmin} to find the one closest to zero.
 	
 	\section{Results}\label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
@@ -532,6 +550,95 @@
 		\caption{}
 		\label{fig:chargedegreescore}
 	\end{figure}
+	\subsection{Pseudo Code}
+	\subsubsection{Equalized Odds}
+	The implementation of equalized odds below assumes that the ROC-curve belonging to the \texttt{fprs1} and \texttt{tprs1} values is always places above the other ROC-curve in order to save space, as the implementation is similar for having the curves overlap.
+	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
+	def EqualizedOdds(fprs1, fprs2, tprs1, tprs2, true1, true2, probs1, probs2, ...
+	                  thresholds1, thresholds2, points):
+	  # @Calculates the equalized odds predictors for two ROC-curves.@
+	  # @Parameters:@
+	  #    @\textbf{fprs1(list), tprs1(list), fprs2(list), tprs2(list):} False/true positive values for upper@
+	  #    @and lower curve respectively.@
+	  #    @\textbf{true1(list), true2(list):} The labels for the actual recidivism values.@
+	  #    @\textbf{probs1(list), probs2(list):} the probabilities for 0 or 1 recidivism given by the classifier.@
+	  #    @\textbf{thresholds1(list), thresholds2(list):} The thresholds used to construct the ROC-curves.@
+	  #    @\textbf{points(int):} The number of points used to construct the ROC-curves.@
+	  # @Returns:@
+	  #    @\textbf{accs[bestIndex](float):} Value of the best accuracy.@
+	  #    @\textbf{1-sampleThreshold(float):} The percentage of times the non-1 threshold is sampled.@
+	  #    @\textbf{thresholds1[bestIndex](float), thresholds2[bestIndex](float):} The thresholds used for@
+	  #    @the two curves.@
+	  accs = empty list of size points
+	  for pointIndex from 0 to points:
+	    # @Defining a line going through (0,0) and the desired point on the lower curve@
+	    slope = tprs2[pointIndex] / fprs2[pointIndex]
+	    def line(x):
+	      return slope * x
+	    linediff = abs(tprs1 - line(fprs1))
+	    # @Find the intersection of the line and upper curve, considering only points to the right@
+	    # @of the lower intersection@
+	    intersectionIndex = argmin(linediff[line(fprs1) > tprs2[pointIndex]])
+  	    x1 = fprs1[intersectionIndex]
+	    x2 = fprs2[pointIndex]
+	    y1 = tprs1[intersectionIndex]
+	    y2 = tprs2[pointIndex]
+		
+	    # @Define thresholds and find line lengths to sample from the thresholds@
+	    thres1 = 1.0
+	    thres2 = thresholds1[intersectionIndex]
+	    fullLength = sqrt(y1^2 + x1^2)
+	    firstLength = sqrt(y2^2 + x2^2)
+	    secondLength = fullLength - firstLength
+		
+	    sampleThreshold = firstLength / fullLength
+	    y_pred1Low = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
+	    y_pred1High = if probs1[i] > thres2[i] then 1 otherwise 0 for every value in probs1
+	    yPred1 = empty list of size probs1
+	    for i from 0 to length of yPred1:
+	      sampleValue = uniform distribution sample between 0 and 1
+	      if sampleValue > sampleThreshold:
+	        yPred1[i] = yPred1Low[i]
+	      else:
+	        yPred1[i] = yPred1High[i]
+	    yPred2 = (probs2 > thresholds2[pointIndex]
+	    yPred2 = if probs2[i] > thresholds2[i] then 1 otherwise 0 for every value in probs2
+	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2)
+	    accs[i] = acc value in this iteration
+	  bestIndex = argmax(accs)
+	  return accs[bestIndex], 1-sampleThreshold, thresholds1[bestIndex], thresholds2[bestIndex]
+	\end{lstlisting}
+	
+	\subsubsection{Equal Opportunity}
+	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
+	def EqualOpportunity(fprs1, tprs1, fprs2, tprs2, true1, true2, probs1, probs2, thresholds1, thresholds2, points):
+	  accs = empty list of size points
+	  for pointIndex from 0 to points:
+	    x2 = fprs2[pointIndex]
+	    y2 = tprs2[pointIndex]
+	    ydiff = abs(y2 - tprs1)
+	    intersectionIndex = argmin(ydiff)
+	    x1 = fprs1[intersection_idx]
+	    y1 = tprs1[intersectionIndex]
+	  
+	    x1s.append(x1)
+	    x2s.append(x2)
+	    y1s.append(y1)
+	    y2s.append(y2)
+	  
+	    thres1 = thresholds1[intersectionIndex]
+	    thres2 = thresholds2[pointIndex]
+	    yPred1 = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
+	    yPred2 = if probs2[i] > thres2[i] then 1 otherwise 0 for every value in probs2
+	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2
+	    accs[i] = acc value in this iteration
+	  bestIndex = argmax(accs)
+	  bestAcc = accs[best_idx]
+	  bestThres1 = thresholds1[best_idx]
+	  bestThres2 = thresholds2[best_idx]
+	  return bestAcc, bestThres1, bestThres2
+	  
+	\end{lstlisting}
 	
 	\begin{thebibliography}{9} \label{bibliography}
 		
