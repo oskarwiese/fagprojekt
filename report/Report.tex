@@ -14,6 +14,15 @@
 \usepackage{longtable}
 \usepackage{arydshln}
 \usepackage{subcaption}
+\usepackage{listings}
+\usepackage{pxfonts}
+\lstset{
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={def, for, return, if, else},
+	xleftmargin=-3.0cm
+}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -513,6 +522,95 @@
 		\caption{}
 		\label{fig:chargedegreescore}
 	\end{figure}
+	\subsection{Pseudo Code}
+	\subsubsection{Equalized Odds}
+	The implementation of equalized odds below assumes that the ROC-curve belonging to the \texttt{fprs1} and \texttt{tprs1} values is always places above the other ROC-curve in order to save space, as the implementation is similar for having the curves overlap.
+	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
+	def EqualizedOdds(fprs1, fprs2, tprs1, tprs2, true1, true2, probs1, probs2, ...
+	                  thresholds1, thresholds2, points):
+	  # @Calculates the equalized odds predictors for two ROC-curves.@
+	  # @Parameters:@
+	  #    @\textbf{fprs1(list), tprs1(list), fprs2(list), tprs2(list):} False/true positive values for upper@
+	  #    @and lower curve respectively.@
+	  #    @\textbf{true1(list), true2(list):} The labels for the actual recidivism values.@
+	  #    @\textbf{probs1(list), probs2(list):} the probabilities for 0 or 1 recidivism given by the classifier.@
+	  #    @\textbf{thresholds1(list), thresholds2(list):} The thresholds used to construct the ROC-curves.@
+	  #    @\textbf{points(int):} The number of points used to construct the ROC-curves.@
+	  # @Returns:@
+	  #    @\textbf{accs[bestIndex](float):} Value of the best accuracy.@
+	  #    @\textbf{1-sampleThreshold(float):} The percentage of times the non-1 threshold is sampled.@
+	  #    @\textbf{thresholds1[bestIndex](float), thresholds2[bestIndex](float):} The thresholds used for@
+	  #    @the two curves.@
+	  accs = empty list of size points
+	  for pointIndex from 0 to points:
+	    # @Defining a line going through (0,0) and the desired point on the lower curve@
+	    slope = tprs2[pointIndex] / fprs2[pointIndex]
+	    def line(x):
+	      return slope * x
+	    linediff = abs(tprs1 - line(fprs1))
+	    # @Find the intersection of the line and upper curve, considering only points to the right@
+	    # @of the lower intersection@
+	    intersectionIndex = argmin(linediff[line(fprs1) > tprs2[pointIndex]])
+  	    x1 = fprs1[intersectionIndex]
+	    x2 = fprs2[pointIndex]
+	    y1 = tprs1[intersectionIndex]
+	    y2 = tprs2[pointIndex]
+		
+	    # @Define thresholds and find line lengths to sample from the thresholds@
+	    thres1 = 1.0
+	    thres2 = thresholds1[intersectionIndex]
+	    fullLength = sqrt(y1^2 + x1^2)
+	    firstLength = sqrt(y2^2 + x2^2)
+	    secondLength = fullLength - firstLength
+		
+	    sampleThreshold = firstLength / fullLength
+	    y_pred1Low = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
+	    y_pred1High = if probs1[i] > thres2[i] then 1 otherwise 0 for every value in probs1
+	    yPred1 = empty list of size probs1
+	    for i from 0 to length of yPred1:
+	      sampleValue = uniform distribution sample between 0 and 1
+	      if sampleValue > sampleThreshold:
+	        yPred1[i] = yPred1Low[i]
+	      else:
+	        yPred1[i] = yPred1High[i]
+	    yPred2 = (probs2 > thresholds2[pointIndex]
+	    yPred2 = if probs2[i] > thresholds2[i] then 1 otherwise 0 for every value in probs2
+	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2)
+	    accs[i] = acc value in this iteration
+	  bestIndex = argmax(accs)
+	  return accs[bestIndex], 1-sampleThreshold, thresholds1[bestIndex], thresholds2[bestIndex]
+	\end{lstlisting}
+	
+	\subsubsection{Equal Opportunity}
+	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
+	def EqualOpportunity(fprs1, tprs1, fprs2, tprs2, true1, true2, probs1, probs2, thresholds1, thresholds2, points):
+	  accs = empty list of size points
+	  for pointIndex from 0 to points:
+	    x2 = fprs2[pointIndex]
+	    y2 = tprs2[pointIndex]
+	    ydiff = abs(y2 - tprs1)
+	    intersectionIndex = argmin(ydiff)
+	    x1 = fprs1[intersection_idx]
+	    y1 = tprs1[intersectionIndex]
+	  
+	    x1s.append(x1)
+	    x2s.append(x2)
+	    y1s.append(y1)
+	    y2s.append(y2)
+	  
+	    thres1 = thresholds1[intersectionIndex]
+	    thres2 = thresholds2[pointIndex]
+	    yPred1 = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
+	    yPred2 = if probs2[i] > thres2[i] then 1 otherwise 0 for every value in probs2
+	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2
+	    accs[i] = acc value in this iteration
+	  bestIndex = argmax(accs)
+	  bestAcc = accs[best_idx]
+	  bestThres1 = thresholds1[best_idx]
+	  bestThres2 = thresholds2[best_idx]
+	  return bestAcc, bestThres1, bestThres2
+	  
+	\end{lstlisting}
 	
 	\begin{thebibliography}{9} \label{bibliography}
 		
