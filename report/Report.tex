@@ -383,7 +383,7 @@
 	
 	In order to make the results as reproducible as possible, the data as well as the way the data was obtained also plays a big role. The way the data was obtained can be seen described in detail in section \ref{dataDescription}. The data comes from the GitHub repository \url{https://github.com/propublica/compas-analysis}, from which the dataset \texttt{compas-scores-two-years.csv} was used as the only dataset for the project. \\
 	
-	\noindent Below, a thorough walkthrough of the most essential parts of the code will be made. To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to easily structurize the data. Several plots of this data were then made using the Seaborn plot library. The code for this can be found in the \texttt{Data Visualization} cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the \texttt{Neural Network} cell in the notebook. The binary classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then performed to show that the acquired accuracy was adequately better than random. The classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the \texttt{Classification} function at the top of the notebook. The next goal was to implement equalized odds and equal opportunity using these conditional ROC-curves. The code for this is located in the \texttt{BiasCorrection} function. The implementation of both equal opportunity and equalized odds is explained both by reading the code and by the pseudo code, which has been supplied in the appendix.
+	\noindent Below, a thorough walkthrough of the most essential parts of the code will be made. To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to easily structurize the data. Several plots of this data were then made using the Seaborn plot library. The code for this can be found in the \texttt{Data Visualization} cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the \texttt{Neural Network} cell in the notebook. The binary classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then performed to show that the acquired accuracy was adequately better than random. The classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the \texttt{Classification} function at the top of the notebook. The next goal was to implement equalized odds and equal opportunity using these conditional ROC-curves. The code for this is located in the \texttt{BiasCorrection} function. The implementation of both equal opportunity and equalized odds is explained both by reading the code and by the pseudo code, which has been supplied in the appendix section \ref{Pseudo Equalized} and \ref{Pseudo Equal}.
 	
 % Forklaring af implementation af equalized odds
 %	For each point on the boundary of the intersection of the convex hulls for each of the conditional distributions, the true postive and false postive rate were found. From the point on the boundary, a line was drawn between this point and the point (0,0). The slope is found using $ m=\frac{\Delta y}{\Delta x} $. Then, the intersection between the upper curve and the line was determined. The distance from (0,0) to the point on the lower curve was found and divided by the length from (0,0) to the point of the upper curve. The distance between the point on the lower curve and the intersection of the line and the upper curve is determined as well and divided by the length from (0,0) to the intersection of the line and the upper curve. This will result in two values, which are referred to as $ \bar p_a $ and $ \underline p_a $ in section \ref{optimalboi}. These are values between zero and one which will sum to one, and decides the proportion of sampling from the randomized predictor. This was done for each point on the upper left boundary of the intersection between the convex hull of the two conditional ROC-curves.
@@ -544,8 +544,8 @@
 		\label{fig:chargedegreescore}
 	\end{figure}
 	\subsection{Pseudo Code}
-	\subsubsection{Equalized Odds}
-	The implementation of equalized odds below assumes that the ROC-curve belonging to the \texttt{fprs1} and \texttt{tprs1} values is always places above the other ROC-curve in order to save space, as the implementation is similar for having the curves overlap.
+	\subsubsection{Equalized Odds}\label{Pseudo Equalized}
+	The implementation of equalized odds below assumes that the ROC-curve belonging to the \texttt{fprs1} and \texttt{tprs1} values is always places above the other ROC-curve in order to save space, as the implementation is similar for having the curves overlap. The \texttt{accuracy\_score} function used in this implementation is the function from \texttt{sklearn.metrics}. The documentation can be seen here: \url{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html}.
 	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
 	def EqualizedOdds(fprs1, fprs2, tprs1, tprs2, true1, true2, probs1, probs2, ...
 	                  thresholds1, thresholds2, points):
@@ -602,9 +602,23 @@
 	  return accs[bestIndex], 1-sampleThreshold, thresholds1[bestIndex], thresholds2[bestIndex]
 	\end{lstlisting}
 	
-	\subsubsection{Equal Opportunity}
+	\subsubsection{Equal Opportunity}\label{Pseudo Equal}
+	The \texttt{accuracy\_score} function used in this implementation is the function from \texttt{sklearn.metrics}. The documentation can be seen here: \url{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html}.
 	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
-	def EqualOpportunity(fprs1, tprs1, fprs2, tprs2, true1, true2, probs1, probs2, thresholds1, thresholds2, points):
+	def EqualOpportunity(fprs1, tprs1, fprs2, tprs2, true1, true2, probs1, probs2, ...
+	                     thresholds1, thresholds2, points):
+	  # @Calculates the equal opportunity predictors for two ROC-curves.@
+  	  # @Parameters:@
+	  #    @\textbf{fprs1(list), tprs1(list), fprs2(list), tprs2(list):} False/true positive values for upper@
+	  #    @and lower curve respectively.@
+	  #    @\textbf{true1(list), true2(list):} The labels for the actual recidivism values.@
+	  #    @\textbf{probs1(list), probs2(list):} the probabilities for 0 or 1 recidivism given by the classifier.@
+	  #    @\textbf{thresholds1(list), thresholds2(list):} The thresholds used to construct the ROC-curves.@
+	  #    @\textbf{points(int):} The number of points used to construct the ROC-curves.@
+	  # @Returns:@
+	  #    @\textbf{bestAcc(float):} Value of the best accuracy.@
+	  #    @\textbf{bestThres1(float):} Value of the threshold for the upper curve with highest accuracy.@
+	  #    @\textbf{bestThres2(float):} Value of the threshold for the lower curve with highest accuracy.@
 	  accs = empty list of size points
 	  for pointIndex from 0 to points:
 	    x2 = fprs2[pointIndex]
