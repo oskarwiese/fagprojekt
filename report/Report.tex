@@ -534,6 +534,10 @@
 	\subsubsection{Who does bias affect and why do we care about fairness?}
 	As mentioned in section \ref{rootofbias} all humans are affected by bias. However, when considering the the question of who it affect, it refers to the protected groups. This is minority groups in society and undiscovered biases can have major impacts as machine learning plays a greater role in the every day life of humans. For instance its important to ensure that the opportunity of getting a loan is equal for all genders and races. Using historical data from the past to train machine learning models to determine the probability of a person getting a loan can lead to sexist and racist models that reject women or African-Americans when they apply for a loan in the bank. This problem stems from racist and sexist behavior of human beings in the past and therefore this study calls for the importance of acknowledging biased human behavior. Machine learning models are often viewed as objective whereas this often can be misleading. The results found in this study confirms the opposite, which proves that a model inherent bias from the data used to train the model. Machine learning models are implemented in several areas of society including self driving cars, healthcare industry, public safety, retail sector and more.Thus, ensuring fairness in machine learning models is important to make the decision of all models comply with the declaration of human rights (The declaration of human rights can be found at \url{https://www.un.org/en/universal-declaration-human-rights/}).
 	
+	\subsection{Examination of fairness definitions}
+	The fairness definitions that have been implemented in this project can be seen in section \ref{bias_def}. These are definitions which are proposed by Mortiz Hardt et al. and this section will thoroughly discuss these. Equality of opportunity states, that the true positive rate for all groups has to be equal. Consider a hiring algorithm designed to pick the best applicants for a certain job (a real life example of this is Amazon which tried to create a job hiring algorithm, see an article by \href{https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G}{Reuters} for more information if desired.). If there are two groups, A \& B, of applicants which both consists of 100 people each. Furthermore, if $ 58 $ people in group A are qualified for the job whereas $ 2 $ people in group B are qualified for the job, and both groups apply for the job. Then, equalized odds states if $ 30 $ people are to be hired then $ 29 $ people from group A should be hired whereas $ 1 $ from group B should be hired, in order for the algorithm to ensure equal opportunity. \cite{towardsdata} If this was a high end job at Google, then group A would have a higher living standard than B. Group A would afford better education for their children, more expensive houses or apartments and so on. This leads to the algorithm, which according to Hardt ensures fairness, to create a larger gap between to possible groups in society. One could then ask if creating a larger gap between groups, resulting in a society with a superior elite, is in any means a way to create fair machine learning models. \newline
+	\\
+	\noindent 
 	
 	\subsection{Avoidance of responsibility}
 	
@@ -709,6 +713,9 @@
 		\bibitem{cog_bias} Žeželj, I., \& Lazarević, L. B.  Irrational Beliefs. Europe’s Journal of Psychology, 15(1), 1-7 2019.
 		
 		\bibitem{reisberg} D. Reisberg Cognition chapter 12 - Judgement and Reasioning, sixth edition (2015)
+		
+		\bibitem{towardsdata} Ziyuan Zhong, "A Tutorial on Fairness in Machine Learning" 2018, \url{https://towardsdatascience.com/a-tutorial-on-fairness-in-machine-learning-3ff8ba1040cb}, visited at 08-06-2020
+		
 	\end{thebibliography}
 	
 	
