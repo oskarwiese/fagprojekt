@@ -403,7 +403,7 @@
 		\label{fig:losscurve}
 	\end{figure}
 	
-	\subsection{Validation of Model Accuracy}
+	\subsection{Validation of Model Accuracy}\label{modelAccuracy}
 	
 	\begin{figure}[H]
 		\centering
@@ -411,9 +411,8 @@
 		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies seem to follow and the blue dashed line is the accuracy of the model on the original non-permuted data. The standard deviation and mean represents the normal distribution which the permutations form.}
 		\label{fig:permtest}
 	\end{figure}\noindent
-	From figure \ref{fig:permtest} it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data. Since there are no permutations larger than the observed value, this would result in a p-value of 0, which is nonsensical. Thus, the p-value can instead be estimated by \cite{p-value}
-	\[p=\frac{1}{M}=0.001,\]
-	which is definitely significant. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. 
+	Since the p-value cannot be 0, it is estimated by \cite{p-value}
+	\[p-value=\frac{1}{M}=0.001.\]
 	
 	\subsection{Confusion Matrices}
 	
@@ -453,7 +452,7 @@
 			\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN. It is clear from the two confusion matrices that the proportion of FN for Afro-Americans are notably larger than the proportion of FN for Caucasians. Furthermore, the proportion of FP for Caucasians are vastly larger than the FP for Afro-Americans.}
+		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN.}
 	\end{figure*}
 	
 	\subsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}
@@ -514,7 +513,9 @@
 	
 	
 	\subsection{Discussion of results}
-	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From the figure \ref{fig:losscurve}, it is clear that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also clear that the training loss has not started rising after reaching a minimum value, so the network has not started overfitting the training data. This means that the validation accuracy will be higher after training than if the model had overfit the training data.
+	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From the figure \ref{fig:losscurve}, it is clear that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also clear that the training loss has not started rising after reaching a minimum value, so the network has not started overfitting the training data. This means that the validation accuracy will be higher after training than if the model had overfit the training data. It is also clear that the validation accuracy is lower than the training data, which is to be expected, since the model was trained to maximize success on the training and test data. \\
+	From figure \ref{fig:permtest}, it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data, which is clear, since there are no permutations larger than the observed value. From the estimation of the p-value in \ref{modelAccuracy}, it is obvious that the p-value is far under the significance value. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. This also means that the model is better than a random model (that e.g. only guesses on the largest class), so the classifier could have practical use. the accuracy of 68\% on the validation set also lines up quite well with the accuracies fround in ProPublica's analysis of the COMPAS recidivism algorithm. They found that their predictive accuracy for Caucasian and African-American defendants were 62.5\% and 62.3\% respectively, while Northpointe found accuracies of 69\% and 67\% for Caucasian and African-American defendants respectively. \cite{propublicaAnalysis} \\
+	It is clear from the two normalized confusion matrices for Caucasian and African-American defendants that Caucasian defendants have almost a twice as large false positive value, while the same is true for the false negative values for African-American defendants. This signifies that the binary classifier more often labels Caucasians as not being at risk of recidivism even though they were at risk, while African-Americans are more often labeled as being at risk of recidivism when they were not truly at risk. This distinctly shows that the original bias that seemed to be present in the data when plotting the recidivism scores for Caucasian and African-Americans, shown in section \ref{dataVisuals} and figure \ref{fig:predictedrecidrace}, has been transferred to the model as well. This shows that care needs to be taken to avoid biased datasets or to implement the necessary steps like bias correction methods to avoid bias in the model before or after training. Meanwhile though, care needs to be taken when dealing with bias removal, as it is also necessary to prove that the bias is unjustified in the data. This was attempted proven in this project using \ref{fig:truerecid}, which shows that the discrepancy in amounts of Caucasian and African-American defendants is not as large as would be expected from figure \ref{fig:predictedrecidrace}.
 	
 	\subsection{Ethical dilemma of bias}
 	
