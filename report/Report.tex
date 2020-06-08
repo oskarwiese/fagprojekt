@@ -549,6 +549,7 @@
 	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
 	def EqualizedOdds(fprs1, fprs2, tprs1, tprs2, true1, true2, probs1, probs2, ...
 	                  thresholds1, thresholds2, points):
+	                  
 	  # @Calculates the equalized odds predictors for two ROC-curves.@
 	  # @Parameters:@
 	  #    @\textbf{fprs1(list), tprs1(list), fprs2(list), tprs2(list):} False/true positive values for upper@
@@ -558,11 +559,13 @@
 	  #    @\textbf{thresholds1(list), thresholds2(list):} The thresholds used to construct the ROC-curves.@
 	  #    @\textbf{points(int):} The number of points used to construct the ROC-curves.@
 	  # @Returns:@
-	  #    @\textbf{accs[bestIndex](float):} Value of the best accuracy.@
-	  #    @\textbf{1-sampleThreshold(float):} The percentage of times the non-1 threshold is sampled.@
-	  #    @\textbf{thresholds1[bestIndex](float), thresholds2[bestIndex](float):} The thresholds used for@
+	  #    @\textbf{bestAcc(float):} Value of the best accuracy.@
+	  #    @\textbf{percentage(float):} The percentage of times the non-1 threshold is sampled.@
+	  #    @\textbf{bestThreshold1(float), bestThreshold2(float):} The thresholds used for@
 	  #    @the two curves.@
+	  
 	  accs = empty list of size points
+	  thresholdOrder = empty list of size points
 	  for pointIndex from 0 to points:
 	    # @Defining a line going through (0,0) and the desired point on the lower curve@
 	    slope = tprs2[pointIndex] / fprs2[pointIndex]
@@ -580,13 +583,14 @@
 	    # @Define thresholds and find line lengths to sample from the thresholds@
 	    thres1 = 1.0
 	    thres2 = thresholds1[intersectionIndex]
+	    thresholdOrder[pointIndex] = thres2
 	    fullLength = sqrt(y1^2 + x1^2)
 	    firstLength = sqrt(y2^2 + x2^2)
 	    secondLength = fullLength - firstLength
 		
 	    sampleThreshold = firstLength / fullLength
-	    y_pred1Low = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
-	    y_pred1High = if probs1[i] > thres2[i] then 1 otherwise 0 for every value in probs1
+	    yPred1Low = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
+	    yPred1High = if probs1[i] > thres2[i] then 1 otherwise 0 for every value in probs1
 	    yPred1 = empty list of size probs1
 	    for i from 0 to length of yPred1:
 	      sampleValue = uniform distribution sample between 0 and 1
@@ -594,12 +598,15 @@
 	        yPred1[i] = yPred1Low[i]
 	      else:
 	        yPred1[i] = yPred1High[i]
-	    yPred2 = (probs2 > thresholds2[pointIndex]
 	    yPred2 = if probs2[i] > thresholds2[i] then 1 otherwise 0 for every value in probs2
 	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2)
-	    accs[i] = acc value in this iteration
+	    accs[i] = acc
 	  bestIndex = argmax(accs)
-	  return accs[bestIndex], 1-sampleThreshold, thresholds1[bestIndex], thresholds2[bestIndex]
+	  bestAcc = accs[bestIndex]
+	  percentage = 1-sampleThreshold
+	  bestThreshold1 = thresholds1[bestIndex]
+	  bestThreshold2 = thresholdOrder[bestIndex]
+	  return bestAcc, percentage, bestThreshold1, bestThreshold2
 	\end{lstlisting}
 	
 	\subsubsection{Equal Opportunity}\label{Pseudo Equal}
@@ -607,6 +614,7 @@
 	\begin{lstlisting}[escapechar=@,escapebegin=\itshape]
 	def EqualOpportunity(fprs1, tprs1, fprs2, tprs2, true1, true2, probs1, probs2, ...
 	                     thresholds1, thresholds2, points):
+	                     
 	  # @Calculates the equal opportunity predictors for two ROC-curves.@
   	  # @Parameters:@
 	  #    @\textbf{fprs1(list), tprs1(list), fprs2(list), tprs2(list):} False/true positive values for upper@
@@ -619,7 +627,9 @@
 	  #    @\textbf{bestAcc(float):} Value of the best accuracy.@
 	  #    @\textbf{bestThres1(float):} Value of the threshold for the upper curve with highest accuracy.@
 	  #    @\textbf{bestThres2(float):} Value of the threshold for the lower curve with highest accuracy.@
+	  
 	  accs = empty list of size points
+	  thresholdOrder = empty list of size points
 	  for pointIndex from 0 to points:
 	    x2 = fprs2[pointIndex]
 	    y2 = tprs2[pointIndex]
@@ -628,21 +638,17 @@
 	    x1 = fprs1[intersection_idx]
 	    y1 = tprs1[intersectionIndex]
 	  
-	    x1s.append(x1)
-	    x2s.append(x2)
-	    y1s.append(y1)
-	    y2s.append(y2)
-	  
 	    thres1 = thresholds1[intersectionIndex]
+	    thresholdOrder[pointIndex] = thres1
 	    thres2 = thresholds2[pointIndex]
 	    yPred1 = if probs1[i] > thres1[i] then 1 otherwise 0 for every value in probs1
 	    yPred2 = if probs2[i] > thres2[i] then 1 otherwise 0 for every value in probs2
 	    acc = accuracy_score(true1, yPred1) + accuracy_score(true2, yPred2)) / 2
-	    accs[i] = acc value in this iteration
+	    accs[pointIndex] = acc
 	  bestIndex = argmax(accs)
-	  bestAcc = accs[best_idx]
-	  bestThres1 = thresholds1[best_idx]
-	  bestThres2 = thresholds2[best_idx]
+	  bestAcc = accs[bestIndex]
+	  bestThres1 = thresholdOrder[bestIndex]
+	  bestThres2 = thresholds2[bestIndex]
 	  return bestAcc, bestThres1, bestThres2
 	  
 	\end{lstlisting}
