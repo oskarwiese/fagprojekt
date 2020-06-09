@@ -562,14 +562,9 @@
 	
 	As can be understood from section \ref{confusionMatrices}, the bias that is suspected to exist in the data rears it head in the binary classifier too, further signifying the actual existence of this bias. The fact that the classifier is biased is shown by comparing the false negative and false positive values of these confusion matrices, as this signifies that the model is attempting to place more Caucasians in the positve class and more African-Americans in the negative class, which is a biased viewpoint, since neither the Caucasians or the African-Americans in the false positive and false negative actually belong there. Meanwhile, the true positive and true negative values do not express bias, as this is the actually recidivism pattern seen in the data. Looking at the conditional ROC-curves and false/true positive rate dependencies on threshold from figure \ref{fig:roc-curve}, the model is also shown to be biased, since the same threshold for the two protected groups yield widely differing true positive and false positive rates. Thus, another way to find bias in the algorithm is to show the ROC-curves of each protected group.
 	
+	As can be seen in figure \ref{fig:equal-opportunity-optimal} and \ref{fig:equalizedOdds}, equal opportunity and equalized odds have been implemented to great success. The accuracy is still high and African-Americans are now no longer getting discriminated upon by the binary classifier, since the bias correction methods have ensured equal true or true and false positive rates. As such, African-Americans are now equally as often as Caucasians given the label of low or high risk of recidivism. This change was made with little penalty made to the accuracy, as equal opportunity resulted in a drop in accuracy of 0.5\% and equalized odds resulted in a 1.5\% drop in accuracy. As such, for this project, it is definitly worth it to make the model less biased for such a small decrease in accuracy. 
 	
-	
-	\begin{enumerate}
-		\item Understand and implement a bias-correction method from the paper "Equality of Opportunity in Supervised Learning". 
-		%	\begin{itemize}
-		%		\item[i)] If time allows for it, other bias correction methods will be taken into consideration and evaluated.
-		%	\end{itemize}
-		
+	\begin{enumerate}	
 		\item Which applications can bias-correction algorithms as well as AI-models have in society? And how can society gain trust in these models? 
 	\end{enumerate}
 	
