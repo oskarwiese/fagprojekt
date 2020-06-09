@@ -551,7 +551,9 @@
 	
 	
 	\subsection{Trade-off between accuracy and fairness}
+	Normally, when correcting for bias in a binary classifier, the accuracy will take a hit to some extent. This happens because the optimal predictor from both of the groups will probably not be chosen when the true or true and false positive rates have to be equal. This also has to be true because two classifiers are forced to have the same false and true positive rates, which means that the accuracy will be the same over all protected groups, so the lower of the accuracies will be fixed as the accuracy for both of the protected attributes. This is not true in the same sense in equal opportunity, as this methods chooses the values with the same true positive rate only. As such, it is possible for the upper of the two curves to utilize the better accuracy, which still ensuring some bias correction. As such, only a slight loss of accuracy will be observed. \cite{equal_of_oppor} This can be seen in our project from section \ref{equalOpportunity} and section \ref{equalizedOdds} from figures \ref{fig:equal-opportunity-optimal} and \ref{fig:equalizedOdds}. The accuracy difference of these methods has also been described in section \ref{discussionOfResults}. Here, it is clear that the difference in accuracy between the biased model and equalized odds-corrected model is larger than between the biased model and equal opportunity-corrected model, as is to be expected. In the case of this project though, the differences in accuracies of 0.5\% and 1.4\% is still more than low enough for the bias correction to be worth it, as the non-discrimination also makes the model more accurate for practical use in return.
 	
+	To better quantify the differences in accuracy between a binary classifier and a random classifier as well as finding the true discrimination of a model, Indrė Žliobaitė proposes that the accuracy difference can be found using Cohen's Kappa, which normalizes the accuracy of the model based on the value of the random classifier accuracy. He also proposes normalizing the discrimination (which, in this case, is defined as the difference between true positives in the protected groups) by the highest discrimination value over all thresholds, as this ensures that the discrimination reaches a maximum if the binary classifier first accepts everyone from the favored protected attribute and only then starts accepting individuals from the non-favored attribute. This finding could make sense to look into for further work into this project, as the true model difference from a baseline or random model would have significance, when attempting to communicate the effectiveness of the model. \cite{bias-accuracy}
 	
 	
 	\section{Conclusion} \label{conclusion}
@@ -717,6 +719,8 @@
 		\bibitem{reisberg} D. Reisberg Cognition chapter 12 - Judgement and Reasioning, sixth edition (2015)
 		
 		\bibitem{towardsdata} Ziyuan Zhong, "A Tutorial on Fairness in Machine Learning" 2018, \url{https://towardsdatascience.com/a-tutorial-on-fairness-in-machine-learning-3ff8ba1040cb}, visited at 08-06-2020
+		
+		\bibitem{bias-accuracy} Indre Zliobaite. On the relation between accuracy and fairness in binary classification. CoRR, abs/1505.05723, 2015.
 		
 	\end{thebibliography}
 	
