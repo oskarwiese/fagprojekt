@@ -536,6 +536,8 @@
 	\section{Discussion} \label{discussion}
 	%\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
+	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. 
+	
 	\subsection{Discussion of results}\label{discussionOfResults}
 	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From figure \ref{fig:losscurve}, it becomes apparent that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also important to be aware of overfitting, so it is important to not just focus on getting a loss that is as low as possible. Reducing overfitting means that the validation accuracy will be higher after training than if the model had overfit the training data. Training for more than 400 epochs reduces validation accuracy, probably exactly because the model starts to overfit, so 400 epochs has been chosen, as this gives the best possible accuracy. It an also be seen that the validation accuracy is lower than the training accuracy, which is to be expected, since the model was trained to maximize success on the training and test data.
 	
