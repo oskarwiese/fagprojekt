@@ -415,6 +415,8 @@
 	\section{Results}\label{results}
 	%\textbf{TODO \\ dokumentér reproducerbarheden af resultaterne \\ tabeller og figurer over resultater \\ forklar resultaterne endten i diskussion eller resultater.}
 	
+	%TODO: Lav standardafvigelse på plots
+	
 	This section will focus on the results of the analyses and give an indication of how to read the illustrations and explain the significance of each illustration. To see the discussion of these results and how the results are obtained or can be improved see section \ref{discussion}. Section \ref{training_loss_and_accuracy} shows the training loss and training accuracy as well as the validation accuracy of the neural network after training. The result of the permutation test can be seen in section \ref{modelAccuracy}. Section \ref{confusionMatrices} shows the bias in the neural network after training on possibly biased data using confusion matrices. As another way to both check and correct bias is to use ROC-curves. These are shown for Caucasians and African-Americans in \ref{ROC}, after which equal opportunity and equalized odds have been implemented and shown in sections \ref{equalOpportunity} \& \ref{equalizedOdds}.
 	
 	\subsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
@@ -536,7 +538,7 @@
 	\section{Discussion} \label{discussion}
 	%\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
-	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. 
+	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. Section \ref{tradeoff} also uses the results but instead sets the focus on uncovering how the accuracy dwindles when using bias correction methods to avoid discrimination of a bias classification model. In section \ref{}
 	
 	\subsection{Discussion of results}\label{discussionOfResults}
 	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From figure \ref{fig:losscurve}, it becomes apparent that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also important to be aware of overfitting, so it is important to not just focus on getting a loss that is as low as possible. Reducing overfitting means that the validation accuracy will be higher after training than if the model had overfit the training data. Training for more than 400 epochs reduces validation accuracy, probably exactly because the model starts to overfit, so 400 epochs has been chosen, as this gives the best possible accuracy. It an also be seen that the validation accuracy is lower than the training accuracy, which is to be expected, since the model was trained to maximize success on the training and test data.
