@@ -288,22 +288,24 @@
 	BCL punishes the algorithm if the predicted value is far from the label. I.e. if the classifier predicts 0.09 and the label is 1, it would result in a very high loss. The ideal model would have a binary cross-entropy loss of zero. \cite {dl} The result is a FFNN with one output node where a threshold can be set to manipulate how the network will classify an input \textbf{x}. This will be elaborated upon further in section \ref{biascorr}.
 
 	\subsection{Standard deviation of the obtained accuracy}
-	To obtain a standard deviation of the model accuracy ten different folds of the dataset were constructed. This was done by splitting the data into ten equal sized arrays and combining these into ten different train test splits. Here is an iluustration of a 5-fold split, 
+	To obtain a standard deviation of the model accuracy ten different folds of the dataset were constructed. This was done by splitting the data into ten equal sized arrays and combining these into ten different train test splits. Here is an illustration of a 54-fold split, 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.4\linewidth]{imgs/kfolds}
-		\caption{Illustrates how the data was split into folds. Image found at \href{https://www.researchgate.net/figure/The-technique-of-KFold-cross-validation-illustrated-here-for-the-case-K-4-involves_fig10_278826818}{ResearchGate} \cite{researchgate}. }
+		\caption{Illustrates how the data was split into folds. It is clear from the illustration that the models obtained are trained and tested on different data. Image found at \href{https://www.researchgate.net/figure/The-technique-of-KFold-cross-validation-illustrated-here-for-the-case-K-4-involves_fig10_278826818}{ResearchGate} \cite{researchgate}. }
 		\label{fig:kfolds}
 	\end{figure}
-	
+	\noindent
 	This result in ten models with different accuracies and training/test data which allows for a value of the mean and standard deviation to be obtained.
 	
 	\subsection{Permutation test}
 	To identify both whether or not the dataset is biased, and if the accuracy of the FFNN is statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier. If the newly acquired accuracy from the permuted data is different from the non-permuted accuracy, this could possibly mean that the classifier is biased. To phrase differently, if the classifier has a tendency to classify Afro-Americans as medium/high risk, a permuted race variable would yield a lower accuracy than the non-permuted data. However, it might just be the reality that all Afro-Americans have a higher chance of recidivism than Caucasians people. Thus, further investigations have to be performed to prove the existence of actual bias in an algorithm. \\\\
 	Permutation tests can also be used to validate whether an accuracy from a model is statistically significant. When the model is trained on the COMPAS dataset with supervised learning and a validation accuracy has been obtained, it is important to know if the model performs better than random, which can be evaluated using a permutation test. A null hypothesis $H_{0}$, stating that the observed value comes from the distribution of randomized permutations, is set up and evaluated. To attempt to reject the null hypothesis, each input variable was shuffled randomly and the model was evaluated on the randomized data. This was done one thousand times and the accuracy from each of the permutations was compared to the original accuracy from the model that was trained on the non-permuted validation dataset. The thousand accuracies will form the distribution of random accuracies and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under desired level of significance, chosen to be equal to $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. This is intuitively equivalent to the accuracy being significantly far away from this distribution. 
 	 This can be evaluated using the \textit{p}-value. For a permutation test, the \textit{p}-value is calculated using the following expression,
-	\[p=\frac{B}{M},\]
+	\begin{equation}\label{pval}
+	p=\frac{B+1}{M}
+	\end{equation}
 	where \textit{B} is the number of extreme permutations (where extreme permutations are permutations with accuracies greater than or equal to the observed accuracy) and \textit{M} is the total number of permutations. \cite{p-value}
 	
 %	As for feature selection every feature was randomly shuffled with re-sampling. If the outputs remained unchanged regardless of the permutation the feature was dropped. Every feature is permuted 1000 times.\\\\
@@ -428,7 +430,7 @@
 		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies seem to follow and the blue dashed line is the accuracy of the model on the original non-permuted data. The standard deviation and mean represents the normal distribution which the permutations form.}
 		\label{fig:permtest}
 	\end{figure}\noindent
-	Since the p-value cannot be 0, it is estimated by \cite{p-value}
+	From figure \ref{fig:permtest} no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
 	\[p=\frac{1}{M}=0.001.\]
 	
 	\subsection{Confusion Matrices}\label{confusionMatrices}
