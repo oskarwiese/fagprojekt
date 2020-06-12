@@ -538,7 +538,7 @@
 	\section{Discussion} \label{discussion}
 	%\textbf{TODO: \\ etisk diskussion omkring teknologien der er arbejdet med}
 	
-	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. Section \ref{tradeoff} also uses the results but instead sets the focus on uncovering how the accuracy dwindles when using bias correction methods to avoid discrimination of a bias classification model. In section \ref{ethical_dilemma_of_bias}, origins of bias and different cognitive biases will be discussed and the victims of bias will be uncovered. The definitions of fairness for machine learning will be looked into further in section \ref{examination_of_fairness_definitions} and section \ref{why_do_we_care} discusses why bias is even an important topic to discuss to begin with.
+	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. Section \ref{tradeoff} also uses the results but instead sets the focus on uncovering how the accuracy dwindles when using bias correction methods to avoid discrimination of a bias classification model. In section \ref{ethical_dilemma_of_bias}, origins of bias and different cognitive biases will be discussed and the victims of bias will be uncovered. The definitions of fairness for machine learning will be looked into further in section \ref{examination_of_fairness_definitions}. Section \ref{why_do_we_care} discusses why bias is even an important topic to discuss to begin with. Lastly, section \ref{safeai} will discuss the principles of safe AI.
 	
 	\subsection{Discussion of results}\label{discussionOfResults}
 	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From figure \ref{fig:losscurve}, it becomes apparent that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also important to be aware of overfitting, so it is important to not just focus on getting a loss that is as low as possible. Reducing overfitting means that the validation accuracy will be higher after training than if the model had overfit the training data. Training for more than 400 epochs reduces validation accuracy, probably exactly because the model starts to overfit, so 400 epochs has been chosen, as this gives the best possible accuracy. It an also be seen that the validation accuracy is lower than the training accuracy, which is to be expected, since the model was trained to maximize success on the training and test data.
@@ -581,8 +581,23 @@
 	%\subsection{The value alignment problem}
 	
 	
-	\subsection{Safe AI}
+	\subsection{Safe AI}\label{safeai}
+	It is important for society to gain trust in machine learning models and artificial intelligence. Steps in order to ensure this trust has already been taken. The Ministry of Foreign Affairs of Denmark has with the cooperation of the research enviroment taken steps in order to ensure that any future development and use of AI live up to democratic values and control mechanisms.If there is no trust in the machine learning industry from society there will be no personal data available. Without the availability of personal data that companies, such as google has, no AI models or machine learning models can be developed. And without AI - no personal services will be available. The aim is to make sure consumers and companies who interact with AI services and products developed in Denmark are able to trust, that they live up to the highest ethical standards. \cite{larsk} Professor Lars Kai Hansen, has produced a list of principles, which ensures safe AI. These are the following, 
 	
+	\begin{figure*}[h]
+	\centering
+	Safe AI = secure - test og verified software and hardwate, adversarials\\
+	Safe AI = open source - methods, code, hardware, check and evolution \\
+	Safe AI = self-conscious - understand own role \\
+	Safe AI = can keep a scret - privacy by design \\
+	Safe AI = has calibrated values - debug for stereotupes, biases \\
+	Safe AI = is accountablee - transparent, communicating, "right to explanation" \\
+	Safe AI = understands social relations - understands user's knowledge graph \\
+	Safe AI = understands power - digital self-defense \\
+	Safe AI = generates trust
+	\\
+	\end{figure*} \noindent
+	One of these principles revolves around the model having calibrated values. Which corresponds to the model being debugged for stereotypes and bias. Furthermore, the model needs to understand emotions. This is merely an example of a step in the right direction which calls for more studies to define bias notions and to invent methods to calibrate for the biases. This project confirms that the current methods are not sufficient and more sophisticated and fair methods needs to be made. A list of principles will not ensure fairness in machine learning models but shedding light on the current issues within machine learning however will inspire more studies to be done on the topic.
 	
 
 	
@@ -764,6 +779,8 @@
 		\bibitem{superint} Nick Bostrom, "Superintelligence" Oxford University Press, 29-03-2016
 		
 		\bibitem{researchgate} F. Pedregosa, "Feature extraction and supervised learning on fMRI: from practice to theory", 2015, \url{https://www.researchgate.net/figure/The-technique-of-KFold-cross-validation-illustrated-here-for-the-case-K-4-involves_fig10_278826818}, visited 11-06-2020
+		
+		\bibitem{larsk} Ministry of Foreign Affairs of Denmark, "Denmark Paves the Way for the Implementation of Trust by Design", 25.03.2019, \url{https://investindk.com/insights/denmark-paves-the-way-for-implementation-of-trust-by-design}, visited 12-06-2020
 		
 	\end{thebibliography}
 	
