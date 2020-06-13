@@ -424,7 +424,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/loss_curve.png}
-		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs.  The validation accuracy obtained is $ 68.05 \% \pm 0.014 \%$ (the green dashed line).}
+		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs. The validation accuracy obtained is $ 68.05\%$ which is shown as the green line and the green area is the standard deviation of the accuracy $0.018\% \pm 68.05\%$.}
 		\label{fig:losscurve}
 	\end{figure}
 	
@@ -433,7 +433,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies seem to follow and the blue dashed line is the accuracy of the model on the original non-permuted data. The standard deviation and mean represents the normal distribution which the permutations form.}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows and the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form.}
 		\label{fig:permtest}
 	\end{figure}\noindent
 	From figure \ref{fig:permtest} no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
@@ -541,9 +541,9 @@
 	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. Section \ref{tradeoff} also uses the results but instead sets the focus on uncovering how the accuracy dwindles when using bias correction methods to avoid discrimination of a bias classification model. In section \ref{ethical_dilemma_of_bias}, origins of bias and different cognitive biases will be discussed and the victims of bias will be uncovered. The definitions of fairness for machine learning will be looked into further in section \ref{examination_of_fairness_definitions}. Section \ref{why_do_we_care} discusses why bias is even an important topic to discuss to begin with. Lastly, section \ref{safeai} will discuss the principles of safe AI.
 	
 	\subsection{Discussion of results}\label{discussionOfResults}
-	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From figure \ref{fig:losscurve}, it becomes apparent that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also important to be aware of overfitting, so it is important to not just focus on getting a loss that is as low as possible. Reducing overfitting means that the validation accuracy will be higher after training than if the model had overfit the training data. Training for more than 400 epochs reduces validation accuracy, probably exactly because the model starts to overfit, so 400 epochs has been chosen, as this gives the best possible accuracy. It an also be seen that the validation accuracy is lower than the training accuracy, which is to be expected, since the model was trained to maximize success on the training and test data.
+	This section will focus on the efficacy and reliability of the results of the project, given in section \ref{results}. From figure \ref{fig:losscurve}, it becomes apparent that 400 epochs seems to let the binary classifier train to near completion, since the value of the binary cross-entroy training loss could still get slightly lower. Meanwhile, it is also important to be aware of overfitting, so it is important to not just focus on getting a loss that is as low as possible. Reducing overfitting means that the validation accuracy will be higher after training than if the model had overfit the training data. Training for more than 400 epochs reduces validation accuracy, probably exactly because the model starts to overfit, so 400 epochs has been chosen, as this gives the best possible accuracy. It an also be seen that the validation accuracy is lower than the training accuracy, which is to be expected, since the model was trained to maximize success on the training and test data. The low standard deviation of the accuracy shows that the accuracy should lie within $68.05\% \pm 0.018\%$ around $68\%$ of the time, assuming the distribution of the accuracies is Gaussian. As such, it shold be pretty easy to replicate or reproduce the result.
 	
-	From figure \ref{fig:permtest}, it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data, which is evident, since there are no permutations larger than the observed value. From the estimation of the \textit{p}-value in \ref{modelAccuracy}, it is obvious that the \textit{p}-value is far under the desired level of significance. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. This also means that the model is better than a random model (that e.g. only guesses on the largest class), so the classifier could have practical use. the accuracy of 68\% on the validation set also lines up quite well with the accuracies fround in ProPublica's analysis of the COMPAS recidivism algorithm. They found that their predictive accuracy for Caucasian and African-American defendants were 62.5\% and 62.3\% respectively, while Northpointe found accuracies of 69\% and 67\% for Caucasian and African-American defendants respectively. \cite{propublicaAnalysis}
+	From figure \ref{fig:permtest}, it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data, which is evident, since there are no permutations larger than the observed value or even the lower bound of the accuracy minus one standard deviation. From the estimation of the \textit{p}-value in \ref{modelAccuracy}, it is obvious that the \textit{p}-value is far under the desired level of significance. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. This also means that the model is better than a random model (that e.g. only guesses on the largest class), so the classifier could have practical use. the accuracy of $68.05\% \pm 0.018\%$ on the validation set also lines up quite well with the accuracies fround in ProPublica's analysis of the COMPAS recidivism algorithm. They found that their predictive accuracy for Caucasian and African-American defendants were 62.5\% and 62.3\% respectively, while Northpointe found accuracies of 69\% and 67\% for Caucasian and African-American defendants respectively. \cite{propublicaAnalysis}
 	
 	It is obvious from the two normalized confusion matrices for Caucasian and African-American defendants that Caucasian defendants have almost a twice as large false positive value, while the same is true for the false negative values for African-American defendants. This signifies that the binary classifier more often labels Caucasians as not being at risk of recidivism even though they were at risk, while African-Americans are more often labeled as being at risk of recidivism when they were not truly at risk. This distinctly shows that the model is very subjective and that the original bias that seemed to be present in the data when plotting the recidivism scores for Caucasian and African-Americans, shown in section \ref{dataVisuals} and figure \ref{fig:predictedrecidrace}, has been learned by the model as well. This shows that care needs to be taken to avoid biased datasets or to implement the necessary steps like bias correction methods to avoid bias in the model before, during or after training. Meanwhile though, care needs to be taken when dealing with bias removal, as it is also necessary to prove that the bias is unjustified in the data. This was attempted proven in this project using figure \ref{fig:truerecid}, which shows that the discrepancy in amounts of Caucasian and African-American defendants is not as large as would be expected from figure \ref{fig:predictedrecidrace}. As such, it makes sense to attempt to correct this bias.
 	
@@ -582,21 +582,40 @@
 	
 	
 	\subsection{Safe AI}\label{safeai}
-	It is important for society to gain trust in machine learning models and artificial intelligence. Steps in order to ensure this trust has already been taken. The Ministry of Foreign Affairs of Denmark has with the cooperation of the research enviroment taken steps in order to ensure that any future development and use of AI live up to democratic values and control mechanisms.If there is no trust in the machine learning industry from society there will be no personal data available. Without the availability of personal data that companies, such as google has, no AI models or machine learning models can be developed. And without AI - no personal services will be available. The aim is to make sure consumers and companies who interact with AI services and products developed in Denmark are able to trust, that they live up to the highest ethical standards. \cite{larsk} Professor Lars Kai Hansen, has produced a list of principles, which ensures safe AI. These are the following, 
+	It is important for society to gain trust in machine learning models and artificial intelligence. Steps have already been taken in order to ensure this trust. The Ministry of Foreign Affairs of Denmark has, with the cooperation of the research environment, taken steps in order to ensure that any future development and use of AI lives up to democratic values and control mechanisms. If there is no trust in the machine learning industry from society, there will be no personal data available. Without the availability of personal data that companies, such as google, has, no AI models or machine learning models can be developed. And without AI, no personalized services will be available. The aim is to make sure that consumers and companies, who interact with AI services and products developed in Denmark, are able to trust that they live up to the highest ethical standards and to the standards of Safe AI. \cite{larsk} Professor Lars Kai Hansen from the Technological University of Denmark has produced a list of principles, which ensure safe AI, shown  below. 
 	
-	\begin{figure*}[h]
-	\centering
-	Safe AI = secure - test og verified software and hardwate, adversarials\\
-	Safe AI = open source - methods, code, hardware, check and evolution \\
-	Safe AI = self-conscious - understand own role \\
-	Safe AI = can keep a scret - privacy by design \\
-	Safe AI = has calibrated values - debug for stereotupes, biases \\
-	Safe AI = is accountablee - transparent, communicating, "right to explanation" \\
-	Safe AI = understands social relations - understands user's knowledge graph \\
-	Safe AI = understands power - digital self-defense \\
-	Safe AI = generates trust
-	\\
-	\end{figure*} \noindent
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{l  l  l  l  l}
+			\toprule
+			Safe AI...                  & & & & Explanation \\ \midrule
+			is secure                      & & & & Test of verified software and hardwate, adversarials \\
+			is open-source                 & & & & Methods, code, hardware, check and evolution         \\
+			is self-conscious              & & & & Understands own role                                 \\
+			is secretive                   & & & & Privacy by design                                    \\
+			has calibrated values       & & & & Debug for stereotupes, biases                        \\
+			is accountable              & & & & transparent, communicating, "right to explanation"   \\
+			understands social relations & & & & understands user's knowledge graph                   \\
+			understands power           & & & & Digital self-defense                                 \\
+			generates trust             & & & & Use in public relations                              \\ \bottomrule
+		\end{tabular}
+	\end{table}
+	
+%	\begin{figure*}[]
+%	\centering
+%	Safe AI = secure - test of verified software and hardwate, adversarials\\
+%	Safe AI = open source - methods, code, hardware, check and evolution \\
+%	Safe AI = self-conscious - understands own role \\
+%	Safe AI = can keep a scret - privacy by design \\
+%	Safe AI = has calibrated values - debug for stereotupes, biases \\
+%	Safe AI = is accountablee - transparent, communicating, "right to explanation" \\
+%	Safe AI = understands social relations - understands user's knowledge graph \\
+%	Safe AI = understands power - digital self-defense \\
+%	Safe AI = generates trust
+%	\\
+%	\end{figure*} 
+	\noindent
 	One of these principles revolves around the model having calibrated values. Which corresponds to the model being debugged for stereotypes and bias. Furthermore, the model needs to understand emotions. This is merely an example of a step in the right direction which calls for more studies to define bias notions and to invent methods to calibrate for the biases. This project confirms that the current methods are not sufficient and more sophisticated and fair methods needs to be made. A list of principles will not ensure fairness in machine learning models but shedding light on the current issues within machine learning however will inspire more studies to be done on the topic.
 	
 
