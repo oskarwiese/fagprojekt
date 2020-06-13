@@ -419,6 +419,8 @@
 	
 	This section will focus on the results of the analyses and give an indication of how to read the illustrations and explain the significance of each illustration. To see the discussion of these results and how the results are obtained or can be improved see section \ref{discussion}. Section \ref{training_loss_and_accuracy} shows the training loss and training accuracy as well as the validation accuracy of the neural network after training. The result of the permutation test can be seen in section \ref{modelAccuracy}. Section \ref{confusionMatrices} shows the bias in the neural network after training on possibly biased data using confusion matrices. As another way to both check and correct bias is to use ROC-curves. These are shown for Caucasians and African-Americans in \ref{ROC}, after which equal opportunity and equalized odds have been implemented and shown in sections \ref{equalOpportunity} \& \ref{equalizedOdds}.
 	
+	All of these results are focussed on the discrimination of the protected groups of Caucasians and African-Americans. To show the possible discrimination between the protected groups of males and females, the same tests have been made on these groups, the result of which can be seen in the appendix, section \ref{appendix}.
+	
 	\subsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
 	
 	\begin{figure}[H]
@@ -633,6 +635,125 @@
 		\caption{}
 		\label{fig:chargedegreescore}
 	\end{figure}
+
+	
+	\subsection{Results for Sex}
+	\subsubsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/loss_curve_sex.png}
+		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs. The validation accuracy obtained is $ 67.61\%$ which is shown as the green line and the green area is the standard deviation of the accuracy $0.017\% \pm 67.61\%$.}
+		\label{fig:losscurve}
+	\end{figure}
+	
+	\subsubsection{Validation of Model Accuracy}\label{modelAccuracy}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/perm_test_sex.png}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows and the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form.}
+		\label{fig:permtest}
+	\end{figure}\noindent
+	From figure \ref{fig:permtest} no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
+	\[p=\frac{1}{M}=0.001\]
+	
+	\subsubsection{Confusion Matrices}\label{confusionMatrices}
+	
+	\begin{figure*}[h]	
+		\begin{multicols}{2}
+			\begin{ceqn}
+				\begin{equation*}
+				\begin{bmatrix}
+				124 & 55  \\
+				42 & 78 
+				\end{bmatrix} 
+				\end{equation*} 
+				\begin{equation*}
+				\begin{bmatrix}
+				0.415 & 0.184  \\
+				0.140 & 0.261 
+				\end{bmatrix} 
+				\end{equation*}
+			\end{ceqn}
+		\end{multicols}
+		{The left matrix shows the confusion matrix of the population conditioned on the Female sex with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Female} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Female} $ is the total number of Females in the dataset. Below the confusion matrix, conditioned on the Male population, is shown.}
+	\end{figure*}
+	\begin{figure*}[h]	
+		\begin{multicols}{2}
+			\begin{ceqn}
+				\begin{equation*}
+				\begin{bmatrix}
+				484 & 122  \\
+				244 & 293 
+				\end{bmatrix} 
+				\end{equation*} 
+				\begin{equation*}
+				\begin{bmatrix}
+				0.423 & 0.107 \\
+				0.213 & 0.256 
+				\end{bmatrix} 
+				\end{equation*}
+			\end{ceqn}
+		\end{multicols}
+		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Male} $ element-wise in order to show the proportions of TP, FP, TN and FN.}
+	\end{figure*}
+	
+	\subsubsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}\label{ROC}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/ROC_sex.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_sex.png}
+			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the conditional ROC-Curves. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold.}
+		\label{fig:roc-curve}
+	\end{figure}
+	
+	%
+	
+	
+	%	\begin{figure}[H]
+	%		\centering
+	%		\includegraphics[width=0.5\linewidth]{imgs/fpr_tpr_plot.png}
+	%		\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+	%		\label{fig:fprtprplot}
+	%	\end{figure}
+	
+	\subsubsection{Equal Opportunity}\label{equalOpportunity}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal_sex"}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. This points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.690 $, where the threshold used for the Females is $T_{\text{Female}}= 0.680 $ and the threshold for Males is $ T_{\text{Male}}=0.450 $, when equal opportunity is ensured.}
+		\label{fig:equal-opportunity-optimal}
+	\end{figure}
+	
+	\subsubsection{Equalized Odds}\label{equalizedOdds}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_sex"}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_sex"}
+			%\caption{An illustration of the true and false positive rates as a function of the threshold. It is clear that, although the difference in the ROC-curves seems small in plot ***, the difference in thresholds causes the true and false positive rates between the two conditional ROC-curves to be different, showing inherent bias and difference between the conditional ROC-curves.}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: This plot illustrates the result of the predictor which satisfies equalized odds. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.691 $, when equalized odds is ensured. The threshold for Males is, $ T_{\text{Male}} = 0.45 $. As for Female, the predictor has a randomized threshold, $ T_{\text{Female}} $. The threshold assumes the value $\underline t_{\text{Female}} = 1 $  with a probability $ \underline p_{\text{Female}}= 0.91 $ and the value $ \bar t_{\text{Female}} = 0.61 $ with the probability $\bar p_{\text{Caucasian}} = 0.09 $.}
+		\label{fig:equalizedOdds}
+	\end{figure}
+	
 	\subsection{Pseudo Code}
 	\subsubsection{Equalized Odds}\label{Pseudo Equalized}
 	The implementation of equalized odds below assumes that the ROC-curve belonging to the \texttt{fprs1} and \texttt{tprs1} values is always placed above the other ROC-curve in order to save space, as the implementation is similar for having the curves overlap. The \texttt{accuracy\_score} function used in this implementation is the function from \texttt{sklearn.metrics}. The documentation can be seen here: \url{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html}.
