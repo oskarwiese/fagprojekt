@@ -424,7 +424,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/loss_curve.png}
-		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs.  The validation accuracy obtained is $ 68.05 \% \pm 0.014 \%$ (the green dashed line).}
+		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs. The validation accuracy obtained is $ 68.05\%$ which is shown as the green line and the green area is the standard deviation of the accuracy $0.018\% \pm 68.05\%$.}
 		\label{fig:losscurve}
 	\end{figure}
 	
@@ -433,7 +433,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies seem to follow and the blue dashed line is the accuracy of the model on the original non-permuted data. The standard deviation and mean represents the normal distribution which the permutations form.}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows and the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form.}
 		\label{fig:permtest}
 	\end{figure}\noindent
 	From figure \ref{fig:permtest} no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
