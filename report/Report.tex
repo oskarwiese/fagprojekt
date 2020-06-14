@@ -103,12 +103,12 @@
 	\section{Data} \label{data}
 %TODO: \\ Data kan kort introduceres i indledningen \\ Lav etisk diskussion om opbevaring af data samt privacy issues
 	
-	\noindent To analyse the efficacy of using bias correction to remove discrimination among races in the American justice system, the modified COMPAS recidivism dataset from ProPublica has been used. An important note on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector for this project to facilitate the use of equal opportunity and equalized odds. This method was also used by ProPublica during their analysis and therefore, turning the output into a binary vector was logical. The idea was to recreate the algorithm proposed originally by ProPublica. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism together into zeros and the \texttt{Low} risk of recidivism into ones. \\
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among races and sexes in the American justice system, the modified COMPAS recidivism dataset from ProPublica has been used. An important note on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector for this project to facilitate the use of equal opportunity and equalized odds. This method was also used by ProPublica during their analysis and therefore, turning the output into a binary vector was logical. The idea was to recreate the algorithm proposed originally by ProPublica. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism together into zeros and the \texttt{Low} risk of recidivism into ones. \\
 	A general overview of the dataset and how it came to be, as well as the variables used for the classifier is given in section \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so section \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, section \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored and examined further in later sections.
 	
 	\subsection{Description of Data} \label{dataDescription}
-	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data while adding their own queries of the offenders involved and data of the offenders who actually recidivated. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
-	\noindent The data consists of 53 different variables, 9 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded in order to convert them into a proper comprehensible format for the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient and exploding gradient problem and to avoid having some variables be of more importance to the final prediction.
+	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data while adding their own queries of the offenders involved and data of the offenders who actually recidivated in order to examine possible discrimination in Northpointe's algorithm. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
+	\noindent The data consists of 53 different variables, 10 of which are used in the binary classification model. Four of the chosen variables are categorical, so these will have to be one-out-of-k encoded in order to convert them into a proper comprehensible format for the neural network. Meanwhile, the numerical variables, of which there are also four, will be normalized as to avoid the vanishing gradient and exploding gradient problem and to avoid having some variables be of more importance to the final prediction.
 	The 10 chosen variables, of which one will be used as the target variable are shown and explained below. To see an exhaustive explanation of all variables from the full dataset, see section \ref{dataExamination}.
 	
 	
@@ -128,7 +128,7 @@
 		\end{tabular}
 		%\caption{text}
 	\end{table}
-	The reason that a vast majority of variables have not been included in the dataset for the binary classifier is that a plethora of variables contain dates or categorical values, that are not often shared between defendants, so to one-of-of-k encode these values, a really large data matrix would be necessary, which would reduce the running time significantly. Thus, only the variables that seem to be significant in order to predict the risk of recidivism, like age, race, number of previous felonies ect., have been added to the model. Preliminary runs of the model also show that the other variables do not enhance the accuracy of the binary classifier.
+	The reason that a vast majority of variables have not been included in the dataset for the binary classifier is that a plethora of variables contain dates or categorical values, that are not often shared between defendants, so to one-of-of-k encode these values, a really large data matrix would be necessary, which would reduce the running time significantly. Thus, only the variables that seem to be significant in order to predict the risk of recidivism, like age, race, sex, number of previous felonies ect., have been added to the model. Preliminary runs of the model also show that the other variables do not significantly enhance the accuracy of the binary classifier.
 		
 		
 	\subsection{Explanation of Data Variables} \label{dataExamination}
@@ -200,7 +200,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_race}	
+		\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_race}	
 		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|l|l|l|}
@@ -210,14 +210,14 @@
 				African-American & 0.412 & 0.311  & 0.277 \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{It is clear from this illustration that the number of caucasian and african-american people in the low group are almost equal. Meanwhile the medium and high groups contain a much larger fraction of african-americans. Looking at the confusion matrix of the normalized values, it seems to be the case that Caucasians are 1.5 times as often classified as low risk of recidivism than African-Americans, while African-Americans are about twice as often classified as high risk of recidivism than whites. This could signify that the data is biased towards giving African-Americans a higher risk evaluation, but this will be quantified in \ref{confusionMatrices}.}
+		\caption{It is clear from this illustration that there is a large discrepancy between the normalized distribution of Caucasians and African-Americans in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that Caucasians are 1.5 times as often classified as low risk of recidivism than African-Americans, while African-Americans are about twice as often classified as high risk of recidivism than whites. This could signify that the data is biased towards giving African-Americans a higher risk evaluation, but this will be quantified in \ref{confusionMatrices}.}
 		\label{fig:predictedrecidrace}
 	\end{figure}
 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/true_recid}
+		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_race}
 		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|l|l|}
@@ -227,13 +227,13 @@
 				African-American & 0.449 & 0.551  \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender. It is clear that a pretty equal amount of African-Americans and Caucasians recidivated or did not recidivate based on the confusion matrix. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
+		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender and normalized by the size of each protected group. It is clear that the amounts of African-Americans and Caucasians that recidivated or did not recidivate based on the confusion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
 		\label{fig:truerecid}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/predicted_recid_sex}
+		\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_sex}
 		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|l|l|l|}
@@ -243,8 +243,24 @@
 				Female    & 0.540 & 0.301  & 0.152 \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{This illustration shows the relationship between sex and the COMPAS prediction of recidivism. The first point to be noted is that there are a lot more men in the dataset than women (5819/1395). Aside from this, it does not seem like there is a difference in the proportions of men or women being classified as belonging to each of the categories. From the data alone, it thus does not seem like any bias is present.}
+		\caption{This illustration shows the relationship between sex and the COMPAS prediction of recidivism normalized by the sizes of the protected groups. Here, it does not seem like there is a significant difference in the proportions of men or women being classified as belonging to each of the categories. From the data alone, it thus would not seem like any bias is present.}
 		\label{fig:predictedrecidsex}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_sex}
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|l|l|l|}
+				\hline
+				& 0   & 1  \\ \hline
+				Male     & 0.475 & 0.525  \\ \hline
+				Female   & 0.611 & 0.389  \\ \hline
+			\end{tabular}
+		\end{table}
+		\caption{This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is definitely a difference in the number of males and females in each group based on the matrix and illustration, since slightly more females have not recidivated and slightly more males have recidivated. This makes it seem like the bias from \ref{fig:predictedrecidsex} is justified, since it is explained by the true amounts of recidivism in each group. Thus, bias seems more likely to be present for the protected attributes for race than for sex.}
+		\label{fig:truerecid}
 	\end{figure}
 	
 	\begin{figure}[H]
