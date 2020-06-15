@@ -352,7 +352,7 @@
 	%As for identification of biases in the binary classifier the categorical variable race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
 	\subsection{Bias Identification}\label{bias_id}
-	To identify if the constructed classifier trained on the COMPAS dataset is fair or not, two different datasets are constructed from the original dataset. A validation-set which only contains the Caucasians and a validation-set which only contains African-Americans. This is the same as conditioning the orignial population on the protected groups. Both of the datasets were validated by the classifier and the confusion matrix of the two conditional populations are compared. A confusion matrix contains the amount of predictions which are true positive, false positive, true negative and false negative predictions. These are arbitrarily ordered as,
+	To identify if the constructed classifier trained on the COMPAS dataset is fair or not, a different dataset is constructed from the original dataset for each protected group, which serves as a validation set for the model. This is equivalent to conditioning the orignial population on the protected groups. Each of the datasets were then validated by the classifier and the confusion matrix of the conditional populations are compared. A confusion matrix contains the amount of predictions which are true positive, false positive, true negative and false negative predictions. These are arbitrarily ordered as,
 	
 	\begin{figure*}[h]	
 			\begin{ceqn}
@@ -364,14 +364,14 @@
 				\end{equation*} 
 			\end{ceqn}
 	\end{figure*} \noindent
-	The true positive (TP) amounts to the classifier predicting true and the ground truth being true. However, true negative (TN) amounts to predicting true when the ground truth is false. False negative (FN) is a false prediction where the ground truth is false. Lastly, the false positive (FP) is a false prediction where the ground truth is true. From the confusion matrix the recall and selectivity also known as true positive rate (TPR) and false negative rate (FPR) can be calculated. Furthermore, the validation accuracy can be determined.
+	For this project, the positive group belongs to those who have not recidivated and the negative group is for those who has recidivated. The true positive (TP) amounts to the classifier predicting true and the ground truth being true, while the true negative (TN) is the number of times the classifier predicted false, when the true label was false. True positive and false positive can thus be seen as the correct predictions. The incorrect predictions are false positive and false negative. False positive (FP) amounts to the model predicting true when the ground truth is false. Meanwhile, the false negative (FN) is a false prediction from the model, where the ground truth is true. From the confusion matrix the recall and selectivity also known as true positive rate (TPR) and false negative rate (FPR) can be calculated. Furthermore, the validation accuracy can be determined.
 	
 	\begin{align}\label{tpr_fpr_acc}
 	\text{TPR} = \frac{\text{TP}}{\text{TP}+\text{FN}}\qquad \qquad \qquad \qquad &
 	\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}} \qquad &&
 	\text{ACC} = \frac{\text{TP}+\text{TN}}{N}
 	\end{align} \noindent
-	Where N, is $ \text{N} = \text{TP}+\text{FN}+\text{FP}+\text{TN} $. The TPR and FPR values of the two conditional populations have to be equal in order for the classification to be fair according to equalized odds and just the TPR values have to be equal to satisfy equal opportunity. The split of the data allows for two different ROC-curves to be constructed, showing differing values for TPR and FPR, which can be equated. This is a simplification of the process of the bias definitions used for bias correction methods, which have been explained in section \ref{bias_def}. Furthermore, in the next section, \ref{biascorr}, a detailed explanation of how to fulfill these fairness definitions will be given. 
+	Where N, is $ \text{N} = \text{TP}+\text{FN}+\text{FP}+\text{TN} $. The TPR and FPR values of the two conditional populations have to be equal in order for the classification to be fair according to equalized odds and just the TPR values have to be equal to satisfy equal opportunity. The split of the data allows for a different ROC-curves to be constructed for each protected group, showing differing values for TPR and FPR, which can be equated. This is a simplification of the process of the bias definitions used for bias correction methods, which have been explained in section \ref{bias_def}. Furthermore, in the next section, \ref{biascorr}, a detailed explanation of how to fulfill these fairness definitions will be given. 
 	
 	\subsection{Bias Correction Methods}\label{biascorr}
 	
@@ -381,7 +381,7 @@
 	\begin{equation*}\label{key}
 	C_{a}(t) \stackrel{\text { def }}{=}(\operatorname{Pr}\{\widehat{R}>t | A=a, Y=0\}, \operatorname{Pr}\{\widehat{R}>t | A=a, Y=1\})
 	\end{equation*}
-	Here, $ \operatorname{Pr}\{\widehat{R}>t | A=a, Y=0\} $ is the false positive rate and $ \operatorname{Pr}\{\widehat{R}>t | A=a, Y=1\} $ is the true positive rate. The conditional curves both specify the conditional distributions of the Caucasian and African-Americans. Therefore, a score function obeys equalized odds if and only if the values of the protected attributes are equal. There are several scenarios to take into account, which are shown below \cite{equal_of_oppor}.
+	Here, $ \operatorname{Pr}\{\widehat{R}>t | A=a, Y=0\} $ is the false positive rate and $ \operatorname{Pr}\{\widehat{R}>t | A=a, Y=1\} $ is the true positive rate. The conditional curves specify the conditional distributions of both the protected groups. Therefore, a score function obeys equalized odds if and only if the values of the protected attributes are equal. There are several scenarios to take into account, which are shown below \cite{equal_of_oppor}.
 	\begin{enumerate}
 		\item The simplest case is if the ROC-curves are identical or close to identical. If this is the case, then any thresholding of R yields an equalized odds predictor. As such, the threshold yielding the best accuracy can be chosen.
 		\item In the case where the ROC-curves are not equal, then a different threshold needs to be chosen for each protected group. If the resulting predictor has to satisfy equalized odds then only points on the ROC-curves with equal TPR and FPR can be considered. This is equivalent to the two conditional ROC-curves intersecting. 
@@ -752,6 +752,92 @@
 		\label{fig:chargedegreescore}
 	\end{figure}
 
+	\subsection{Analysis of age}
+
+	\subsubsection{Confusion Matrices}\label{confusionMatrices}
+	
+	\begin{figure*}[h]	
+		\begin{multicols}{2}
+			\begin{ceqn}
+				\begin{equation*}
+				\begin{bmatrix}
+				409 & 124  \\
+				169 & 253 
+				\end{bmatrix} 
+				\end{equation*} 
+				\begin{equation*}
+				\begin{bmatrix}
+				0.428 & 0.130  \\
+				0.177 & 0.265 
+				\end{bmatrix} 
+				\end{equation*}
+			\end{ceqn}
+		\end{multicols}
+		{The left matrix shows the confusion matrix of the population conditioned on the defendants under 25 years old with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Less_than_25} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Less_than_25} $ is the total number of defendants under 25 years old in the dataset. Below the confusion matrix conditioned on the population of defendants over 25 is shown.}
+	\end{figure*}
+	\begin{figure*}[h]	
+		\begin{multicols}{2}
+			\begin{ceqn}
+				\begin{equation*}
+				\begin{bmatrix}
+				85 & 35  \\
+				77 & 78 
+				\end{bmatrix} 
+				\end{equation*} 
+				\begin{equation*}
+				\begin{bmatrix}
+				0.309 & 0.127 \\
+				0.280 & 0.284 
+				\end{bmatrix} 
+				\end{equation*}
+			\end{ceqn}
+		\end{multicols}
+		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Greater_than_25} $ element wise in order to show the proportions of TP, FP, TN and FN.}
+	\end{figure*}
+	
+	
+	\subsubsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}\label{ROC}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/ROC_age.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_age.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}
+		\caption{\textbf{Left:} An illustration of the conditional ROC-Curves when conditioning on race. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right:} An illustration of the true and false positive rates as a function of the threshold.}
+		\label{fig:roc-curve}
+	\end{figure}
+	
+	\subsubsection{Equal Opportunity}\label{equalOpportunity}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal_age"}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. These points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.680 $, where the threshold used for the Caucasian is $T_{\text{Less_than_25}}= 0.490 $ and the threshold for African-American is $ T_{\text{Greater_than_25}}=0.240 $, when equal opportunity is ensured.}
+		\label{fig:equal-opportunity-optimal}
+	\end{figure}
+	
+	\subsubsection{Equalized Odds}\label{equalizedOdds}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_age"}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_age"}
+		\end{subfigure}
+		\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.633 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{Greater_than_25}} = 0.310 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Less_than_25}} $. The threshold assumes the value $\underline t_{\text{Less_than_25}} = 1 $  with a probability $ \underline p_{\text{Less_than_25}}= 0.73 $ and the value $ \bar t_{\text{Less_than_25}} = 0.34 $ with the probability $\bar p_{\text{Less_than_25}} = 0.27 $.}
+		\label{fig:equalizedOdds}
+	\end{figure}
 	
 	\subsection{Pseudo Code}
 	\subsubsection{Equalized Odds}\label{Pseudo Equalized}
