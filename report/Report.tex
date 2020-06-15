@@ -773,7 +773,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The left matrix shows the confusion matrix of the population conditioned on the Caucasian race with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Caucasian} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Caucasian} $ is the total number of Caucasians in the dataset. Below the confusion matrix, conditioned on the Afro-American population, is shown.}
+		{The left matrix shows the confusion matrix of the population conditioned on the defendants under 25 years old with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Less_than_25} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Less_than_25} $ is the total number of defendants under 25 years old in the dataset. Below the confusion matrix conditioned on the population of defendants over 25 is shown.}
 	\end{figure*}
 	\begin{figure*}[h]	
 		\begin{multicols}{2}
@@ -792,7 +792,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN.}
+		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Greater_than_25} $ element wise in order to show the proportions of TP, FP, TN and FN.}
 	\end{figure*}
 	
 	
@@ -810,7 +810,7 @@
 			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_age.png}
 			%\caption{Lorem ipsum}
 		\end{subfigure}
-		\caption{\textbf{Top}: An illustration of the conditional ROC-Curves for race on the left and sex on the left. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Bottom}: An illustration of the true and false positive rates as a function of the threshold for race on the left and sex on the right.}
+		\caption{\textbf{Left:} An illustration of the conditional ROC-Curves when conditioning on race. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right:} An illustration of the true and false positive rates as a function of the threshold.}
 		\label{fig:roc-curve}
 	\end{figure}
 	
@@ -819,7 +819,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal_age"}
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. This points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. \textbf{Left:} The constructed binary classifier yields an accuracy of $ 0.678 $, where the threshold used for the Caucasian is $T_{\text{Caucasian}}= 0.56 $ and the threshold for African-American is $ T_{\text{Afro-American}}=0.510 $, when equal opportunity is ensured. \textbf{Right:} The achieved accuracy is $0.690$ where $T_{\text{Female}}= 0.68$ and $T_{\text{Male}}= 0.45$.}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. These points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.680 $, where the threshold used for the Caucasian is $T_{\text{Less_than_25}}= 0.490 $ and the threshold for African-American is $ T_{\text{Greater_than_25}}=0.240 $, when equal opportunity is ensured.}
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
 	
@@ -835,7 +835,7 @@
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_age"}
 		\end{subfigure}
-		\caption{\textbf{Top}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Bottom left}: These illustrations show the result of the predictor which satisfies equalized odds for race. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.669 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{African-Americans}} = 0.47 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Caucasian}} $. The threshold assumes the value $\underline t_{\text{Caucasian}} = 1 $  with a probability $ \underline p_{\text{Caucasian}}= 0.76 $ and the value $ \bar t_{\text{Caucasian}} = 0.50 $ with the probability $\bar p_{\text{Caucasian}} = 0.24 $. \textbf{Bottom right:} The accuracy of the equalized odds predictor on sex is 0.691, where the threshold $T_{\text{Female}}$ is 0.45 and the male threshold is made by mixing the threshold $T_{\text{male}} = 0.61$ with probability $p_{\text{Caucasian}} = 0.09$ and $T_{\text{male}} = 1.00$ with probability $p_{\text{Caucasian}} = 0.91$.}
+		\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.633 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{Greater_than_25}} = 0.310 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Less_than_25}} $. The threshold assumes the value $\underline t_{\text{Less_than_25}} = 1 $  with a probability $ \underline p_{\text{Less_than_25}}= 0.73 $ and the value $ \bar t_{\text{Less_than_25}} = 0.34 $ with the probability $\bar p_{\text{Less_than_25}} = 0.27 $.}
 		\label{fig:equalizedOdds}
 	\end{figure}
 	
