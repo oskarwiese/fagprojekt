@@ -760,7 +760,41 @@
 	\end{figure}
 
 	\subsection{Analysis of age}
-
+	
+	\subsubsection{Data Visualization}
+	
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_race}	
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|l|l|l|l|}
+					\hline
+					& Low   & Medium & High  \\ \hline
+					Less than 25    & 0.326 & 0.365  & 0.309 \\ \hline
+					Greater than 25 & 0.557 & 0.258  & 0.185 \\ \hline
+				\end{tabular}
+			\end{table}
+			\caption{It is clear from this illustration that there is a large discrepancy between the normalized distribution of Caucasians and African-Americans in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that Caucasians are 1.5 times as often classified as low risk of recidivism than African-Americans, while African-Americans are about twice as often classified as high risk of recidivism than whites. This could signify that the data is biased towards giving African-Americans a higher risk evaluation, but this will be quantified in \ref{confusionMatrices}.}
+			\label{fig:predictedrecidrace}
+		\end{figure}
+	
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_age}
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|l|l|l|}
+				\hline
+				& 0   & 1  \\ \hline
+				Less than 25        & 0.395 & 0.605  \\ \hline
+				Greater than 25     & 0.531 & 0.469  \\ \hline
+			\end{tabular}
+		\end{table}
+		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender and normalized by the size of each protected group. It is clear that the amounts of African-Americans and Caucasians that recidivated or did not recidivate based on the confusion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
+		\label{fig:truerecid}
+	\end{figure}
+	
 	\subsubsection{Confusion Matrices}\label{confusionMatrices}
 	
 	\begin{figure*}[h]	
