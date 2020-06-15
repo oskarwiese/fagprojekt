@@ -60,7 +60,7 @@
 	
 	\subsection{Motivation}
 	%TODO 
-	%Der skal skrives mere aktuelt om situtationen i USA 
+	%Der skal skrives mere aktuelt om situtationen i USA og BLM!!!! måske også de hvide
 	Artifical intelligence (AI) and machine learning (ML) methods are playing a bigger and bigger role in modern society. As the accuracies of AI and ML models increase, their applications become wider, allowing for these  models to be implemented either as ground truth or as a pointer in applications like autonomous vehicles, medical imaging, the American judicial system ect. These models are, for the general public, often seen as an objective decision maker. As such, it becomes of essence to avoid discrimination, since model discrimination could lead to reinforced societal discrimination. Bias seems to originate from the dataset, meaning that a saving grace would be to either implement bias correction on the dataset to remove the bias from the source of the problem or to remove bias from the model, thereby removing the risk of discrimination when using the model for classification tasks. This report aims to understand bias and how it affects datasets as well as classification models. Furthermore, bias correction methods will be put to use in order to explore the possibilites of keeping discrimination away from important fields. More specifically, the questions to be answered throughout the report are whether there is a bias in the COMPAS recidivism dataset and which kind of bias there is, as well as what this bias means in the dataset. Meanwhile, it is also analyzed how bias affects a binary classification feed-forward neural network algorithm, how bias in an algorithm is detected and how to quantify the bias. Lastly, bias correction methods will be implemented and tested and an ethical discussion will be carried out to understand the applications of bias correction algorithms and AI models on society as well as how society can learn to trust these models. \\
 	
 	\noindent In this report, the rest of section \ref{indledning} will focus on related work within the field of bias correction and the contributions from this report. Afterwards, section \ref{data} will present the necessary details of the COMPAS dataset including visualizations of possibly discriminatory variables like "race" and "sex", explanations of the variables of the dataset and how the data was collected and put together. Section \ref{methods} on methods sets up the necessary background knowledge for the topics of FFNNs, k-fold validation, permutation tests, bias identification and bias correction methods. The section will also contain a description of how to reproduce the results. Results will be illustrated in section \ref{results} through figures and tables, which will then be discussed and put into a greater perspective in section \ref{discussion}. The discussion also contains the ethical discussion of bias and bias correction as a whole. The whole report will be summed up in section \ref{conclusion}. Some lesser relevant figures and points as well as pseudo code for some of the used functions have been left out of the report, but can be found in section \ref{appendix} and the relevant sources are found in section \ref{bibliography}.
@@ -172,7 +172,7 @@
 		c\_charge\_desc & The offense that was performed & Discrete nominal \\
 		r\_charge\_desc & & \\
 		vr\_charge\_desc & & \\ \hdashline
-		c\_arrest\_date & ----- & Discrete nominal \\
+		c\_arrest\_date & The date the arrest was performed & Discrete nominal \\
 		c\_days\_from\_compas & ------ & Discrete interval \\
 		r\_days\_from\_arrest & Recidivism days until arrested for the crime & Discrete interval \\
 		violent\_recid & Completely empty data column & NaN \\ \hdashline
@@ -442,7 +442,7 @@
 	
 	In order to make the results as reproducible as possible, the data as well as the way the data was obtained also plays a big role. The way the data was obtained can be seen described in detail in section \ref{dataDescription}. The data comes from the GitHub repository \url{https://github.com/propublica/compas-analysis}, from which the dataset \texttt{compas-scores-two-years.csv} was used as the only dataset for the project. \\
 	
-	\noindent Below, a thorough walkthrough of the most essential parts of the code will be made. To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to easily structurize the data. Several plots of this data were then made using the Seaborn plot library. The code for this can be found in the \texttt{Data Visualization} cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the \texttt{Neural Network} cell in the notebook. The binary classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then performed to show that the acquired accuracy was adequately better than random. The classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the \texttt{Classification} function at the top of the notebook. The next goal was to implement equalized odds and equal opportunity using these conditional ROC-curves. The code for this is located in the \texttt{BiasCorrection} function. The implementation of both equal opportunity and equalized odds is explained both by reading the code and by the pseudo code, which has been supplied in the appendix section \ref{Pseudo Equalized} and \ref{Pseudo Equal}.
+	\noindent Below, a thorough walkthrough of the most essential parts of the code will be made. To implement the bias correction methods and classifier, firstly, the dataset was loaded into a Pandas dataframe in order to easily structurize the data. Several plots of this data were then made using the Seaborn plot library. The code for this can be found in the \texttt{Data Visualization} cell. In order to pre-process the data for the implementation of a neural network, all of the features were converted into PyTorch tensors (the chosen features and order of features for this project can be seen in section \ref{Feed-forward neural}). All of the numerical variables were normalized to avoid the exploding gradient problem and to give every variable a level playing field. A FFNN was constructed using the PyTorch NN module, see the \texttt{Neural Network} cell in the notebook. The binary classifier was trained using BCE-loss with Adam as the chosen optimizer. All of the hyperparameters can be seen in section \ref{Feed-forward neural}. A permutation test was then performed to show that the acquired accuracy was adequately better than random. The classifier was used to construct predictions for conditional distributions for the protected attributes, which were saved in an array and used to construct confusion matrices at different thresholds. By using different thresholds, two  different conditional ROC-curves were constructed with Numpy and MatPlotLib. A plot of the TPR and FPR for each of the protected groups, as a function of thresholds were constructed as well, the code for which can be seen at the bottom of the \texttt{Classification} function at the top of the notebook. The next goal was to implement equalized odds and equal opportunity using these conditional ROC-curves. The code for this is located in the \texttt{BiasCorrection} function. The implementation of both equal opportunity and equalized odds is explained both by reading the code and by the pseudo code, which has been supplied in the appendix section \ref{Pseudo Equalized} \& \ref{Pseudo Equal}.
 	
 % Forklaring af implementation af equalized odds
 %	For each point on the boundary of the intersection of the convex hulls for each of the conditional distributions, the true postive and false postive rate were found. From the point on the boundary, a line was drawn between this point and the point (0,0). The slope is found using $ m=\frac{\Delta y}{\Delta x} $. Then, the intersection between the upper curve and the line was determined. The distance from (0,0) to the point on the lower curve was found and divided by the length from (0,0) to the point of the upper curve. The distance between the point on the lower curve and the intersection of the line and the upper curve is determined as well and divided by the length from (0,0) to the intersection of the line and the upper curve. This will result in two values, which are referred to as $ \bar p_a $ and $ \underline p_a $ in section \ref{optimalboi}. These are values between zero and one which will sum to one, and decides the proportion of sampling from the randomized predictor. This was done for each point on the upper left boundary of the intersection between the convex hull of the two conditional ROC-curves.
@@ -462,30 +462,32 @@
 	\subsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
 	
 	\begin{figure}[H]
-		\begin{subfigure}{0.5\textwidth}
+		%\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/loss_curve.png}
-		\end{subfigure}
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/loss_curve_sex.png}
-		\end{subfigure}
-		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs. \textbf{Left:} The validation accuracy of the binary classifier obtained after running on race is $ 68.05\%$ which is shown as the green line and the green area is the standard deviation of the accuracy $0.018\% \pm 68.05\%$. \textbf{Right:} the validation accuracy after running the classifier on sex is $67.61\% \pm 0.017\%$}
+			\includegraphics[width=0.5\linewidth]{imgs/loss_curve.png}
+		%\end{subfigure}
+%		\begin{subfigure}{0.5\textwidth}
+%			\centering
+%			\includegraphics[width=0.9\linewidth]{imgs/loss_curve_sex.png}
+%		\end{subfigure}
+		\caption{The training loss and training accuracy after training for 400 epocs. It is clear, as expected, that the two curves are inversely proportional and that the accuracy rises with the number of epochs.  The validation accuracy of the binary classifier obtained after training is $ 68.05\%$ which is shown as the green line and the green area is the standard deviation of the accuracy $0.018\% \pm 68.05\%$.% \textbf{Right:} the validation accuracy after running the classifier on sex is $67.61\% \pm 0.017\%$}
+		}
 		\label{fig:losscurve}
 	\end{figure}
 	
 	\subsection{Validation of Model Accuracy}\label{modelAccuracy}
 	
 	\begin{figure}[H]
-		\begin{subfigure}{0.5\textwidth}
+		%\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/perm_test.png}
-		\end{subfigure}
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/perm_test_sex.png}
-		\end{subfigure}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows and the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. \textbf{Left:} The permutation test for race. \textbf{Right:} Permutation test for sex.}
+			\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
+		%\end{subfigure}
+%		\begin{subfigure}{0.5\textwidth}
+%			\centering
+%			\includegraphics[width=0.9\linewidth]{imgs/perm_test_sex.png}
+%		\end{subfigure}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows and the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. %\textbf{Left:} The permutation test for race. \textbf{Right:} Permutation test for sex.}
+		}
 		\label{fig:permtest}
 	\end{figure}\noindent
 	From figure \ref{fig:permtest} no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
@@ -550,7 +552,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The left matrix shows the actual $ T = 0.5 $ threshold population and the right matrix is normalized by $N_{Female}$ to find proportions. Below the confusion matrix conditioned on the Male population is shown.}
+		{The left matrix shows the confusion matrix of the population conditioned on female, with a threshold, $ T = 0.5 $ and the right matrix is normalized by $N_{Female}$ to find proportions. Below the confusion matrix conditioned on the Male population is shown.}
 	\end{figure*}
 	\begin{figure*}[h]	
 		\begin{multicols}{2}
@@ -569,7 +571,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The threshold is $T = 0.5$. Right shows proportions by dividing by $N_{Male}$.}
+		{The threshold is set to $T = 0.5$. On the right the proportions of TP, TN, FN and FP is shown by dividing by $N_{Male}$.}
 	\end{figure*}
 	
 	
