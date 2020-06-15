@@ -819,7 +819,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal_age"}
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. These points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.680 $, where the threshold used for the Caucasian is $T_{\text{Less_than_25}}= 0.490 $ and the threshold for African-American is $ T_{\text{Greater_than_25}}=0.240 $, when equal opportunity is ensured.}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. These points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.680 $, where the threshold used for the protected group less than 25 years old is $T_{\text{Less\_than\_25}}= 0.490 $ and the threshold for the protected group grater than 25 years old is $ T_{\text{Greater\_than\_25}}=0.240 $, when equal opportunity is ensured.}
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
 	
@@ -830,12 +830,12 @@
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_age"}
-		\end{subfigure}
+		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_age"}
 		\end{subfigure}
-		\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.633 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{Greater_than_25}} = 0.310 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Less_than_25}} $. The threshold assumes the value $\underline t_{\text{Less_than_25}} = 1 $  with a probability $ \underline p_{\text{Less_than_25}}= 0.73 $ and the value $ \bar t_{\text{Less_than_25}} = 0.34 $ with the probability $\bar p_{\text{Less_than_25}} = 0.27 $.}
+		\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.633 $, when equalized odds is ensured. The threshold for the protected group older than 25 is, $ T_{\text{Greater\_than\_25}} = 0.310 $. As for the group under 25, the predictor has a randomized threshold, $ T_{\text{Less\_than\_25}} $. The threshold assumes the value $\underline t_{\text{Less\_than\_25}} = 1 $  with a probability $ \underline p_{\text{Less\_than\_25}}= 0.73 $ and the value $ \bar t_{\text{Less\_than\_25}} = 0.34 $ with the probability $\bar p_{\text{Less\_than\_25}} = 0.27 $.}
 		\label{fig:equalizedOdds}
 	\end{figure}
 	
