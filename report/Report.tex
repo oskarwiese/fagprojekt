@@ -6,6 +6,7 @@
 \newcommand{\so}[2]{{#1}\mathrm{e}{#2}}
 % \geometry{top=1cm}
 \usepackage{hyperref}
+\usepackage{array}
 \usepackage{amsmath}
 \usepackage{ragged2e}
 \usepackage{booktabs}
@@ -359,18 +360,31 @@
 	%As for identification of biases in the binary classifier the categorical variable race was used. Permutation was implemented by randomly shuffling the attribute with re-sampling. The permuted data were used as input for the model and several confusion matrices were constructed and compared. The matrices were compared to the original confusion matrix, which in turn results in a \textit{p}-value on the percentage of false negatives (FN) on whites compared to African-Americans in the ProPublica data.
 	
 	\subsection{Bias Identification}\label{bias_id}
-	To identify if the constructed classifier trained on the COMPAS dataset is fair or not, a different dataset is constructed from the original dataset for each protected group, which serves as a validation set for the model. This is equivalent to conditioning the orignial population on the protected groups. Each of the datasets were then validated by the classifier and the confusion matrix of the conditional populations are compared. A confusion matrix contains the amount of predictions which are true positive, false positive, true negative and false negative predictions. These are arbitrarily ordered as,
+	To identify if the constructed classifier trained on the COMPAS dataset is fair or not, a different dataset is constructed from the original dataset for each protected group, which serves as a validation set for the model. This is equivalent to conditioning the orignial population on the protected groups. Each of the datasets were then validated by the classifier and the confusion matrix of the conditional populations are compared. A confusion matrix contains the amount of predictions which are true positive, false positive, true negative and false negative predictions. These are arbitrarily ordered as,	
 	
-	\begin{figure*}[h]	
-			\begin{ceqn}
-				\begin{equation*}
-				\begin{bmatrix}
-				\text{TP} & \text{FP}  \\
-				\text{FN} & \text{TN} 
-				\end{bmatrix} 
-				\end{equation*} 
-			\end{ceqn}
-	\end{figure*} \noindent
+	\begin{center}
+		\bgroup
+		\def\arraystretch{2}%  1 is the default, change whatever you need
+		\begin{tabular}{c | c c |}
+			& Predicted positive & Predicted negative \\ 
+			\hline 
+			Actual positive & True positive [TP] & False positive [FP] \\
+			Actual negative & False negative [FN] & True negative [TN] \\ 
+			\hline
+		\end{tabular}
+		\egroup
+	\end{center}
+	
+%	\begin{figure*}[h]	
+%			\begin{ceqn}
+%				\begin{equation*}
+%				\begin{bmatrix}
+%				\text{TP} & \text{FP}  \\
+%				\text{FN} & \text{TN} 
+%				\end{bmatrix} 
+%				\end{equation*} 
+%			\end{ceqn}
+%	\end{figure*} \noindent
 	For this project, the positive group belongs to those who have not recidivated and the negative group is for those who has recidivated. The true positive (TP) amounts to the classifier predicting true and the ground truth being true, while the true negative (TN) is the number of times the classifier predicted false, when the true label was false. True positive and false positive can thus be seen as the correct predictions. The incorrect predictions are false positive and false negative. False positive (FP) amounts to the model predicting true when the ground truth is false. Meanwhile, the false negative (FN) is a false prediction from the model, where the ground truth is true. From the confusion matrix the recall and selectivity also known as true positive rate (TPR) and false negative rate (FPR) can be calculated. Furthermore, the validation accuracy can be determined.
 	
 	\begin{align}\label{tpr_fpr_acc}
@@ -378,7 +392,9 @@
 	\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}} \qquad &&
 	\text{ACC} = \frac{\text{TP}+\text{TN}}{N}
 	\end{align} \noindent
-	Where N, is $ \text{N} = \text{TP}+\text{FN}+\text{FP}+\text{TN} $. The TPR and FPR values of the two conditional populations have to be equal in order for the classification to be fair according to equalized odds and just the TPR values have to be equal to satisfy equal opportunity. The split of the data allows for a different ROC-curves to be constructed for each protected group, showing differing values for TPR and FPR, which can be equated. This is a simplification of the process of the bias definitions used for bias correction methods, which have been explained in section \ref{bias_def}. Furthermore, in the next section, \ref{biascorr}, a detailed explanation of how to fulfill these fairness definitions will be given. 
+	Where N is 
+	\[\text{N} = \text{TP}+\text{FN}+\text{FP}+\text{TN.}\] 
+	The TPR and FPR values of the two conditional populations have to be equal in order for the classification to be fair according to equalized odds and just the TPR values have to be equal to satisfy equal opportunity. The split of the data allows for a different ROC-curves to be constructed for each protected group, showing differing values for TPR and FPR, which can be equated. This is a simplification of the process of the bias definitions used for bias correction methods, which have been explained in section \ref{bias_def}. Furthermore, in the next section, \ref{biascorr}, a detailed explanation of how to fulfill these fairness definitions will be given. 
 	
 	\subsection{Bias Correction Methods}\label{biascorr}
 	
