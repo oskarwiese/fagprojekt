@@ -343,7 +343,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{imgs/kfolds2}
-		\caption{Illustrates how the data was split into folds. It is clear from the illustration that the models obtained are trained and tested on different data. Image found at \href{https://www.researchgate.net/figure/Diagram-of-k-fold-cross-validation-with-k-10-Image-from-Karl-Rosaen-Log_fig1_332370436}{ResearchGate} \cite{researchgate}. }
+		\caption{Illustrates how the data was split into folds. It is clear from the illustration that the models obtained are trained and tested on different data. On the right, it is shown that the accuracy, E, can be found by the mean of all accuracies from the ten different models. Image found at \href{https://www.researchgate.net/figure/Diagram-of-k-fold-cross-validation-with-k-10-Image-from-Karl-Rosaen-Log_fig1_332370436}{ResearchGate} \cite{researchgate}. }
 		\label{fig:kfolds}
 	\end{figure}
 	
@@ -354,7 +354,7 @@
 %		\label{fig:kfolds}
 %	\end{figure}
 	\noindent
-	This result in ten models with different accuracies and training/test data which allows for a value of the mean and standard deviation to be obtained.
+	This results in ten models with different accuracies and training/test data which allows for a value of the mean and standard deviation to be obtained.
 	
 	\subsection{Permutation test}\label{permutation_test}
 	To identify both whether or not the dataset is biased, and if the accuracy of the FFNN is statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier. If the newly acquired accuracy from the permuted data is different from the non-permuted accuracy, this could possibly mean that the classifier is biased. To phrase differently, if the classifier has a tendency to classify Afro-Americans as medium/high risk, a permuted race variable would yield a lower accuracy than the non-permuted data. However, it might just be the reality that all Afro-Americans have a higher chance of recidivism than Caucasians people. Thus, further investigations have to be performed to prove the existence of actual bias in an algorithm. \\\\
