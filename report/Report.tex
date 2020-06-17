@@ -324,7 +324,7 @@
 			& Output layer             &&&&& & $1$      & \\ \bottomrule
 		\end{tabular}
 	\end{table}
-	
+	\noindent
 	The hyperparameters are based on preliminary runs as well as an exhaustive search through the parameter space. The fully connected layers are trained on the COMPAS dataset with a supervised learning strategy. The hyperparameters used are a drop-out value at $p=0.5$, which is used on each layer. The learning rate, $\alpha$, is initialized as $\alpha = 0.001$. However, the optimization algorithm used for this project is Adaptive Moment Estimation (Adam). Adam is a well known optimizer in the literature and has an adaptive learning rate and step size. The activation function used is rectified linear unit (ReLU), which is defined as $ y = \text{max}(0,x) $. Thus, the function returns x for positive values and zero otherwise. The activation function ensures non-linearity which allows for a more expressive model. Binary cross-entropy loss (BCL) is used as the cost function. The loss in the binary classifier is calculated using the expression below. 
 	\begin{equation}\label{key}
 	L\left(\boldsymbol{y}_{i}, \hat{\boldsymbol{y}}_{i}\right) = -(\mathbf y \log (\mathbf {\hat y})+(1-\mathbf  y) \log (1-\mathbf {\hat y}))
@@ -388,6 +388,7 @@
 %				\end{equation*} 
 %			\end{ceqn}
 %	\end{figure*} \noindent
+	\noindent
 	For this project, the positive group belongs to those who have not recidivated and the negative group is for those who has recidivated. The true positive (TP) amounts to the classifier predicting true and the ground truth being true, while the true negative (TN) is the number of times the classifier predicted false, when the true label was false. True positive and false positive can thus be seen as the correct predictions. The incorrect predictions are false positive and false negative. False positive (FP) amounts to the model predicting true when the ground truth is false. Meanwhile, the false negative (FN) is a false prediction from the model, where the ground truth is true. From the confusion matrix the recall and selectivity also known as true positive rate (TPR) and false negative rate (FPR) can be calculated. Furthermore, the validation accuracy can be determined.
 	
 	\begin{align}\label{tpr_fpr_acc}
@@ -395,7 +396,7 @@
 	\text{FPR} = \frac{\text{FP}}{\text{FP}+\text{TN}} \qquad &&
 	\text{ACC} = \frac{\text{TP}+\text{TN}}{N}
 	\end{align} \noindent
-	Where N is 
+	Where N is the total amount of predictions which is given as, 
 	\[\text{N} = \text{TP}+\text{FN}+\text{FP}+\text{TN.}\] 
 	The TPR and FPR values of the two conditional populations have to be equal in order for the classification to be fair according to equalized odds and just the TPR values have to be equal to satisfy equal opportunity. The split of the data allows for a different ROC-curves to be constructed for each protected group, showing differing values for TPR and FPR, which can be equated. This is a simplification of the process of the bias definitions used for bias correction methods, which have been explained in section \ref{bias_def}. Furthermore, in the next section, \ref{biascorr}, a detailed explanation of how to fulfill these fairness definitions will be given. 
 	
@@ -788,7 +789,7 @@
 				\end{tabular}
 			\end{table}
 			\caption{It is clear from this illustration that there is a large discrepancy between the normalized distribution defendants greater than and less than 25 years old in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that defendants greater than 25 years old are 1.7 times as often classified as low risk of recidivism than those under 25 years old, while under 25 year olds are about twice as often classified as high risk of recidivism than over 25 year olds. This could signify that the data is biased towards giving older defendants a higher risk evaluation, but further analysis will have to be made.}
-			\label{fig:predictedrecidrace}
+			\label{fig:predictedrecidage}
 		\end{figure}
 	
 		\begin{figure}[H]
@@ -803,7 +804,7 @@
 				Greater than 25     & 0.531 & 0.469  \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the age of each offender and normalized by the size of each protected group. It is clear that the amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
+		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the age of each offender and normalized by the size of each protected group. It is clear that the amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidage}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidage} is somewhat explained by the true recidivism scores.}
 		\label{fig:truerecid}
 	\end{figure}
 	
