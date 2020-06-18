@@ -114,7 +114,7 @@
 	
 	\section{Data} \label{data}
 	
-	\noindent To analyse the efficacy of using bias correction to remove discrimination among race and gender in the American justice system, the modified COMPAS recidivism dataset from ProPublica has been used. An important note on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector for this project to facilitate the use of equal opportunity and equalized odds. This method was also used by ProPublica during their analysis and therefore, turning the output into a binary vector was logical. The idea was to recreate the algorithm proposed originally by ProPublica. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism together into zeros and the \texttt{Low} risk of recidivism into ones. Furthermore, in the analysis only African-American and Caucasian race has been used. This is because there are not enough data to construct any meaningful analysis of the other races.
+	\noindent To analyse the efficacy of using bias correction to remove discrimination among race and gender in the American justice system, the modified COMPAS recidivism dataset from ProPublica has been used. An important note on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector for this project to facilitate the use of equal opportunity and equalized odds. This method was also used by ProPublica during their analysis and therefore, turning the output into a binary vector was logical. The idea was to recreate the algorithm proposed originally by ProPublica. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism together into zeros and the \texttt{Low} risk of recidivism into ones. Furthermore, in the analysis only African-American and Caucasian race has been used. This is because there is not enough data to construct any meaningful analysis of the other races, which can be seen in figure \ref{fig:races}.
 	
 	A general overview of the dataset and how it came to be, as well as the variables used for the classifier is given in section \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so section \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base the future analysis. Lastly, section \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored and examined further in later sections.
 	
@@ -780,6 +780,14 @@
 		\caption{}
 	\end{figure}
 
+	\subsection{Distributions of Categorical Data Variables}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/races}
+		\caption{This illustration shows the number of defendants of each race. It is clear that the number of defendants of all other races than \texttt{Caucasian} and \texttt{African-American} are underrepresented by this dataset, and it will thus become difficult to train a model on these races.}
+		\label{fig:races}
+	\end{figure}
+	
 	\subsection{Distributions of Numerical Data Variables}
 	\begin{figure}
 		\centering
