@@ -521,7 +521,7 @@
 	\section{Results}\label{results}
 	The bias identification and bias correction in this section focuses on bias from race and sex specifically. The analysis of bias in age can be seen in \ref{analysis_of_age}. For race and sex, this section will focus on the results of the analyses and give an indication of how to read the illustrations and explain the significance of each illustration. To see the discussion of these results and how the results are obtained or can be improved see section \ref{discussion}. Section \ref{training_loss_and_accuracy} shows the training loss and training accuracy as well as the validation accuracy of the neural network after training. The result of the permutation test can be seen in section \ref{modelAccuracy}. Section \ref{confusionMatrices} shows the bias in the neural network after training on possibly biased data using confusion matrices. As another way to both check and correct bias is to use ROC-curves. These are shown for Caucasians and African-Americans as well as males and females in \ref{ROC}, after which equal opportunity and equalized odds have been implemented and shown in sections \ref{equalOpportunity} \& \ref{equalizedOdds}.
 	
-	Since the same methods have been used on both the protected groups sex and race, the results are shown by having the results for the race protected attributes on the left side of the page and having the sex protected attribute on the right side of the page. The confusion matrices in section \ref{confusionMatrices} have the race results on top and the sex attributes on the bottom, since this makes them a lot easier to read.
+	Since the same methods have been used for all the protected groups -- race, sex and age -- the results are shown by having the results for the race protected attributes on the top of the page, having the sex protected attribute in the middle and age on the bottom. This is true for every subsection except for section \ref{training_loss_and_accuracy} and section \ref{modelAccuracy}, since every protected attribute uses the same trained binary classifier.
 	
 	\subsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
 	
@@ -690,24 +690,30 @@
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/ROC_sex.png}
-			%\caption{Lorem ipsum}
+			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot.png}
 		\end{subfigure}
-	
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot.png}
+			\includegraphics[width=0.9\linewidth]{imgs/ROC_sex.png}
+			%\caption{Lorem ipsum}
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_sex.png}
 		\end{subfigure}
-		\caption{\textbf{Top}: An illustration of the conditional ROC-Curves for race on the left and sex on the left. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Bottom}: An illustration of the true and false positive rates as a function of the threshold for race on the left and sex on the right.}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/ROC_age.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_age.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the conditional ROC-Curves for race sex and age respectively. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold for race, sex and age respectively.}
 		\label{fig:roc-curve}
 	\end{figure}
-
-%
-	
 
 %	\begin{figure}[H]
 %		\centering
@@ -727,7 +733,13 @@
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/Equal Opportunity Optimal_sex"}
 		\end{subfigure}	
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. The points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. \textbf{Left:} The constructed binary classifier yields an accuracy of $ 0.678 $, where the threshold used for the Caucasian is $T_{\text{Caucasian}}= 0.56 $ and the threshold for African-American is $ T_{\text{Afro-American}}=0.510 $, when equal opportunity is ensured. \textbf{Right:} The achieved accuracy is $0.690$ where $T_{\text{Female}}= 0.68$ and $T_{\text{Male}}= 0.45$.}
+		\begin{center}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equal Opportunity Optimal_age"}
+		\end{subfigure}
+		\end{center}
+		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. The points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. \textbf{Left:} The constructed binary classifier yields an accuracy of $ 0.678 $, where the threshold used for the Caucasian is $T_{\text{Caucasian}}= 0.56 $ and the threshold for African-American is $ T_{\text{Afro-American}}=0.510 $, when equal opportunity is ensured. \textbf{Right:} The achieved accuracy is $0.690$ where $T_{\text{Female}}= 0.68$ and $T_{\text{Male}}= 0.45$. \textbf{Bottom:} The accuracy is $0.68$ with $T_{\text{Greater\_than\_{25}}}= 0.49$ and $T_{\text{Less\_than\_{25}}}= 0.24$.}
 		\label{fig:equal-opportunity-optimal}
 	\end{figure}
 	
@@ -741,20 +753,33 @@
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_sex"}
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied"}
 		\end{subfigure}
-	
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied"}
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_sex"}
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_sex"}
 		\end{subfigure}
-		\caption{\textbf{Top}: An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Bottom left}: These illustrations show the result of the predictor which satisfies equalized odds for race. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.671 $, when equalized odds is ensured. The threshold for African-Americans is, $ T_{\text{African-Americans}} = 0.48 $. As for Caucasian, the predictor has a randomized threshold, $ T_{\text{Caucasian}} $. The threshold assumes the value $\underline t_{\text{Caucasian}} = 1 $  with a probability $ \underline p_{\text{Caucasian}}= 0.84 $ and the value $ \bar t_{\text{Caucasian}} = 0.58 $ with the probability $\bar p_{\text{Caucasian}} = 0.15 $. \textbf{Bottom right:} The accuracy of the equalized odds predictor on sex is 0.685, where the threshold is $T_{\text{Female}}=0.52$ and the male threshold is $\bar t_{\text{male}} = 0.63$ with probability $\bar p_{\text{Male}} = 0.04$ and $,\underline t_{\text{Male}} = 1.00$ with probability $\underline p_{\text{Male}} = 0.95$.}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_age"}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_age"}
+		\end{subfigure}
+		\caption{\textbf{Left}: An illustration of the dashed blue line used to sample the best equalized odds threshold. Mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. The equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: These illustrations show the result of the predictor which satisfies equalized odds for race, sex and age in that order. Hence, the blue point is moved onto the green point. The accuracies of the equalized odds predictors $0.671$, $0.685$ and $0.635$, where the age equalized odds classifier probably gets the lowest accuracy because it is peanalized more for lowering the \texttt{Greater\_than\_{25}}} accuracy. The thresholds can be seen in the illustrations.
 		\label{fig:equalizedOdds}
 	\end{figure}
+	
+	
+	
+%	\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.635 $, when equalized odds is ensured. The threshold for the protected group older than 25 is, $ T_{\text{Greater\_than\_25}} = 0.640 $. As for the group under 25, the predictor has a randomized threshold, $ T_{\text{Less\_than\_25}} $. The threshold assumes the value $\underline t_{\text{Less\_than\_25}} = 1 $  with a probability $ \underline p_{\text{Less\_than\_25}}= 0.63 $ and the value $ \bar t_{\text{Less\_than\_25}} = 0.43 $ with the probability $\bar p_{\text{Less\_than\_25}} = 0.37 $.}
+	
+	
 	
 	\subsection{ProPublica Bias Examination}
 	
@@ -767,22 +792,30 @@
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/propub_ROC_sex.png}
-			%\caption{Lorem ipsum}
+			\includegraphics[width=0.9\linewidth]{imgs/propub_fpr_tpr_race.png}
 		\end{subfigure}
-		
 		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/propub_fpr_tpr_race.png}
+			\includegraphics[width=0.9\linewidth]{imgs/propub_ROC_sex.png}
+			%\caption{Lorem ipsum}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/propub_fpr_tpr_sex.png}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{imgs/propub_ROC_age.png}
+			%\caption{Lorem ipsum}
 		\end{subfigure}%
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{imgs/propub_fpr_tpr_age.png}
+			%\caption{Lorem ipsum}
 		\end{subfigure}
-		\caption{These plots show how bias could be perceived by ProPublica in their original analysis, when they used \texttt{decile\_score} to analyze FPR and TPR differences. \textbf{Top}: An illustration of the conditional ROC-Curves for race on the left and sex on the left. Each point on the curve is realized by thresholding at every value of \texttt{decile\_score}. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Bottom}: An illustration of the true and false positive rates as a function of the threshold for race on the left and sex on the right.}
+		\caption{These plots show how bias could be perceived by ProPublica in their original analysis, when they used \texttt{decile\_score} to analyze FPR and TPR differences. \textbf{Left}: An illustration of the conditional ROC-Curves for race, sex and age respectively. Each point on the curve is realized by thresholding at every value of \texttt{decile\_score}. The diagonal (the dashed red line) represents the TPR and FPR relationship for a random classifier. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold of race, sex and age.}
 		\label{fig:roc-curve}
 	\end{figure}
-	
 	
 	\section{Discussion} \label{discussion}	
 	This section will focus on discussing the results as well as the efficacy of the methods and of bias in general. The first section, section \ref{discussionOfResults}, will make sense of the results seen in section \ref{results} and argue the correctness or possible future work on them. Section \ref{tradeoff} also uses the results but instead sets the focus on uncovering how the accuracy dwindles when using bias correction methods to avoid discrimination of a bias classification model. In section \ref{ethical_dilemma_of_bias}, origins of bias and different cognitive biases will be discussed and the victims of bias will be uncovered. The definitions of fairness for machine learning will be looked into further in section \ref{examination_of_fairness_definitions}. Section \ref{perf_model} will uncover if perfect ML modles needs definitions of fairness. Section \ref{why_do_we_care} discusses why bias is even an important topic to discuss to begin with. Lastly, section \ref{safeai} will discuss the principles of safe AI.
@@ -904,69 +937,6 @@
 		\caption{Histograms for every numerical variable used in the training of the classifier. Here, it can also be seen that the values of the variables \texttt{juv\_misd\_count} and \texttt{juv\_fel\_count} are a lot lower than the values of \texttt{prior\_count} and \texttt{age}.}
 		\label{fig:histogramnumerical}
 	\end{figure}
-	
-	\subsubsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}
-	
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/ROC_age.png}
-			%\caption{Lorem ipsum}
-		\end{subfigure}%
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/fpr_tpr_plot_age.png}
-			%\caption{Lorem ipsum}
-		\end{subfigure}
-		\caption{\textbf{Left:} An illustration of the conditional ROC-Curves when conditioning on race. Each point on the curve is realized by thresholding the score function R at some value. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right:} An illustration of the true and false positive rates as a function of the threshold.}
-		\label{fig:roc-curveage}
-	\end{figure}
-	
-	\subsubsection{Equal Opportunity}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.5\linewidth]{"imgs/Equal Opportunity Optimal_age"}
-		\caption{An illustration of the optimal equal opportunity threshold on the entirety of the ROC-curves. These points have equal \textit{y}-coordinates which is illustrated with the red horizontal dash line between the blue and green points. The constructed binary classifier yields an accuracy of $ 0.680 $, where the threshold used for the protected group less than 25 years old is $T_{\text{Less\_than\_25}}= 0.490 $ and the threshold for the protected group grater than 25 years old is $ T_{\text{Greater\_than\_25}}=0.240 $, when equal opportunity is ensured.}
-		\label{fig:equal-opportunity-optimalage}
-	\end{figure}
-	
-	\subsubsection{Equalized Odds}
-	
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Optimal_age"}
-		\end{subfigure}%
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{"imgs/Equalized Odds Correctied_age"}
-		\end{subfigure}
-		\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.635 $, when equalized odds is ensured. The threshold for the protected group older than 25 is, $ T_{\text{Greater\_than\_25}} = 0.640 $. As for the group under 25, the predictor has a randomized threshold, $ T_{\text{Less\_than\_25}} $. The threshold assumes the value $\underline t_{\text{Less\_than\_25}} = 1 $  with a probability $ \underline p_{\text{Less\_than\_25}}= 0.63 $ and the value $ \bar t_{\text{Less\_than\_25}} = 0.43 $ with the probability $\bar p_{\text{Less\_than\_25}} = 0.37 $.}
-		\label{fig:equalizedOddsage}
-	\end{figure}
-	
-	
-	\subsubsection{ProPublica Original Bias Analysis}
-	
-	\begin{figure}[H]
-		\centering
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/propub_ROC_age.png}
-			%\caption{Lorem ipsum}
-		\end{subfigure}%
-		\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.9\linewidth]{imgs/propub_fpr_tpr_age.png}
-			%\caption{Lorem ipsum}
-		\end{subfigure}
-		\caption{These plots show how bias could be perceived by ProPublica in their original analysis, when they used \texttt{decile\_score} to analyze FPR and TPR differences. \textbf{Left}: An illustration of the conditional ROC-Curve for age. Each point on the curve is realized by thresholding at every value of \texttt{decile\_score}. The diagonal (the dashed red line) represents the relationship of the true positive and false positive rate for a random classifier. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold for age.}
-		\label{fig:roc-curveage}
-	\end{figure}
-
 	
 	\subsection{Accuracy Distribution}
 	\begin{figure}[H]
