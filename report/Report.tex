@@ -656,7 +656,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{Confusion matrices of the age conditioned data with threshold $ T = 0.5 $. The right matrix is normalized by $ N_{Less_than_{25}} $.}
+		{Confusion matrices of the age conditioned data with threshold $ T = 0.5 $. The right matrix is normalized by $ N_{Greater\_than\_25} $.}
 	\end{figure*}
 	\begin{figure*}[h!]	
 		\begin{multicols}{2}
@@ -675,7 +675,7 @@
 				\end{equation*}
 			\end{ceqn}
 		\end{multicols}
-		{The confusion matrix conditioned on the population of defendants over 25 is shown. The threshold is $ T = 0.5 $ and the right matrix is normalized by $ N_{Greater_than_25} $.}
+		{The confusion matrix conditioned on the population of defendants over 25 is shown. The threshold is $ T = 0.5 $ and the right matrix is normalized by $ N_{Less\_than\_25} $.}
 	\end{figure*}
 	
 	
@@ -774,12 +774,6 @@
 		\caption{\textbf{Left}: An illustration of the dashed blue line used to sample the best equalized odds threshold. Mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. The equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right}: These illustrations show the result of the predictor which satisfies equalized odds for race, sex and age in that order. Hence, the blue point is moved onto the green point. The accuracies of the equalized odds predictors $0.671$, $0.685$ and $0.635$, where the age equalized odds classifier probably gets the lowest accuracy because it is peanalized more for lowering the \texttt{Greater\_than\_{25}}} accuracy. The thresholds can be seen in the illustrations.
 		\label{fig:equalizedOdds}
 	\end{figure}
-	
-	
-	
-%	\caption{\textbf{Left:} An illustration of the line (dashed blue line) which is used to sample the best equalized odds threshold. Equalized odds entails that the TPR and FPR rates are equal. When mixing the threshold of 1 with the threshold of the blue point, a predictor which satisfies equalized odds can be found. As such, it is possible to make the false and true positive rates approximately equal. It is also clear that equalized odds and equal opportunity bias corrections methods choose almost the same threshold.  \textbf{Right:} These illustrations show the result of the predictor which satisfies equalized odds for age. Hence, the blue point is moved onto the green point and thereby ensures that the TPR and FPR are approximately equal. The constructed binary classifier will yield an accuracy of $ 0.635 $, when equalized odds is ensured. The threshold for the protected group older than 25 is, $ T_{\text{Greater\_than\_25}} = 0.640 $. As for the group under 25, the predictor has a randomized threshold, $ T_{\text{Less\_than\_25}} $. The threshold assumes the value $\underline t_{\text{Less\_than\_25}} = 1 $  with a probability $ \underline p_{\text{Less\_than\_25}}= 0.63 $ and the value $ \bar t_{\text{Less\_than\_25}} = 0.43 $ with the probability $\bar p_{\text{Less\_than\_25}} = 0.37 $.}
-	
-	
 	
 	\subsection{ProPublica Bias Examination}
 	
