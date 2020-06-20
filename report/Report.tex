@@ -235,7 +235,7 @@
 		
 	\subsection{Visualization of Data} \label{dataVisuals}
 	%TODO Fix så alle figurer bliver nævnt
-	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace} aims to show whether there is a difference between the fraction of Caucasians and African-Americans who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. Figure \ref{fig:predictedrecidsex} has the same purpose, utilizing sex instead of race. Figure \ref{fig:truerecid} \& \ref{fig:proirs} give some insight into the actual amount of crime done by African-Americans and Caucasians and whether the amounts seem to be similar.\fix A similar range of illustrations to show possible bias in the age variable can be seen in section \ref{age_data_visualization}.
+	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace}, \ref{fig:predictedrecidsex} and \ref{fig:predictedrecidrage} aims to show whether there is a difference between the fraction of the protected group who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. The protected groups are: race, sex and age. Figure \ref{fig:race_truerecid}, \ref{fig:sex_truerecid}, \ref{fig:age_truerecid} and \ref{fig:proirs} give some insight into the actual amount of crime done by each of the protected groups and whether the amounts seem to be similar.\fix 
 	
 	\begin{figure}[H]
 		\centering
@@ -267,7 +267,7 @@
 			\end{tabular}
 		\end{table}
 		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender and normalized by the size of each protected group. It is clear that the amounts of African-Americans and Caucasians that recidivated or did not recidivate based on the proportion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
-		\label{fig:truerecid}
+		\label{fig:race_truerecid}
 	\end{figure}
 	
 	\begin{figure}[H]
@@ -299,7 +299,7 @@
 			\end{tabular}
 		\end{table}
 		\caption{This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is a difference between the fraction of males who recidivates and the fraction of women who recidivates. The illustration agrees with figure \ref{fig:predictedrecidsex} as no bias seems present. Thus, from the visualizations, a bias appears to exist for the protected attributes race but not for sex.}
-		\label{fig:truerecid}
+		\label{fig:sex_truerecid}
 	\end{figure}
 
 	
@@ -316,7 +316,7 @@
 			\end{tabular}
 		\end{table}
 		\caption{As in figure \ref{fig:predictedrecidrace}, it also holds true in this illustration that there is a large discrepancy between the normalized distribution defendants greater than and less than 25 years old in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that defendants greater than 25 years old are 1.7 times as often classified as low risk of recidivism than those under 25 years old, while under 25 year olds are about twice as often classified as high risk of recidivism than over 25 year olds. This could signify that the data is biased towards giving older defendants a higher risk evaluation, but further analysis will have to be made.}
-		\label{fig:predictedrecidage}
+		\label{fig:predictedrecidrage}
 	\end{figure}
 	
 	\begin{figure}[H]
@@ -332,7 +332,7 @@
 			\end{tabular}
 		\end{table}
 		\caption{This illustration shows the normalized true recidivism values for the protected group age. The amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration are close to equal to the amounts seen in figure \ref{fig:predictedrecidage}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidage} is somewhat explained by the true recidivism scores.}
-		\label{fig:truerecidage}
+		\label{fig:age_truerecid}
 	\end{figure}
 	
 	
@@ -802,7 +802,6 @@
 			%\caption{Lorem ipsum}
 		\end{subfigure}
 		\caption{These plots show how bias could be perceived by ProPublica in their original analysis, when they used \texttt{decile\_score} to analyze FPR and TPR differences. \textbf{Left}: An illustration of the conditional ROC-Curves for race, sex and age respectively. Each point on the curve is realized by thresholding at every value of \texttt{decile\_score}. The diagonal (the dashed red line) represents the TPR and FPR relationship for a random classifier. \textbf{Right}: An illustration of the true and false positive rates as a function of the threshold of race, sex and age.}
-		\label{fig:roc-curve}
 	\end{figure}
 	
 	\section{Discussion} \label{discussion}	
@@ -813,7 +812,7 @@
 	
 	From figure \ref{fig:permtest}, it is clear that the obtained accuracy is indeed significant and different from the accuracies of the permuted data, which is evident, since there are no permutations larger than the observed value or even the lower bound of the accuracy minus one standard deviation. From the estimation of the \textit{p}-value in \ref{modelAccuracy}, it is obvious that the \textit{p}-value is far under the desired level of significance. Hence, the null hypothesis is rejected and the permutation test thus shows that the accuracy from the neural network on the non-permuted data is better than random and has found a meaningful interpretation of the data. This also means that the model is better than a random model (that e.g. only guesses on the largest class), so the classifier could have practical use. The accuracy of $68.05\% \pm 0.015\%$ on the validation set also lines up quite well with the accuracies fround in ProPublica's analysis of the COMPAS recidivism algorithm. They found that their predictive accuracy for Caucasian and African-American defendants were 62.5\% and 62.3\% respectively, while Northpointe found accuracies of 69\% and 67\% for Caucasian and African-American defendants respectively \cite{propublicaAnalysis}. \\\\
 	\noindent
-	It is obvious from the two normalized confusion matrices for Caucasian and African-American defendants in section \ref{confusionMatrices} that Caucasian defendants have almost a twice as large false positive value, while the same is true for the false negative values for African-American defendants. This signifies that the binary classifier more often labels Caucasians as not being at risk of recidivism even though they were at risk, while African-Americans are more often labeled as being at risk of recidivism when they were not truly at risk. This clearly shows that the model is very biased and that the original bias that seemed to be present in the data when plotting the recidivism scores for Caucasian and African-Americans, shown in section \ref{dataVisuals} and figure \ref{fig:predictedrecidrace}, has been learned by the model as well. This finding confirms the study done by ProPublica. However, another bias in the dataset is uncovered. From the confusion matrices seen in results for sex, it is obvious that women have a higher false postive value thus showing a bias towards not classifying women at risk to recidivate. From the plots seen in section \ref{dataVisuals} no indication of any bias in relation to sex can be seen, as was seen with race. This shows that care needs to be taken to avoid biased datasets. Biases are not always easy to detect nor to calibrate for, either before, during or after training of the model. Meanwhile though, care needs to be taken when dealing with bias removal, as it is necessary to prove that the bias is unjustified in the data. This can be proven by looking at conditional populations and their FPR \& TPR as a function of thresholds. This can reveal if there is an underlying bias which shows discrimination in a classifier. 
+	It is obvious from the two normalized confusion matrices for Caucasian and African-American defendants in section \ref{confusionMatrices} that Caucasian defendants have almost a twice as large false positive value, while the same is true for the false negative values for African-American defendants. This signifies that the binary classifier more often labels Caucasians as not being at risk of recidivism even though they were at risk, while African-Americans are more often labeled as being at risk of recidivism when they were not truly at risk. This clearly shows that the model is very biased and that the original bias that seemed to be present in the data when plotting the recidivism scores for Caucasian and African-Americans, shown in section \ref{dataVisuals} and figure \ref{fig:predictedrecidrace}, has been learned by the model as well. Furthermore in section \ref{propub}, it is shown that the orignal COMPAS-algorithm has the racial bias as well. The findings of this project therefore confirms the study done by ProPublica. However, another bias in the dataset is uncovered. From the confusion matrices seen in results (see \ref{confusionMatrices}) for sex, it is obvious that women have a higher false positive value thus showing a bias towards not classifying women at risk to recidivate. From the plots seen in section \ref{dataVisuals} no indication of any bias in relation to sex can be seen, as was seen with race. This shows that care needs to be taken to avoid biased datasets. Biases are not always easy to detect nor to calibrate for, either before, during or after training of the model. Meanwhile though, care needs to be taken when dealing with bias removal, as it is necessary to prove that the bias is unjustified in the data. This can be proven by looking at conditional populations and their FPR \& TPR as a function of thresholds. This can reveal if there is an underlying bias which shows discrimination in a classifier. 
 	
 	The conditional ROC-curves from section \ref{ROC} figure \ref{fig:roc-curve} may at first glance seem very similar for both sex and race, but when the dependency of the specific threshold is taken into consideration, it becomes apparent that there are major differences. The difference in thresholds causes the true and false positive rates between the two conditional ROC-curves, in both cases, to be different, showing an inherent bias and of course a difference between the conditional ROC-curves. This also confirms the suspected bias seen from figure \ref{fig:predictedrecidrace} \& \ref{fig:proirs} for race in the data section. The data visualtion for sex, as earlier mentioned, does not suggest any bias. Since the two ROC-curves are different, using just one common threshold for both races, age groups or genders would result in a biased model, exactly like what happened in Northpointe Inc.'s algorithm. For this reason, equal opportunity or equalized odds with a threshold for each protected attribute (Caucasians and African-Americans \& Male and Female or ages over and under 25 in this project) needs to be used, sometimes even when the curves look deceivingly similar. \\\\
 	\noindent
