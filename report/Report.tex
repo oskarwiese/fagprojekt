@@ -17,6 +17,26 @@
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{pxfonts}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color, colortbl}
+\definecolor{green}{rgb}{0.67, 0.88, 0.69}
+\definecolor{red}{rgb}{1.0, 0.44, 0.37}
+\newcommand\MyBoxgreen[2]{
+	\fcolorbox{black}{green}{\lower1cm
+		\vbox to 2.4cm{\vfil
+			\hbox to 2.4cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+			\vfil}%
+	}%
+}
+\newcommand\MyBoxred[2]{
+	\fcolorbox{black}{red}{\lower1cm
+		\vbox to 2.4cm{\vfil
+			\hbox to 2.4cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+			\vfil}%
+	}%
+}
+
 \captionsetup{labelfont=bf}
 \def\fix{\hskip\fontdimen2\font\relax}
 \lstset{
@@ -571,126 +591,86 @@
 	\[p=\frac{1}{M}=0.001\]
 	
 	\subsection{Confusion Matrices}\label{confusionMatrices}
+	The following section will show the confusion matrices condtioned on three different protected groups which are the following: race, gender and age.
+	\renewcommand\arraystretch{1.5}
+	\setlength\tabcolsep{0pt}
+	\begin{figure}[H]
+	\begin{subfigure}{0.5\textwidth}
+	\scalebox{0.8}{
+	\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+		\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+		& \multicolumn{2}{c}{\bfseries True Condition} & \\
+		& & \bfseries p & \bfseries n & \bfseries Total \\
+		& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=193}{\hspace*{-0.1cm}TPP=0.412} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=103}{\hspace*{-0.1cm}FPP=0.213} & 296 \\[2.4em]
+		& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=62}{\hspace*{-0.1cm}FNP=0.128} & \MyBoxgreen{\hspace*{-0.1cm}TN=119}{\hspace*{-0.1cm}TNP=0.246} & 181\\
+		& Total & 255 & 222 & $ N_{Caucasian}=477 $ 
+	\end{tabular}
+	}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+	\scalebox{0.8}{
+	\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+		\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+		& \multicolumn{2}{c}{\bfseries True Condition} & \\
+		& & \bfseries p & \bfseries n & \bfseries Total \\
+		& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=259}{\hspace*{-0.1cm}TPP=0.347} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=92}{\hspace*{-0.1cm}FPP=0.123} & 351 \\[2.4em]
+		& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=165}{\hspace*{-0.1cm}FNP=0.221} & \MyBoxgreen{\hspace*{-0.1cm}TN=231}{\hspace*{-0.1cm}TNP=0.309} & 396\\
+		& Total & 424 & 323 & $ N_{Afro-American}=747 $ 
+	\end{tabular}
+	}
+	\end{subfigure}
 	
-	\begin{figure*}[h!]	
-	\begin{multicols}{2}
-		\begin{ceqn}
-		\begin{equation*}
-		\begin{bmatrix}
-		193 & 103  \\
-		62 & 119 
-		\end{bmatrix} 
-		\end{equation*} 
-		\begin{equation*}
-		\begin{bmatrix}
-		0.412 & 0.213  \\
-		0.128 & 0.246 
-		\end{bmatrix} 
-		\end{equation*}
-		\end{ceqn}
-	\end{multicols}
-	{The left matrix shows the confusion matrix of the population conditioned on the Caucasian race with the threshold, $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Caucasian} $ element wise in order to show the proportions of TP, FP, TN and FN. $ N_{Caucasian} $ is the total number of Caucasians in the dataset. Below, the confusion matrix, conditioned on the Afro-American race, is shown.}
-	\end{figure*}
-	\begin{figure*}[h!]	
-		\begin{multicols}{2}
-			\begin{ceqn}
-			\begin{equation*}
-			\begin{bmatrix}
-			259 & 92  \\
-			165 & 231 
-			\end{bmatrix} 
-			\end{equation*} 
-			\begin{equation*}
-			\begin{bmatrix}
-			0.347 & 0.123 \\
-			0.221 & 0.309 
-			\end{bmatrix} 
-			\end{equation*}
-			\end{ceqn}
-		\end{multicols}
-		{The threshold is set to $ T = 0.5 $. On the right the confusion matrix is divided by $ N_{Afro-American} $ element wise in order to show the proportions of TP, FP, TN and FN.}
-	\end{figure*}
-	
-	
-		\begin{figure*}[h!]	
-		\begin{multicols}{2}
-			\begin{ceqn}
-				\begin{equation*}
-				\begin{bmatrix}
-				124 & 55  \\
-				42 & 78 
-				\end{bmatrix} 
-				\end{equation*} 
-				\begin{equation*}
-				\begin{bmatrix}
-				0.415 & 0.184  \\
-				0.140 & 0.261 
-				\end{bmatrix} 
-				\end{equation*}
-			\end{ceqn}
-		\end{multicols}
-		{The left matrix shows the confusion matrix of the population conditioned on female, with a threshold, $ T = 0.5 $ and the right matrix is normalized by $N_{Female}$ to find proportions. Below, the confusion matrix of the population conditioned on the gender Male is shown.}
-	\end{figure*}
-	\begin{figure*}[h!]	
-		\begin{multicols}{2}
-			\begin{ceqn}
-				\begin{equation*}
-				\begin{bmatrix}
-				484 & 122  \\
-				244 & 293 
-				\end{bmatrix} 
-				\end{equation*} 
-				\begin{equation*}
-				\begin{bmatrix}
-				0.423 & 0.107 \\
-				0.213 & 0.256 
-				\end{bmatrix} 
-				\end{equation*}
-			\end{ceqn}
-		\end{multicols}
-		{The threshold is set to $T = 0.5$. On the right the proportions of TP, TN, FN and FP is shown by dividing by $N_{Male}$.}
-	\end{figure*}
-	
-	
-		\begin{figure*}[h!]	
-		\begin{multicols}{2}
-			\begin{ceqn}
-				\begin{equation*}
-				\begin{bmatrix}
-				409 & 124  \\
-				169 & 253 
-				\end{bmatrix} 
-				\end{equation*} 
-				\begin{equation*}
-				\begin{bmatrix}
-				0.428 & 0.130  \\
-				0.177 & 0.265 
-				\end{bmatrix} 
-				\end{equation*}
-			\end{ceqn}
-		\end{multicols}
-		{Confusion matrices of the age conditioned data with threshold $ T = 0.5 $. The right matrix is normalized by $ N_{Greater\_than\_25} $.}
-	\end{figure*}
-	\begin{figure*}[h!]	
-		\begin{multicols}{2}
-			\begin{ceqn}
-				\begin{equation*}
-				\begin{bmatrix}
-				85 & 35  \\
-				77 & 78 
-				\end{bmatrix} 
-				\end{equation*} 
-				\begin{equation*}
-				\begin{bmatrix}
-				0.309 & 0.127 \\
-				0.280 & 0.284 
-				\end{bmatrix} 
-				\end{equation*}
-			\end{ceqn}
-		\end{multicols}
-		{The confusion matrix conditioned on the population of defendants over 25 is shown. The threshold is $ T = 0.5 $ and the right matrix is normalized by $ N_{Less\_than\_25} $.}
-	\end{figure*}
-	
+		\begin{subfigure}{0.5\textwidth}
+			\scalebox{0.8}{
+			\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+					\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+					& \multicolumn{2}{c}{\bfseries True Condition} & \\
+					& & \bfseries p & \bfseries n & \bfseries Total \\
+					& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=123}{\hspace*{-0.1cm}TPP=0.415} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=55}{\hspace*{-0.1cm}FPP=0.184} & 179 \\[2.4em]
+					& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=42}{\hspace*{-0.1cm}FNP=0.140} & \MyBoxgreen{\hspace*{-0.1cm}TN=78}{\hspace*{-0.1cm}TNP=0.261} & 120\\
+					& Total & 166 & 133 & $ N_{Female}=299 $ 
+				\end{tabular}
+			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\scalebox{0.8}{
+				\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+					\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+					& \multicolumn{2}{c}{\bfseries True Condition} & \\
+					& & \bfseries p & \bfseries n & \bfseries Total \\
+					& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=484}{\hspace*{-0.1cm}TPP=0.423} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=122}{\hspace*{-0.1cm}FPP=0.107} & 606 \\[2.4em]
+					& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=244}{\hspace*{-0.1cm}FNP=0.213} & \MyBoxgreen{\hspace*{-0.1cm}TN=293}{\hspace*{-0.1cm}TNP=0.256} & 537\\
+					& Total & 728 & 415 & $ N_{Male}=1143 $ 
+				\end{tabular}
+			}
+		\end{subfigure}
+
+		\begin{subfigure}{0.5\textwidth}
+			\scalebox{0.8}{
+				\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+					\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+					& \multicolumn{2}{c}{\bfseries True Condition} & \\
+					& & \bfseries p & \bfseries n & \bfseries Total \\
+					& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=409}{\hspace*{-0.1cm}TPP=0.428} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=124}{\hspace*{-0.1cm}FPP=0.130} & 533 \\[2.4em]
+					& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=169}{\hspace*{-0.1cm}FNP=0.177} & \MyBoxgreen{\hspace*{-0.1cm}TN=253}{\hspace*{-0.1cm}TNP=0.265} & 422\\
+					& Total & 578 & 377 & $ N_{age>25}=955 $ 
+				\end{tabular}
+			}
+		\end{subfigure}
+		\begin{subfigure}{0.5\textwidth}
+			\scalebox{0.8}{
+				\begin{tabular}{c >{\bfseries}r @{\hspace{0.9em}}c @{\hspace{0.8em}}c @{\hspace{0.9em}}l}
+					\multirow{10}{*}{\parbox{1.3cm}{\bfseries\raggedleft Predicted\\ condition}} & 
+					& \multicolumn{2}{c}{\bfseries True Condition} & \\
+					& & \bfseries p & \bfseries n & \bfseries Total \\
+					& p$'$ & \MyBoxgreen{\hspace*{-0.1cm}TP=85}{\hspace*{-0.1cm}TPP=0.309} \vspace*{0.2cm} & \MyBoxred{\hspace*{-0.1cm}FP=35}{\hspace*{-0.1cm}FPP=0.127} & 120 \\[2.4em]
+					& n$'$ & \MyBoxred{\hspace*{-0.1cm}FN=77}{\hspace*{-0.1cm}FNP=0.280} & \MyBoxgreen{\hspace*{-0.1cm}TN=78}{\hspace*{-0.1cm}TNP=0.284} & 155\\
+					& Total & 162 & 113 & $ N_{age<25}=275 $ 
+				\end{tabular}
+			}
+		\end{subfigure}
+	\caption{TPP, FPP, FNP and TNP shows the propotion of TP, FP, FN and TN of the conditioned population respectively. The threshold for all of the confusion matrices are, $ T = 0.5 $. \textbf{Top}: The left matrix shows the confusion matrix of the population conditioned on the Caucasian race and right shows the confusion matrix conditioned on the Afro-American race. \textbf{Middle}: Left shows the confusion matrix conditioned on female and right shows the confusion matrix conditioned on male. \textbf{Bottom}: Left is the confusion matrix of the population conditioned on age greater than 25 and right shows the confusion matrix conditioned on the age less than 25.}
+	\end{figure}
 	
 	\subsection{Conditional ROC-curves and FPR/TPR Dependency on Threshold}\label{ROC}
 	
