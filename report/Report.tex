@@ -552,9 +552,9 @@
 %As for the implementation of Equal Opportunity, it only requires that the TPR is equal for both populations. This was done by using exhaustive search, by choosing a TPR for one population, then subtracting this from the TPR-array for the other population and using \texttt{argmin} to find the one closest to zero.
 	
 	\section{Results}\label{results}
-	The bias identification and bias correction in this section focuses on bias from race and sex specifically. The analysis of bias in age can be seen in \ref{analysis_of_age}. For race and sex, this section will focus on the results of the analyses and give an indication of how to read the illustrations and explain the significance of each illustration. To see the discussion of these results and how the results are obtained or can be improved see section \ref{discussion}. Section \ref{training_loss_and_accuracy} shows the training loss and training accuracy as well as the validation accuracy of the neural network after training. The result of the permutation test can be seen in section \ref{modelAccuracy}. Section \ref{confusionMatrices} shows the bias in the neural network after training on possibly biased data using confusion matrices. As another way to both check and correct bias is to use ROC-curves. These are shown for Caucasians and African-Americans as well as males and females in \ref{ROC}, after which equal opportunity and equalized odds have been implemented and shown in sections \ref{equalOpportunity} \& \ref{equalizedOdds}.
+	The bias identification and bias correction in this section focuses on bias from race, sex and age. This section will focus on the results of the analyses and give an indication of how to read the illustrations and explain the significance of each illustration. To see the discussion of these results and how the results are obtained or can be improved see section \ref{discussion}. Section \ref{training_loss_and_accuracy} shows the training loss and training accuracy as well as the validation accuracy of the neural network after training. The result of the permutation test can be seen in section \ref{modelAccuracy}. Section \ref{confusionMatrices} shows the bias in the neural network after training on possibly biased data using confusion matrices. As another way to both check and correct bias is to use ROC-curves. These are shown for all the protected groups in section \ref{ROC}, after which equal opportunity and equalized odds have been implemented and shown in sections \ref{equalOpportunity} \& \ref{equalizedOdds}.
 	
-	Since the same methods have been used for all the protected groups -- race, sex and age -- the results are shown by having the results for the race protected attributes on the top of the page, having the sex protected attribute in the middle and age on the bottom. This is true for every subsection except for section \ref{training_loss_and_accuracy} and section \ref{modelAccuracy}, since every protected attribute uses the same trained binary classifier.
+	Since the same methods have been used for all the protected groups -- race, sex and age -- the results are shown by having the results for the race protected attributes on the top of the page, having the sex protected attribute in the middle and age at the bottom. This is true for every subsection except for section \ref{training_loss_and_accuracy} and section \ref{modelAccuracy}, since every protected attribute uses the same trained binary classifier.
 	
 	\subsection{Training Loss and Accuracy}\label{training_loss_and_accuracy}
 	
@@ -859,18 +859,18 @@
 	
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{l  l  l  l  l}
+		\begin{tabular}{l  l  l l l  l  l}
 			\toprule
-			Safe AI...                  & & & & Explanation \\ \midrule
-			is secure                      & & & & Test of verified software and hardwate, adversarials \\
-			is open-source                 & & & & Methods, code, hardware, check and evolution         \\
-			is self-conscious              & & & & Understands own role                                 \\
-			is secretive                   & & & & Privacy by design                                    \\
-			has calibrated values       & & & & Debug for stereotypes, biases                        \\
-			is accountable              & & & & Transparent, communicating, "right to explanation"   \\
-			understands social relations & & & & Understands user's knowledge graph                   \\
-			understands power           & & & & Digital self-defense                                 \\
-			generates trust             & & & & Use in public relations                              \\ \bottomrule
+			Safe AI...                 & & & & & & Explanation \\ \midrule
+			is secure                     & & & & & & Test of verified software and hardwate, adversarials \\
+			is open-source                & & & & & & Methods, code, hardware, check and evolution         \\
+			is self-conscious             & & & & & & Understands own role                                 \\
+			is secretive                  & & & & & & Privacy by design                                    \\
+			has calibrated values      & & & & & & Debug for stereotypes, biases                        \\
+			is accountable             & & & & & & Transparent, communicating, "right to explanation"   \\
+			understands social relations& & & & & & Understands user's knowledge graph                   \\
+			understands power          & & & & & & Digital self-defense                                 \\
+			generates trust            & & & & & & Use in public relations                              \\ \bottomrule
 		\end{tabular}
 	\end{table} 
 	\noindent
