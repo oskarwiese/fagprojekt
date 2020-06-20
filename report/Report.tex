@@ -890,20 +890,20 @@
 	
 	\section{Appendix} \label{appendix}
 	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/c_charge_degree}
-		\caption{}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/charge_degree_score}
-		\caption{}
-	\end{figure}
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.5\linewidth]{imgs/c_charge_degree}
+%		\caption{}
+%	\end{figure}
+%	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[width=0.5\linewidth]{imgs/charge_degree_score}
+%		\caption{}
+%	\end{figure}
 
 	\subsection{Distributions of Categorical Data Variables}
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/races}
 		\caption{This illustration shows the number of defendants of each race. It is clear that the number of defendants of all other races than \texttt{Caucasian} and \texttt{African-American} are underrepresented by this dataset, and it will thus become difficult to train a model on these races.}
@@ -911,13 +911,13 @@
 	\end{figure}
 	
 	\subsection{Distributions of Numerical Data Variables}
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/boxplot_numericals}
 		\caption{This illustration shows normalized boxplots for the four numerical variables from the data that the binary classifier is trained on. It is clear that \texttt{age} has more values and is more spread out that the other variables. \texttt{juv\_fel\_count} and \texttt{juv\_misd\_count} contain a low number of distinct values as expected, since most defendants have probably not committed more than 10 felonies or misdemeanors.}
 		\label{fig:boxplotnumericals}
 	\end{figure}
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/histogram_numerical}
 		\caption{Histograms for every numerical variable used in the training of the classifier. Here, it can also be seen that the values of the variables \texttt{juv\_misd\_count} and \texttt{juv\_fel\_count} are a lot lower than the values of \texttt{prior\_count} and \texttt{age}.}
