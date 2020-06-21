@@ -839,7 +839,6 @@
 	\noindent	
 	To better quantify the differences in accuracy between a binary classifier and a random classifier as well as finding the true discrimination of a model, Indrė Žliobaitė proposes that the accuracy difference can be found using Cohen's Kappa, which normalizes the accuracy of the model based on the value of the random classifier accuracy. He also proposes normalizing the discrimination (which, in this case, is defined as the difference between true positives in the protected groups) by the highest discrimination value over all thresholds, as this ensures that the discrimination reaches a maximum if the binary classifier first accepts everyone from the favored protected attribute and only then starts accepting individuals from the non-favored attribute. This finding could make sense to look into for further work into this project, as the true model difference from a baseline or random model would have significance, when attempting to communicate the effectiveness of the model \cite{bias-accuracy}.
 	
-	
 	\subsection{The Ethical Dilemma of Bias}\label{ethical_dilemma_of_bias}
 	
 	\subsubsection{Where does Bias Come From?}\label{rootofbias}
@@ -848,6 +847,18 @@
 	
 	\subsubsection{Victims of a Biased Classifier}
 	As mentioned in section \ref{rootofbias} all humans are affected by bias. However, when considering the the question of who it affects, it refers specifically to the protected groups. These are minority groups in society and undiscovered biases can have major impacts on these groups, as machine learning plays a growing role in the everyday life of humans. For instance, it is important to ensure that the opportunity of getting a loan is equal for all genders and races. Using historical data from the past to train machine learning models to determine the probability of a person getting a loan can lead to sexist and racist models that reject women or African-Americans when they apply for a loan in the bank. This problem stems from racist and sexist behavior of human beings in the past and therefore, this study calls for the importance of acknowledging biased human behavior. Machine learning models are often viewed as objective but this can be extremely misleading. The results found in this study confirms the opposite, which proves that a model inherits bias from the data used to train the model. Machine learning models are implemented in several areas of society including self autonomous vehicles, the healthcare industry, public safety, the retail sector and many more sectors. Thus, ensuring fairness in machine learning models is an import step towards making all models comply with the declaration of human rights (The declaration of human rights can be found at \url{https://www.un.org/en/universal-declaration-human-rights/}).
+	
+	\subsubsection{Length Time Bias}
+	In the world of medicine length time bias is commonly known. People develop symptoms and deceases at different rates. Prostate cancer for men is  an example where some develop slow growing tumors and some have rapidly and lethal growing tumors. This will lead to the fact that a screening test becomes biased \cite{length}.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.3\linewidth]{imgs/length}
+		\caption{An illustration of length time bias. A screening in this case will not ensure to find all of the people with a certain decease. This can be due to people developing symptoms at different rates. Furthermore, it is also seen from the figure that people are sick in different amounts of time.}
+		\label{fig:length}
+	\end{figure}
+	\noindent
+	Length time bias can also be present in ProPublicas screening to find out if people recidivated or not. ProPublica did a screening 2 years later, which they used to show that the original COMPAS-algorithm is biased towards imprisoning Afro-Americans. However, this might not be the truth since many of the people in their screening potentially are still able to recidivate. Therefore, our study also calls for followup screenings to further confirm the present potential bias. To confirm a bias is present screenings from 4,6,8 and maybe more years after needs to be done in order to prove that the original COMPAS-algorithm actually misclassified the protected groups.
 	
 	\subsection{Examination of Fairness Definitions}\label{examination_of_fairness_definitions}
 	The fairness definitions that have been implemented in this project can be seen in section \ref{bias_def}. These are definitions which are proposed by Mortiz Hardt et al. and this section will thoroughly discuss these. Equality of opportunity states that the true positive rate for all groups has to be equal. Consider a hiring algorithm designed to pick the best applicants for a certain job (a real life example of this is Amazon, which tried to create a job hiring algorithm, see an article by \href{https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G}{Reuters} for more information if desired. However, this is not relevant for this section). There are two groups, A \& B, of applicants which both consists of 100 people each. Furthermore, if $ 58 $ people in group A are qualified for the job, whereas $ 2 $ people in group B are qualified for the job, and both groups apply for the job. Then, equalized odds states if $ 30 $ people are to be hired then $ 29 $ people from group A should be hired whereas $ 1 $ from group B should be hired, in order for the algorithm to ensure equal opportunity \cite{towardsdata}. If this was a high end job at Google, then group A would have a higher living standard than B. Group A would afford better education for their children, more expensive houses or apartments etc. This leads to the algorithm, which according to Hardt ensures fairness, to create a larger gap between to possible groups in society. One could then ask if creating a larger gap between groups, resulting in a society with a superior elite, is by any means a way to create fair machine learning models. \newline
@@ -1120,6 +1131,9 @@
 		\bibitem{researchgate} J. Ashfaque, "Introduction to Support Vector Machines and Kernel Methods", 2019, \url{https://www.researchgate.net/figure/Diagram-of-k-fold-cross-validation-with-k-10-Image-from-Karl-Rosaen-Log_fig1_332370436}, visited 17-06-2020
 		
 		\bibitem{larsk} Ministry of Foreign Affairs of Denmark, "Denmark Paves the Way for the Implementation of Trust by Design", 25.03.2019, \url{https://investindk.com/insights/denmark-paves-the-way-for-implementation-of-trust-by-design}, visited 12-06-2020
+		
+		\bibitem{length} W. LaMorte, "Evaluating Screening Programs", 2016, \url{http://sphweb.bumc.bu.edu/otlt/MPH-Modules/EP/EP713_Screening/EP713_Screening8.html}, visited 21-06-2020
+		
 		
 	\end{thebibliography}
 	
