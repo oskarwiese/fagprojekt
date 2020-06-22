@@ -93,16 +93,16 @@ We had no project meeting this week, as our group had not yet been created.
 \textbf{Decisions:} We will generally focus on implementing ideas that sound interesting after most of the report has been written, as the research questions at this point in time take priority.
 
 \subsection*{3-Week Period - Week 2: 11.6.20 - 17.6.20}
-\textbf{Questions:} 
-\textbf{Reading:} 
-\textbf{Implementation:} 
-\textbf{Decisions:} 
+\textbf{Questions:} Have we found results that are new enough to get them published? Would that require a shorter version of the report?
+\textbf{Reading:} We will spend the next long while reading though the report and trying to find any mistakes while refining the details and making sure that there are no spelling or grammatical errors. Meanwhile, we will read some scientific studies in order to find out if other people have found a bias on age before us.
+\textbf{Implementation:} There is not really much left to implement except for at coulpe plots. The Notebook also has to be polished, so it is nice to look at, if other people should want to open it. It could also be interesting to take a look at the decile score-ROC-curves, as these could show whether ProPublica would have been able to find the same biases as us.
+\textbf{Decisions:} We have decided that we do not want to implement a pre-processing method in this report and will leave it as future work. We simply do not have the time to read up on the methods, use them and write about them in the report.
 
 \subsection*{3-Week Period - Week 3: 18.6.20 - 24.6.20}
-\textbf{Questions:} 
-\textbf{Reading:} 
-\textbf{Implementation:} 
-\textbf{Decisions:} 
+\textbf{Questions:} There are no questions for this last week except for minor stuff, as the supervisor meeting this week will be the last one.
+\textbf{Reading:} The last reading will just consist of reading the report, as it still needs a bit more work before we are ready to deliver.
+\textbf{Implementation:} We will only be implementing a couple last plots, as the methods have already been implemented.
+\textbf{Decisions:} We have decided to focus our work on correcting mistakes from our understandings of the methods when we started the writing process, as some of the old sections are not up-to-date.
 
 
 \section*{Supervisor Meetings}
@@ -204,104 +204,11 @@ Our supervisor will be reading discussion and results first, as these are the mo
 Future supervisor meetings will be once a week like during the 13-week period, as we do not have many questions and it would take up too much time to have even more meetings.
 
 \subsection*{3-Week Period - Week 2: 11.6.20 - 17.6.20}
+We talked about moving the age-related findings into the results as well, and we have decided that age, sex and race should be included. We have also decided that not all results should be presented in the abstract, and that, instead, we should just have the most central findings. We also found that the abstract should only be around 1 page. As a last important remark, it will be possible to hold a physical exam, and we have decided that this is better for us than to have exams over zoom.
 
 
 \subsection*{3-Week Period - Week 3: 18.6.20 - 24.6.20}
-
-
-		
-\newpage
-\newpage
-\section*{Project Meetings}
-	
-	%Questions \\
-	%Reading, who and what \\
-	%Implementation, who and what \\
-	%Results, who and what \\
-	%Decisions, who and what, what do you do alone, what do you do together
-	
-	\textbf{Week 08:}  19.02.2020 \\\\
-	\noindent
-	Hvilke bias eksisterer i dataen? \\ 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.3\linewidth]{billeder/decil.png}
-	\end{figure}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.7\linewidth]{billeder/black_white}
-	\end{figure}
-	\noindent
-	There exists a recial bias in the dataset, which is indicated by the histograms above. 
-	\\\\
-	\textbf{Week 10:}  03.03.2020 \\\\
-	\noindent
-	Spørgsmål til næste møde: \\
-	Hvordan skal dataen permuteres ? (Kun indenfor en kategorisk variabel eller hele datasættet) \newline 
-	Kan man se bias ud fra confusion matrix?? \\ 
-	Skal man vise, at der en statistisk forskel på de to confusion matricer? \\ \\
-	\textbf{Noter} \\ 
-	Lav nogle flere plots for at vise, om der er bias i selve data. Undersøg, hvor mange der får 1 i recidivism både af sorte og hvide.
-	\newline
-	Det ville være smart at finde noget statistisk signifikans. Man kan finde en p-værdi ved at bruge permutationstests.
-	\newline
-	Lav predictions med random forests.
-	\newline
-	Equal opportunity er godt resultatet, som vi ser fra vores data. Man kunne plotte equal opportunity som netværket bliver trænet.
-	\newline
-	Lav en slags baseline som logistisk regression for at se, om de begge er biased eller om de klarer sig lige godt.
-	\newline
-	Vi skal senest have midvejafleveringen klar d. 16, så Aasa kan læse det igennem.	
-	\\\\	
-	\textbf{Week 11:}  10.03.2020 \\\\
-	\noindent
-	Spørgsmål:
-	\begin{itemize}
-		\item  Hvordan skal vi lave feature selection for at se om de forskellige attributes påvirker modellen? Skal det stå som et afsnit i metoder?
-		
-		\item 4454, i forhold til at tage udgangspunkt i dataen, hvordan kan bias påvises vha. permutationstest. 
-		
-		\item Hvordan man helt præcist skal implementere Hardt et al. (post hoc correction)
-		
-		\item Hvordan skal vi finde bias i datasættet? 
-		
-		\item domain adaptation / transfer learning
-		
-		\item ting fra ICML / ECML , ICLR, Fair 
-		
-	\end{itemize}
-	
-	Skrive om feature selection i metode
-	
-	
-\section*{Supervisor Meetings}
-	
-	\textbf{Week 07:}  12.02.2020 \\\\
-	\noindent
-%	Presentation of results since last meeting \\
-	Meeting notes: \\ Fællesmøder samt personlige møde. (Hver anden uge er individuele). \\0. Vi får et datasæt (COMPASS) - ligger online \\
-	1. Hvordan er dataen skæv? (Hvilke bias eksisterer i dataen) (Hvordan finder man helt præcist ud af det?) (Hvad betyder det at der er en bias?) \\
-	2. Hvad gør skæv data ved min algoritme? (hvad betyder bias i en algoritme) (Hvordan kvantificeres/verificeres bias i algorimten?) \\
-	3. Equality of Opportunity in Supervised Learning (forstå, implementer og valider) \\ 
-	4. Etisk diskussion (Sune Filosof)
-	\\\\\\\\
-	\textbf{Week 08:}  19.02.2020 \\\\
-	\noindent
-	%	Presentation of results since last meeting \\
-	Meeting notes: \\ Feature extraction
-	\\\\
-	Action points for next week: N/A
-	\\\\\\\\
-	\textbf{Week 09:}  26.02.2020 \\\\
-	\noindent
-	%	Presentation of results since last meeting \\
-	Meeting notes: 
-	\\\\
-	Action points for next week
-	\begin{itemize}
-		\item  
-	\end{itemize} 
-		
+There might be bias in the model because it is easier for the model to classify based on the larger class, but this is not really something that should be fixed. There is also not a problem with not having enough data, as the variables could probably contain a lot of correlation to the true recidivism. If the ROC-curves are on top of each other, equal opportunity or equalized odds should probably not be used, as it would be possible to just use a new threshold for each protected group.
+It seems that the COMPAS algorithm is still being used, as there is no evidence to suggest otherwise. One would also think that ProPublica would have mentioned if COMAS was not being used anymore. We have gotten some feedback for the report, that we will implement in the last few days, so the report is ready to be delivered on wednesday.
 	
 \end{document}
