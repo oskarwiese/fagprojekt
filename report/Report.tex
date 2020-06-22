@@ -166,15 +166,14 @@
 			sex & The sex of the offender & Discrete nominal \\
 			\hdashline
 			score\_text & The COMPAS prediction of chance of recidivism & Discrete interval \\
-			is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal
+			is\_recid & Whether the offender truly recidivated after two years (0/1) & Discrete nominal \\ \bottomrule
 		\end{tabular}
-		%\caption{text}
 	\end{table} \noindent
-	The reason why a vast majority of variables have not been included in the dataset for the binary classifier is that a plethora of variables contain dates or categorical values, that are not often shared between defendants, so to one-of-of-k encode these values, a really large data matrix would be necessary, which would increase the running time significantly. Thus, only the variables that seem to be significant in order to predict the risk of recidivism, like age, race, sex, number of previous felonies ect., have been added to the model. The preliminary runs of the model shows that the other variables do not significantly enhance the accuracy of the binary classifier.
+	A vast majority of variables have not been included in the dataset for the binary classifier because a plethora of variables contain dates or categorical values, that are not often shared between defendants, so to one-of-of-k encode these values, a really large data matrix would be necessary, which would increase the running time significantly. Thus, only the variables that seem to be significant in order to predict the risk of recidivism, like age, race, sex, number of previous felonies ect., have been added to the model. The preliminary runs of the model also show that the other variables do not significantly enhance the accuracy of the binary classifier.
 		
 		
 	\subsection{Explanation of Data Variables} \label{dataExamination}
-	Using and researching the extended COMPAS dataset has shown that there is no documentation of the meaning of the variables. This makes interpretation difficult and can make singular variables of the dataset next to impossible to understand. To remove ambiguity about the meaning of the variables, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and sheds light on the true contents of the dataset. Some variables, mostly those with \textit{c\_}, \textit{r\_} or \textit{vr\_} prefixes,have been grouped together in the table, as these serve the same purpose in the dataset for \textit{custody}, \textit{recidivism} and \textit{violent recidivism} cases respectively. 
+	Using and researching the extended COMPAS dataset has shown that there is no documented meaning of each variable. This makes interpretation difficult and can make singular variables of the dataset next to impossible to understand. To remove ambiguity about the meaning of the variables, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and sheds light on the true contents of the dataset. Some variables, mostly those with \textit{c\_}, \textit{r\_} or \textit{vr\_} prefixes,have been grouped together in the table, as these serve the same purpose in the dataset for \textit{custody}, \textit{recidivism} and \textit{violent recidivism} cases respectively. 
 	
 	\noindent Some variable names have the prefix \textit{v\_}, which has been disregarded as an error. As such, this interpretation of the dataset assumes that these variables are akin to those with the \textit{vr\_} prefix, representing the variables related to violent recidivism. Furthermore, in the case of a few of the variables in the dataset, it has simply not been possible to find a meaningful interpretation, since the entire column is either full of NaN's like in the case of \textit{violent\_recid} or every value of a variables matches one to one with another variable, which is the case between \textit{decile\_score} and \textit{decile\_score\_1} as well as \textit{priors\_count} and \textit{priors\_count\_2}. These variables are kept in the table for completeness, but seem to have no discernible purpose in the dataset.
 	
@@ -233,11 +232,11 @@
 		out\_custody & When the offender was removed from custody & Discrete nominal \\
 		start & The day the screening started compared to the start of the process & Discrete interval \\
 		end & The day the screening ended compared to the start of the process & Discrete interval \\
-		event & ------ & Discrete interval
+		event & ------ & Discrete interval \\
 	\end{longtable}
 		
 	\subsection{Visualization of Data} \label{dataVisuals}
-	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace}, \ref{fig:predictedrecidsex} and \ref{fig:predictedrecidrage} aims to show whether there is a difference between the fraction of the protected group who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. The protected groups are race, sex and age. Figure \ref{fig:race_truerecid}, \ref{fig:sex_truerecid}, \ref{fig:age_truerecid}, \ref{fig:proirs}, \ref{fig:proirssex} and \ref{fig:proirsage} give some insight into the actual amount of crime done by each of the protected groups and whether the amounts seem to be similar. Other plots of the categorical and numerical variables chosen for the focus of this report, see section \ref{dist_categorical} and \ref{dist_numerical}.\fix 
+	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace}, \ref{fig:predictedrecidsex} and \ref{fig:predictedrecidrage} aims to show whether there is a difference between the fraction of the protected group who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. The protected groups are race, sex and age. Figure \ref{fig:race_truerecid}, \ref{fig:sex_truerecid}, \ref{fig:age_truerecid} as well as \ref{fig:proirs}, \ref{fig:proirssex} and \ref{fig:proirsage} give some insight into the actual amount of crime done by each of the protected groups and whether the amounts seem to be similar. For plots of the categorical and numerical variables chosen for the focus of this report, see section \ref{dist_categorical} and \ref{dist_numerical}.\fix 
 	
 	\begin{figure}[H]
 		\centering
@@ -300,7 +299,7 @@
 				Female   & 0.611 & 0.389  \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is a difference between the fraction of males who recidivates and the fraction of women who recidivates. The illustration agrees with figure \ref{fig:predictedrecidsex} as no bias seems present. Thus, from the visualizations, a bias appears to exist for the protected attributes race but not for sex.}
+		\caption{This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is a difference between the fraction of males who recidivate and the fraction of women who recidivate. The illustration does not seem to match with figure \ref{fig:predictedrecidsex} as more female are placed in low risk of recidivism and more males in high risk. Thus, a bias could be present, but the figure \ref{fig:predictedrecidsex} shows no sign of bias.}
 		\label{fig:sex_truerecid}
 	\end{figure}
 
@@ -341,7 +340,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/proirs}
-		\caption{An illustration of the relation between race (African-American or Caucasian) and the number of previous felonies prior to the study taking place. This plot gives a clear indication that the number of whites and African-Americans who have performed no prior felonies is similar. Otherwise, it is clear that the proportion of African-American to whites becomes larger as the number of previous felonies becomes larger. This seems to indicate that African-Americans are more frequently engaged in criminal activity, which also weakens the indication of a bias from figure \ref{fig:predictedrecidrace}. Further analysis will still have to be made to check if an actual bias is present.}
+		\caption{An illustration of the relation between race (African-American or Caucasian) and the number of previous felonies prior to the study taking place. This plot, like figure \ref{fig:predictedrecidrace} gives a clear indication that the number of whites and African-Americans who have performed no prior felonies is similar. Otherwise, it is clear that the proportion of African-American to whites becomes larger as the number of previous felonies becomes larger. This seems to indicate that African-Americans are more frequently engaged in criminal activity, which also weakens the indication of a bias from figure \ref{fig:predictedrecidrace}. Further analysis will still have to be made to check if an actual bias is present.}
 		\label{fig:proirs}
 	\end{figure}
 
