@@ -242,6 +242,7 @@
 	
 	\begin{figure}[H]
 		\centering
+		\textbf{\textbf{Figure 1}}\par\medskip
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_race"}
@@ -278,6 +279,7 @@ Illustration \ref{fig:race_truerecid} shows the true recidivism values (0 being 
 
 	\begin{figure}[H]
 		\centering
+		\textbf{\textbf{Figure 2}}\par\medskip		
 		\begin{subfigure}{0.5\textwidth}
 			\centering
 			\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_sex"}
@@ -317,6 +319,7 @@ The illustration \ref{fig:sex_truerecid} does not seem to match with figure \ref
 
 	\begin{figure}[H]
 	\centering
+	\textbf{\textbf{Figure 3}}\par\medskip	
 	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_age"}
@@ -353,27 +356,34 @@ As in figure \ref{fig:predictedrecidrace}, it also holds true in illustration \r
 
 Illustration \ref{fig:age_truerecid} shows the normalized true recidivism values for the protected group age. The amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration are close to equal to the amounts seen in figure \ref{fig:predictedrecidage}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidage} is somewhat explained by the true recidivism scores.
 
-	
 	\begin{figure}[H]
+	\centering
+	\textbf{\textbf{Figure 4}}\par\medskip
+	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/proirs}
-		\caption{An illustration of the relation between race (African-American or Caucasian) and the number of previous felonies prior to the study taking place. This plot, like figure \ref{fig:predictedrecidrace} gives an indication that a larger amount of Caucasians have committed a low number of previous felonies and African-Americans have committed a larger number of prior felonies. This is supported by the fact that the proportion of African-American to whites becomes larger as the number of previous felonies becomes larger. This seems to indicate that African-Americans are more frequently engaged in criminal activity, which also weakens the indication of a bias from figure \ref{fig:predictedrecidrace}. Further analysis will still have to be made to check if an actual bias is present.}
+		\includegraphics[width=0.9\linewidth]{"imgs/proirs"}
+		\caption{Normalized number of felonies by race}	
 		\label{fig:proirs}
-	\end{figure}
-
-	\begin{figure}[H]
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/proirs_sex}
-		\caption{An illustration of the relation between sex (Female and Male) and the number of previous felonies prior to the study taking place. This plot gives a clear indication that the number of females and males who have performed no prior felonies is very different. Otherwise, it can be seen that the proportion of females who have a low number of felonies previous is in general somewhat the same as that of men. The proportion of men becomes larger as the number of previous felonies becomes larger. This seems to indicate that men are more frequently engaged in criminal activity due to the fact that women seems to often have less felonies than men. Further analysis will still have to be made to check if an actual bias is present.}
-		\label{fig:proirssex}
-	\end{figure}
-	
-	\begin{figure}[H]
+		\includegraphics[width=0.9\linewidth]{"imgs/proirs_sex"}
+		\caption{Normalized number of felonies by sex}		
+		\label{fig:proirssex}		
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/proirs_age}
-		\caption{An illustration of the relation between age (less than 25 and over) and the number of previous felonies prior to the study taking place. This plot gives a clear indication that the proportion of people younger than 25 who have performed no prior felonies is larger than the proportion of people older than 25. Otherwise, it is clear that the proportion of people older than 25 becomes larger as the number of previous felonies becomes larger. This seems to indicate that people over 25 are more frequently engaged in criminal activity, which is a logical deduction since older people have had more time to engage in crime. Further analysis will still have to be made to check if an actual bias is present.}
+		\includegraphics[width=0.9\linewidth]{"imgs/proirs_age"}
+		\caption{Normalized number of felonies by race}		
 		\label{fig:proirsage}
-	\end{figure}
+	\end{subfigure}
+	\end{figure}	
+
+\noindent Illustration \ref{fig:proirs} shows the relation between race (African-American or Caucasian) and the number of previous felonies prior to the study taking place. This plot, like figure \ref{fig:predictedrecidrace} gives an indication that a larger amount of Caucasians have committed a low number of previous felonies and African-Americans have committed a larger number of prior felonies. This is supported by the fact that the proportion of African-American to whites becomes larger as the number of previous felonies becomes larger. This seems to indicate that African-Americans are more frequently engaged in criminal activity, which also weakens the indication of a bias from figure \ref{fig:predictedrecidrace}. Further analysis will still have to be made to check if an actual bias is present.
+
+Illustration \ref{fig:proirssex} illustrates the relation between sex (Female and Male) and the number of previous felonies prior to the study taking place. This plot gives a clear indication that the number of females and males who have performed no prior felonies is very different. Otherwise, it can be seen that the proportion of females who have a low number of felonies previous is in general somewhat the same as that of men. The proportion of men becomes larger as the number of previous felonies becomes larger. This seems to indicate that men are more frequently engaged in criminal activity due to the fact that women seems to often have less felonies than men. Further analysis will still have to be made to check if an actual bias is present.
+	
+In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the number of previous felonies prior to the study taking place has been shown. This plot gives a clear indication that the proportion of people younger than 25 who have performed no prior felonies is larger than the proportion of people older than 25. Otherwise, it is clear that the proportion of people older than 25 becomes larger as the number of previous felonies becomes larger. This seems to indicate that people over 25 are more frequently engaged in criminal activity, which is a logical deduction since older people have had more time to engage in crime. Further analysis will still have to be made to check if an actual bias is present.
 	
 	
 	
