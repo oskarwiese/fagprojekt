@@ -5,6 +5,8 @@
 \usepackage{texfiles/MediocreMike}
 \newcommand{\so}[2]{{#1}\mathrm{e}{#2}}
 % \geometry{top=1cm}
+%\usepackage{cleveref}
+\usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{array}
 \usepackage{amsmath}
@@ -236,77 +238,88 @@
 	\end{longtable}
 		
 	\subsection{Visualization of Data} \label{dataVisuals}
-	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace}, \ref{fig:predictedrecidsex} and \ref{fig:predictedrecidrage} aims to show whether there is a difference between the fraction of the protected group who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. The protected groups are race, sex and age. Figure \ref{fig:race_truerecid}, \ref{fig:sex_truerecid}, \ref{fig:age_truerecid} as well as \ref{fig:proirs}, \ref{fig:proirssex} and \ref{fig:proirsage} give some insight into the actual amount of crime done by each of the protected groups and whether the amounts seem to be similar. For plots of the categorical and numerical variables chosen for the focus of this report, see section \ref{dist_categorical} and \ref{dist_numerical}.\fix 
+	To better get an understanding of the data, a range of plots are shown below. Figure \ref{fig:predictedrecidrace}, \ref{fig:predictedrecidsex} and \ref{fig:predictedrecidage} aims to show whether there is a difference between the fraction of the protected group who are predicted by the COMPAS classifier as having low, medium and high risk of recidivism. The protected groups are race, sex and age. Figure \ref{fig:race_truerecid}, \ref{fig:sex_truerecid}, \ref{fig:age_truerecid} as well as \ref{fig:proirs}, \ref{fig:proirssex} and \ref{fig:proirsage} give some insight into the actual amount of crime done by each of the protected groups and whether the amounts seem to be similar. For plots of the categorical and numerical variables chosen for the focus of this report, see section \ref{dist_categorical} and \ref{dist_numerical}.\fix 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_race}	
-		\begin{table}[H]
+		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\begin{tabular}{|l|l|l|l|}
-				\hline
-				& Low   & Medium & High  \\ \hline
-				Caucasian        & 0.652 & 0.236  & 0.112 \\ \hline
-				African-American & 0.412 & 0.311  & 0.277 \\ \hline
-			\end{tabular}
-		\end{table}
-		\caption{It is clear from this illustration that there is a large discrepancy between the normalized distribution of Caucasians and African-Americans in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that Caucasians are 1.5 times as often classified as low risk of recidivism than African-Americans, while African-Americans are about twice as often classified as high risk of recidivism than whites. This could signify that the data is biased towards giving African-Americans a higher risk evaluation, but this will be quantified in \ref{confusionMatrices}.}
-		\label{fig:predictedrecidrace}
+			\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_race"}
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|l|l|l|l|}
+					\hline
+					& Low   & Medium & High  \\ \hline
+					Caucasian        & 0.652 & 0.236  & 0.112 \\ \hline
+					African-American & 0.412 & 0.311  & 0.277 \\ \hline
+				\end{tabular}
+			\end{table}
+			\caption{Race normalized predicted recidivism risk}\label{fig:predictedrecidrace}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\includegraphics[width=0.9\linewidth]{"imgs/true_normalized_race"}
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|l|l|l|}
+					\hline
+					& 0   & 1  \\ \hline
+					Caucasian        & 0.582 & 0.418  \\ \hline
+					African-American & 0.449 & 0.551  \\ \hline
+				\end{tabular}
+			\end{table}	
+			\caption{Race normalized true recidivism risk}\label{fig:race_truerecid}
+		\end{subfigure}
 	\end{figure}
 
-	
+\noindent It is clear from illustration \ref{fig:predictedrecidrace} that there is a large discrepancy between the normalized distribution of Caucasians and African-Americans in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that Caucasians are 1.5 times as often classified as low risk of recidivism than African-Americans, while African-Americans are about twice as often classified as high risk of recidivism than whites. This could signify that the data is biased towards giving African-Americans a higher risk evaluation but does not serve as complete evidence. 
+
+Illustration \ref{fig:race_truerecid} shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender and normalized by the size of each protected group. It is clear that the amounts of African-Americans and Caucasians that recidivated or did not recidivate based on the proportion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.
+
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_race}
-		\begin{table}[H]
+		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\begin{tabular}{|l|l|l|}
-				\hline
-				& 0   & 1  \\ \hline
-				Caucasian        & 0.582 & 0.418  \\ \hline
-				African-American & 0.449 & 0.551  \\ \hline
-			\end{tabular}
-		\end{table}
-		\caption{This illustration shows the true recidivism values (0 being no recidivism after two years and 1 being recidivism) for all offenders in the dataset seperated by the race of each offender and normalized by the size of each protected group. It is clear that the amounts of African-Americans and Caucasians that recidivated or did not recidivate based on the proportion matrix and illustration seems to be closer to equal than in figure \ref{fig:predictedrecidrace}. It also seems to be the case that the Caucasians slightly more often do not recidivate, while the African-Americans slightly more often recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidrace} is somewhat explained by the true recidivism scores.}
-		\label{fig:race_truerecid}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_sex}
-		\begin{table}[H]
+			\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_sex"}
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|l|l|l|l|}
+					\hline
+					& Low   & Medium & High  \\ \hline
+					Male      & 0.500 & 0.274  & 0.226 \\ \hline
+					Female    & 0.540 & 0.301  & 0.152 \\ \hline
+				\end{tabular}
+			\end{table}
+			\caption{Sex normalized predicted recidivism risk}
+			\label{fig:predictedrecidsex}			
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
 			\centering
-			\begin{tabular}{|l|l|l|l|}
-				\hline
-				& Low   & Medium & High  \\ \hline
-				Male      & 0.500 & 0.274  & 0.226 \\ \hline
-				Female    & 0.540 & 0.301  & 0.152 \\ \hline
-			\end{tabular}
-		\end{table}
-		\caption{This illustration shows the relationship between sex and the COMPAS prediction of recidivism normalized by the sizes of the protected groups. No significant difference in the proportions of men or women being classified as belonging to each of the categories can be seen.\fix From the data alone, it would thus not seem as if any bias is present.}
-		\label{fig:predictedrecidsex}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_sex}
-		\begin{table}[H]
-			\centering
-			\begin{tabular}{|l|l|l|}
-				\hline
-				& 0   & 1  \\ \hline
-				Male     & 0.475 & 0.525  \\ \hline
-				Female   & 0.611 & 0.389  \\ \hline
-			\end{tabular}
-		\end{table}
-		\caption{This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is a difference between the fraction of males who recidivate and the fraction of women who recidivate. The illustration does not seem to match with figure \ref{fig:predictedrecidsex} as more female are placed in low risk of recidivism and more males in high risk. Thus, a bias could be present, but the figure \ref{fig:predictedrecidsex} shows no sign of bias.}
-		\label{fig:sex_truerecid}
+			\includegraphics[width=0.9\linewidth]{"imgs/true_normalized_sex"}
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{|l|l|l|}
+					\hline
+					& 0   & 1  \\ \hline
+					Male     & 0.475 & 0.525  \\ \hline
+					Female   & 0.611 & 0.389  \\ \hline
+				\end{tabular}
+			\end{table}
+			\caption{Sex normalized true recidivism risk}
+			\label{fig:sex_truerecid}			
+		\end{subfigure}
 	\end{figure}
 
-	
+
+\noindent Illustration \ref{fig:predictedrecidsex} shows the relationship between sex and the COMPAS prediction of recidivism normalized by the sizes of the protected groups. No significant difference in the proportions of men or women being classified as belonging to each of the categories can be seen.\fix From the data alone, it would thus not seem as if any bias is present. This illustration shows the normalized true recidivism values separated by the sex of the offender. It is clear that there is a difference between the fraction of males who recidivate and the fraction of women who recidivate. 
+
+The illustration \ref{fig:sex_truerecid} does not seem to match with figure \ref{fig:predictedrecidsex} as more female are placed in low risk of recidivism and more males in high risk. Thus, a bias could be present, but the figure \ref{fig:predictedrecidsex} shows no sign of bias.
+
 	\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/normalized_recid_age}	
+		\includegraphics[width=0.9\linewidth]{"imgs/normalized_recid_age"}
 		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|l|l|l|}
@@ -316,13 +329,12 @@
 				Greater than 25 & 0.557 & 0.258  & 0.185 \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{As in figure \ref{fig:predictedrecidrace}, it also holds true in this illustration that there is a large discrepancy between the normalized distribution defendants greater than and less than 25 years old in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that defendants greater than 25 years old are 1.7 times as often classified as low risk of recidivism than those under 25 years old, while under 25 year olds are about twice as often classified as high risk of recidivism than over 25 year olds. This could signify that the data is biased towards giving older defendants a higher risk evaluation, but further analysis will have to be made.}
-		\label{fig:predictedrecidrage}
-	\end{figure}
-	
-	\begin{figure}[H]
+		\caption{Age normalized predicted recidivism risk}	
+		\label{fig:predictedrecidage}		
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{imgs/true_normalized_age}
+		\includegraphics[width=0.9\linewidth]{"imgs/true_normalized_age"}
 		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|l|l|}
@@ -332,10 +344,15 @@
 				Greater than 25   & 0.531 & 0.469  \\ \hline
 			\end{tabular}
 		\end{table}
-		\caption{This illustration shows the normalized true recidivism values for the protected group age. The amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration are close to equal to the amounts seen in figure \ref{fig:predictedrecidage}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidage} is somewhat explained by the true recidivism scores.}
-		\label{fig:age_truerecid}
+		\caption{Age normalized true recidivism risk}		
+		\label{fig:age_truerecid}		
+	\end{subfigure}
 	\end{figure}
 	
+As in figure \ref{fig:predictedrecidrace}, it also holds true in illustration \ref{fig:predictedrecidage} that there is a large discrepancy between the normalized distribution defendants greater than and less than 25 years old in the Low, Medium and High groups. From the matrix as well as the illustration itself, it can be seen that defendants greater than 25 years old are 1.7 times as often classified as low risk of recidivism than those under 25 years old, while under 25 year olds are about twice as often classified as high risk of recidivism than over 25 year olds. This could signify that the data is biased towards giving older defendants a higher risk evaluation, but further analysis will have to be made.
+
+Illustration \ref{fig:age_truerecid} shows the normalized true recidivism values for the protected group age. The amounts of defendants over and under 25 years old that recidivated or did not recidivate based on the confusion matrix and illustration are close to equal to the amounts seen in figure \ref{fig:predictedrecidage}. It also seems to be the case that the older group 1.3 times as often did not recidivate. This makes it difficult to prove bias in the data based only on the data, as the bias that could exist in figure \ref{fig:predictedrecidage} is somewhat explained by the true recidivism scores.
+
 	
 	\begin{figure}[H]
 		\centering
@@ -839,13 +856,13 @@
 	\subsubsection{Where does Bias Come From?}\label{rootofbias}
 	Bias is defined in the dictionary as \textit{\enquote{a strong feeling in favour of or against one group of people, or one side in an argument, often not based on fair judgement.}} \cite{oxford}. In general bias can be natural or innate,  but can also be learned. Bias can be developed by humans for or against people, certain individuals, objects, beliefs or even cultures. Several types of cognitive biases exist. A cognitive bias is a systematic error in thinking that occurs when people are processing and interpreting information in the world around them that affects the decisions and judgments that they make \cite{verywellmind}. A few example of these are: confirmation bias, the halo and horn effect and the misinformation effect. Confirmation bias is the favoring of information that confirms one's own belief and discounting information that opposes or challenges one's belief. The Halo and horn effect is the effect of how an overall impression of someone influences how one feels and thinks about someone. This effect can both be positive and negative, and hence shows the importance of first impressions. The misinformation effect is the tendency of information that happens after an event to interfere with the memory of the original event. Aside from the three mentioned biases, a plethora of others exist, and all of these biases have consequences of how we as humans make decisions and judge other people. Consider a court room where an evaluation of whether a defendant should be granted parole or not is taking place. Imagine how the Misinformation effect influences the defendants memory processing or how confirmation bias or the halo effect influences the jurisdiction of the judge. Furthermore, studies show that being hungry affects judgement and how one make decisions \cite{eat}.
 	
-	The consequences of cognitive biases can lead to distorted thinking. Conspiracy theories as well as extremist political beliefs stems from cognitive biases, which can lead to irrational beliefs \cite{cog_bias}. Thus, humans are in general very biased and are affected by bias every day of their life. The question is then if bias is necessarily a bad thing. In psychology it is a well accepted theory that many of the cognitive biases serve humans to optimize our way of living. Among other reasons by allowing decisions within milliseconds, which can be vital in dangerous situations \cite{reisberg}. However, bias can also be discriminating, as bias and prejudice are closely related. Prejudice is prejudgment, through forming an opinion of someone or something beforehand. Prejudices and biases can lead to racism and sexism, which is why detecting bias is an important topic. In summarize, data that has been generated by humans, e.g. the COMPAS dataset, will be biased and needs to be properly handled in order to ensure fair ML models.
+	The consequences of cognitive biases can lead to distorted thinking. Conspiracy theories as well as extremist political beliefs stems from cognitive biases, which can lead to irrational beliefs \cite{cog_bias}. Thus, humans are in general very biased and are affected by bias every day of their life. The question is then if bias is necessarily a bad thing. In psychology it is a well accepted theory that many of the cognitive biases serve humans to optimize our way of living. Among other reasons by allowing decisions within milliseconds, which can be vital in dangerous situations \cite{reisberg}. However, bias can also be discriminating, as bias and prejudice are closely related. Prejudice is prejudgment, through forming an opinion of someone or something beforehand. Prejudices and biases can lead to racism and sexism, which is why detecting bias is an important topic. To summarize, data that has been generated by humans, e.g. the COMPAS dataset, will be biased and needs to be properly handled in order to ensure fair ML models.
 	
 	\subsubsection{Victims of a Biased Classifier}
-	As mentioned in section \ref{rootofbias} all humans are affected by bias. However, when considering the the question of who it affects, it refers specifically to the protected groups. These are minority groups in society and undiscovered biases can have major impacts on these groups, as machine learning plays a growing role in the everyday life of humans. For instance, it is important to ensure that the opportunity of getting a loan is equal for all genders and races. Using historical data from the past to train machine learning models to determine the probability of a person getting a loan can lead to sexist and racist models that reject women or African-Americans when they apply for a loan in the bank. This problem stems from racist and sexist behavior of human beings in the past and therefore, this study calls for the importance of acknowledging biased human behavior. Machine learning models are often viewed as objective but this can be extremely misleading. The results found in this study confirms the opposite, which proves that a model inherits bias from the data used to train the model. Machine learning models are implemented in several areas of society including self autonomous vehicles, the healthcare industry, public safety, the retail sector and many more sectors. Thus, ensuring fairness in machine learning models is an import step towards making all models comply with the declaration of human rights (The declaration of human rights can be found at \url{https://www.un.org/en/universal-declaration-human-rights/}).
+	As mentioned in section \ref{rootofbias} all humans are affected by bias. However, when considering the the question of who it affects, it refers specifically to the protected groups. These are minority groups in society and undiscovered biases can have major impacts on these groups, as machine learning plays a growing role in the everyday life of humans. For instance, it is important to ensure that the opportunity of getting a loan is equal for all genders, races and age groups. Using historical data from the past to train machine learning models to determine the probability of a person getting a loan can lead to sexist and racist models that reject women or African-Americans when they apply for a loan in the bank. This problem stems from racist and sexist behavior of human beings in the past and therefore, this study calls for the importance of acknowledging biased human behavior. Machine learning models are often viewed as objective, but this can be extremely misleading. The results found in this study confirms the opposite, which proves that a model inherits bias from the data used to train the model. Machine learning models are implemented in several areas of society including autonomous vehicles, the healthcare industry, public safety, the retail sector and many other applications. Thus, ensuring fairness in machine learning models is an import step towards making all models comply with the declaration of human rights (The declaration of human rights can be found at \url{https://www.un.org/en/universal-declaration-human-rights/}).
 	
 	\subsubsection{Length Time Bias}
-	In the world of medicine, length time bias is commonly known. People develop symptoms and deceases at different rates. Prostate cancer for men is  an example where some develop slow growing tumors and some have rapidly and lethal growing tumors. This difference in rate of development of the sickness is what commonly leads to length time bias \cite{length}.
+	In the world of medicine, length time bias is commonly known. People develop symptoms and deceases at different rates. Prostate cancer for men is  an example where some develop slow growing tumors and some have rapid growing lethal tumors. This difference in rate of development of the sickness is what commonly leads to length time bias \cite{length}.
 	
 	\begin{figure}[H]
 		\centering
