@@ -610,21 +610,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	
 	\subsection{Significance of Model Accuracy}\label{modelAccuracy}
 	
-	\begin{figure}[H]
-		%\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
-		%\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\centering
-%			\includegraphics[width=0.9\linewidth]{imgs/perm_test_sex.png}
-%		\end{subfigure}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. %\textbf{Left:} The permutation test for race. \textbf{Right:} Permutation test for sex.}
-		}
-		\label{fig:permtest}
-	\end{figure}\noindent
-	From figure \ref{fig:permtest}, no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
-	\[p=\frac{1}{M}=0.001\]
+
 	\newpage
 	\subsection{Confusion Matrices}\label{confusionMatrices}
 	The following section will show the confusion matrices conditioned on three different protected groups which are the following: race, gender and age. As mentioned in section \ref{bias_id}, the postive group belongs to those who have not reactivated vice versa. \vspace*{-0.28cm} 
@@ -854,7 +840,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	\noindent
 	The bias between women and men in the dataset has not been uncovered in any papers before and thus the project underlines the importance of using TPR \& FPR dependency on threshold for bias detection. The visualization of the data gave no indication of this bias, but by looking at the conditional populations TPR and FPR as a function of thresholds it is clear that a bias is present. From section \ref{propub}, the original COMPAS algorithm does not seem to have a strong bias for gender. This suggests that machine learning models might be able to construct biases themselves, that are not necessarily present in the dataset. A theory could be that the sigmoid function stretches the dataset thus resulting in the classifier becoming biased. A bias in age has also never been shown in a study before and is also present in the original COMPAS algorithm, see \ref{propub}. This bias can result in young people being unfairly put back into jail which will prevent them from education and much more in life. \\\\ 
 	\noindent
-	In section \ref{equalOpportunity} figure \ref{fig:equal-opportunity-optimal}, equal opportunity has been implemented to correct the bias in the model. The middle of the ROC-curves seems to yield the best accuracy, which is reasonable, since a classifier with higher true positive rate and lower false positive rate will have a higher accuracy. This also implies that the trivial endpoints, at which the false and true positive rates are already equal, will not bring much value when optimizing for an unbiased model with high accuracy, as the accuracy in these points will be very close to random. As for the implementation of equalized odds in figure \ref{fig:equalizedOdds} from section \ref{equalizedOdds}, it makes sense that the same is true, since almost the same points and thresholds have been chosen to maximize accuracy while keeping the condition of equalized odds. In the case of accuracy reduction, it seems that both methods only carry with them a small decrease in accuracy. The accuracy of the original biased binary classifier is 68.3\%. This accuracy is reduced to 67.8\% using equal opportunity and to 67.1\% using equalized odds. From this, it is obvious that equalized odds takes a bigger hit on accuracy, though the differences in accuracy is still 0.5\% for equal opportunity and 1.2\% for equalized odds, so the overall loss in accuracy definitely seems to be worth it to get a properly working model that does not discriminate on any of the protected attributes. However, the threshold has not been a hyperparameter for the network which mean that the default threshold of $ T = 0.5 $ is not necessarily the optimal threshold to obtain the highest accuracy. Therefore, the loss of accuracy can be more punishing that what it seems from the results of this study. Furthermore, the accuracy found for the protected variable age can be misleading due to the fact that the ROC-curves are not concave. The method implemented in this project has assumed that the ROC-curve is concave. Thus, all possible classifiers in the intersection of the convex hulls of the A-conditional ROC-curves are not examined, which means a higher accuracy can be achieved by examining this area.
+	In section \ref{equalOpportunity} figure \ref{fig:equal-opportunity-optimal}, equal opportunity has been implemented to correct the bias in the model. The middle of the ROC-curves seems to yield the best accuracy, which is reasonable, since a classifier with higher true positive rate and lower false positive rate will have a higher accuracy. This also implies that the trivial endpoints, at which the false and true positive rates are already equal, will not bring much value when optimizing for an unbiased model with high accuracy, as the accuracy in these points will be very close to random. As for the implementation of equalized odds in figure \ref{fig:equalizedOdds} from section \ref{equalizedOdds}, it makes sense that the same is true, since almost the same points and thresholds have been chosen to maximize accuracy while keeping the condition of equalized odds. In the case of accuracy reduction, it seems that both methods only carry with them a small decrease in accuracy. The accuracy of the original biased binary classifier is 68.3\%. This accuracy is reduced to 67.8\% using equal opportunity and to 67.1\% using equalized odds. From this, it is obvious that equalized odds takes a bigger hit on accuracy, though the differences in accuracy is still 0.5\% for equal opportunity and 1.2\% for equalized odds, so the overall loss in accuracy definitely seems to be worth it to get a properly working model that does not discriminate on any of the protected attributes. However, the threshold has not been a hyperparameter for the network which mean that the default threshold of $ T = 0.5 $ is not necessarily the optimal threshold to obtain the highest accuracy. Therefore, the loss of accuracy can be more punishing that what it seems from the results of this study. Furthermore, the accuracy found for the protected variable age can be misleading due to the fact that the ROC-curves are not convex. The method implemented in this project has assumed that the ROC-curves are concave. Thus, all possible classifiers in the intersection of the convex hulls of the A-conditional ROC-curves are not examined, which means a higher accuracy can be achieved by examining this area.
 	
 	\subsection{Trade-Off Between Accuracy and Fairness}\label{tradeoff}
 	Normally, when correcting for bias in a binary classifier, the accuracy will take a hit to some extent. This happens because the optimal predictor from both of the groups will probably not be chosen when the true or true and false positive rates have to be equal. This also has to be true because two classifiers are forced to have the same false and true positive rates, which means that the accuracy will be the same over all protected groups, so the lower of the accuracies will be fixed as the accuracy for both of the protected attributes. This is not true in the same sense in equal opportunity, as this method chooses the values with the same true positive rate only. As such, it is possible for the upper of the two curves to utilize the better accuracy, which still ensures some bias correction. As such, only a slight loss of accuracy will be observed \cite{equal_of_oppor}. This can be seen in our project from section \ref{equalOpportunity} and section \ref{equalizedOdds} from figures \ref{fig:equal-opportunity-optimal} and \ref{fig:equalizedOdds}. The accuracy difference of these methods has also been described in section \ref{discussionOfResults}. Here, it is clear that the difference in accuracy between the biased model and equalized odds-corrected model is larger than between the biased model and equal opportunity-corrected model, as is to be expected. In the case of this project though, the differences in accuracies of 0.5\% and 1.2\% is still more than low enough for the bias correction to be worth it, as the non-discrimination also makes the model more accurate for practical use in return.\\\\
@@ -1024,6 +1010,27 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 		\label{fig:qqplotaccuracies}
 	\end{figure}
 	
+	\subsection{Significance of Features}
+	
+	To identify if the features of the FFNN are statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier. A null hypothesis $H_{0}$, stating that the observed value comes from the distribution of randomized permutations, is set up and evaluated. To attempt to reject the null hypothesis, each input variable was shuffled randomly and the model was evaluated on the randomized data. This was done one thousand times and the accuracy from each of the permutations was compared to the original accuracy from the model that was trained on the non-permuted validation dataset. The thousand accuracies form a distribution and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under the desired level of significance at $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. Intuitively, this is equivalent to the accuracy being significantly far away from this distribution. 
+	
+		\begin{figure}[H]
+		%\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
+		%\end{subfigure}
+		%		\begin{subfigure}{0.5\textwidth}
+		%			\centering
+		%			\includegraphics[width=0.9\linewidth]{imgs/perm_test_sex.png}
+		%		\end{subfigure}
+		\caption{An illustration of a permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. %\textbf{Left:} The permutation test for race. \textbf{Right:} Permutation test for sex.}
+		}
+		\label{fig:permtest}
+	\end{figure}\noindent
+	From figure \ref{fig:permtest}, no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
+	\[p=\frac{1}{M}=0.001\]
+	\noindent
+	Thus, the original features used for training the model are significant for obtaining a good accuracy.
 	\newpage
 	
 	\subsection{Pseudo Code}\label{pseudo_code}
