@@ -452,10 +452,9 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	\subsection{Standard deviation of the obtained accuracy} \label{standard_deviation}
 	To obtain a standard deviation of the model accuracy, ten different folds of the dataset were constructed. This was done by splitting the data into ten equal sized arrays and combining these into ten different train test splits. Below, an illustration of a 10-fold split can be seen: 
 	
-	%TODO: Søren synes dette er grimt, så måske skal det ændres
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.8\linewidth]{imgs/kfolds2}
+		\includegraphics[width=0.7\linewidth]{imgs/kfolds2}
 		\caption{Illustrates how the data was split into folds. It is clear from the illustration that the models obtained are trained and tested on different data. On the right, it is shown that the accuracy, E, can be found by the mean of all accuracies from the ten different models. Image found at \href{https://www.researchgate.net/figure/Diagram-of-k-fold-cross-validation-with-k-10-Image-from-Karl-Rosaen-Log_fig1_332370436}{ResearchGate} \cite{researchgate}. }
 		\label{fig:kfolds}
 	\end{figure}
