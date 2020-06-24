@@ -454,9 +454,10 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	This results in ten models with different accuracies and training/test data which allows for a value of the mean and standard deviation to be obtained.
 	
 	\subsection{Permutation Test}\label{permutation_test}
-%	To identify both whether or not the dataset is biased, and if the accuracy of the FFNN is statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier. If the newly acquired accuracy from the permuted data is different from the non-permuted accuracy, this shows that the classifier is biased. In other words, if the classifier has a tendency to classify African-Americans as medium/high risk, a permuted race variable would yield a lower accuracy than the non-permuted data. However, it might just be the reality that all African-Americans have a higher chance of recidivism than Caucasians people. Thus, further investigations have to be performed to prove the existence of actual bias in an algorithm. \\\\
-	To identify if the accuracy of the FFNN is statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier.
-	When the model is trained on the COMPAS dataset with supervised learning and a validation accuracy has been obtained, it is important to know if the model performs better than random, which can be evaluated using a permutation test. A null hypothesis $H_{0}$, stating that the observed value comes from the distribution of randomized permutations, is set up and evaluated. To attempt to reject the null hypothesis, each input variable was shuffled randomly and the model was evaluated on the randomized data. This was done one thousand times and the accuracy from each of the permutations was compared to the original accuracy from the model that was trained on the non-permuted validation dataset. The thousand accuracies form a distribution and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under the desired level of significance at $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. Intuitively, this is equivalent to the accuracy being significantly far away from this distribution. 
+
+	When the model is trained on the COMPAS dataset with supervised learning and a validation accuracy has been obtained, it is important to know if the model performs significantly better than random. To examine this, a permutation test was conducted by comparing the NN accuracy to a distribution of random model accuracies. These accuracies are found by permuting the output variables \texttt{score\_text} and \texttt{is\_recid} in the dataset and then training and validating on the new dataset, as this will construct a model that approximately predicts randomly. This is done 500 times. 
+	
+	For the significance test itself, a null hypothesis $H_{0}$, stating that the NN accuracy comes from the distribution of accuracies from the random model, is set up and evaluated. The 500 accuracies form a distribution and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under the desired level of significance at $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. Intuitively, this is equivalent to the accuracy being significantly far away from this distribution. 
 	This can be evaluated using the \textit{p}-value. For a permutation test, the \textit{p}-value is calculated using the following expression,
 	\begin{equation}\label{pval}
 	p=\frac{B+1}{M}
@@ -611,19 +612,13 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	\subsection{Significance of Model Accuracy}\label{modelAccuracy}
 	
 	\begin{figure}[H]
-		%\begin{subfigure}{0.5\textwidth}
-			\centering
-			\includegraphics[width=0.5\linewidth]{imgs/perm_test.png}
-		%\end{subfigure}
-%		\begin{subfigure}{0.5\textwidth}
-%			\centering
-%			\includegraphics[width=0.9\linewidth]{imgs/perm_test_sex.png}
-%		\end{subfigure}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. %\textbf{Left:} The permutation test for race. \textbf{Right:} Permutation test for sex.}
-		}
+		\centering
+		\includegraphics[width=0.5\linewidth]{imgs/rigtig_perm_test.png}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form.}
 		\label{fig:permtest}
-	\end{figure}\noindent
-	From figure \ref{fig:permtest}, no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
+	\end{figure}
+	
+	\noindent From figure \ref{fig:permtest}, no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
 	\[p=\frac{1}{M}=0.001\]
 	\newpage
 	\subsection{Confusion Matrices}\label{confusionMatrices}
