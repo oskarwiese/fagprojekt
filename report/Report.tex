@@ -146,7 +146,7 @@
 	
 	\noindent To analyse the efficacy of using bias correction to remove discrimination among race, gender and age in the American justice system, the modified COMPAS recidivism dataset from ProPublica has been used. An important note on the dataset is that the output variable \texttt{score\_text} has been turned into a binary vector for this project to facilitate the use of equal opportunity and equalized odds. This method was also used by ProPublica during their analysis. Meanwhile, making the classifier's output one dimensional and thresholding at values to create predictions allows for equal opportunity and equalized odds to be implemented on the classifier, so turning the output into a binary vector was logical. The binarization was performed by merging the \texttt{Medium} and \texttt{High} risk of recidivism together into zeros and the \texttt{Low} risk of recidivism into ones. Furthermore, only the races African-American and Caucasian have been used in the analysis, see that there is not enough data to construct any meaningful analysis of other races, which is also proven by figure \ref{fig:races}.
 	
-	A general overview of the dataset and how it came to be, as well as the variables used for the classifier, is given in section \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so section \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base future analyses. Lastly, section \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored and examined further in later sections. The ethicality of ProPublica's way of storing data is discussed in \ref{ethicality_of_data} and Supplementary plots of the data variables are also shown in section \ref{dist_categorical} and \ref{dist_numerical}.
+	A general overview of the dataset and how it came to be, as well as the variables used for the classifier, is given in section \ref{dataDescription}. The data and variables have not been properly explained to any extent in examined literature, so section \ref{dataExamination} will cover the meaning of all 53 variables of the dataset to remove ambiguity and set a common ground from which to base future analyses. Lastly, section \ref{dataVisuals} will show important visualizations of features of the dataset to cover which of the variables are most likely to contain biases that will be explored and examined further in later sections. The ethicality of ProPublica's way of storing data is discussed in \ref{ethicality_of_data} and Supplementary plots of the data variables are also shown in section \ref{dist_categorical} \& \ref{dist_numerical}.
 	
 	\subsection{Description of Data} \label{dataDescription}
 	The data used in this project stems from an initial analysis of the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm by its developers, Northpointe Inc. After this analysis, ProPublica made a subsequent analysis of this data while adding their own queries of the offenders involved and data of the offenders who actually recidivated in order to examine possible discrimination in Northpointe's algorithm. This data is stored in the \texttt{compas-scores-two-year.csv} dataset from ProPublica's GitHub page, which can be found here: \url{https://github.com/propublica/compas-analysis/blob/master/compas-scores-two-years.csv}. \\\\
@@ -179,7 +179,7 @@
 	Using and researching the extended COMPAS dataset has shown that there is no documented meaning of each variable. This makes interpretation difficult and can make singular variables of the dataset next to impossible to understand. To remove ambiguity about the meaning of variables, an exhaustive description of every variable and variable type has been produced. This allows for the results of this report to be contained within this interpretation and sheds light on the true contents of the dataset. Some variables, mostly those with \textit{c\_}, \textit{r\_} or \textit{vr\_} prefixes,have been grouped together in the table, as these serve the same purpose in the dataset for \textit{custody}, \textit{recidivism} and \textit{violent recidivism} cases respectively. 
 	
 	\noindent Some variable names have the prefix \textit{v\_}, which has been disregarded as an error. As such, this interpretation of the dataset assumes that these variables are akin to those with the \textit{vr\_} prefix, representing the variables related to violent recidivism. Furthermore, in the case of a few of the variables in the dataset, it has simply not been possible to find a meaningful interpretation, since the entire column is either full of NaN's like in the case of \textit{violent\_recid} or every value of a variables matches one to one with another variable, which is the case between \textit{decile\_score} and \textit{decile\_score\_1} as well as \textit{priors\_count} and \textit{priors\_count\_2}. These variables are kept in the table for completeness, but seem to have no discernible purpose in the dataset.
-	
+	\newpage
 	\setlength\LTleft{-9mm}
 	\begin{longtable}{l l l} \label{allVars}
 		\textbf{Variable} & \textbf{Description} & \textbf{Type} \\ \hline
@@ -407,7 +407,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.8]{imgs/ffnn}
+		\includegraphics[scale=0.5]{imgs/ffnn}
 		\caption{Visualization of the binary classifier model. The input layer has dimension $ \mathbb R ^8$ and the output layer has dimension $ \mathbb R^1 $. The number of nodes in the hidden layers are hyperparameters. The number of nodes used in this project are, layer one through five respectively: $ \mathbb R ^{16} $, $ \mathbb R ^{32} $, $ \mathbb R ^{64} $, $ \mathbb R ^{128} $, $ \mathbb R ^{64} $}
 		\label{fig:ffnn}
 	\end{figure}
@@ -443,7 +443,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	BCL punishes the algorithm if the predicted value is far from the label. I.e. if the classifier predicts 0.09 and the label is 1, it would result in a very high loss. The ideal model would have a binary cross-entropy loss of zero \cite {dl}. The result is a FFNN with one output node where a threshold can be set to manipulate how the network will classify an input \textbf{x}. This will be elaborated upon further in section \ref{biascorr}.
 
 	\subsection{Standard deviation of the obtained accuracy} \label{standard_deviation}
-	To obtain a standard deviation of the model accuracy, ten different folds of the dataset were constructed. This was done by splitting the data into ten equal sized arrays and combining these into ten different train test splits. Here is an illustration of a 10-fold split, 
+	To obtain a standard deviation of the model accuracy, ten different folds of the dataset were constructed. This was done by splitting the data into ten equal sized arrays and combining these into ten different train test splits. Below, an illustration of a 10-fold split can be seen: 
 	
 	\begin{figure}[H]
 		\centering
@@ -615,12 +615,12 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\linewidth]{imgs/rigtig_perm_test.png}
-		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form.}
+		\caption{An illustration of the permutation test. The black dashed line illustrates the mean permuted accuracy, the red dashed line represents the distribution that the permuted data accuracies follows, the blue dashed line is the accuracy of the model on the original non-permuted data and the standard deviation of this accuracy is shown as the blue area. The standard deviation and mean represents the normal distribution which the permutations form. The number of permutations was $ M =500 $.}
 		\label{fig:permtest}
 	\end{figure}
 	
 	\noindent From figure \ref{fig:permtest}, no extreme permutations are present, and since the \textit{p}-value cannot be 0, it is estimated by equation \ref{pval}, which results in the following \textit{p}-value:
-	\[p=\frac{1}{M}=0.001\]
+	\[p=\frac{1}{M}=0.002\]
 	\newpage
 	\subsection{Confusion Matrices}\label{confusionMatrices}
 	The following section will show the confusion matrices conditioned on three different protected groups which are the following: race, gender and age. As mentioned in section \ref{bias_id}, the postive group belongs to those who have not reactivated vice versa. \vspace*{-0.28cm} 
@@ -900,7 +900,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	\subsection{Safe AI}\label{safeai}
 	It is important for society to gain trust in machine learning models and artificial intelligence. Steps have already been taken in order to ensure this trust. The Ministry of Foreign Affairs of Denmark has, with the cooperation of the research environment, taken steps in order to ensure that any future development and use of AI lives up to democratic values and control mechanisms. If there is no trust in the machine learning industry from society, there will be no personal data available. Without the availability of personal data that companies, such as Google has, no AI models or machine learning models can be developed. And without AI, no personalized services will be available. The aim is to make sure that consumers and companies, who interact with AI services and products developed in Denmark, are able to trust that they live up to the highest ethical standards and to the standards of Safe AI \cite{larsk}. Professor Lars Kai Hansen from the Technological University of Denmark has produced a list of principles, which ensure safe AI, shown  below. 
 	
-	
+
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{l  l  l l l  l  l}
@@ -917,6 +917,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 			generates trust            & & & & & & Use in public relations                              \\ \bottomrule
 		\end{tabular}
 	\end{table} 
+
 	\noindent
 	One of these principles revolves around the model having calibrated values, which corresponds to the model being debugged for stereotypes and bias. Furthermore, the model needs to understand emotions. This is merely an example of a step in the right direction which calls for more studies to define bias notions and to invent methods to calibrate for the biases. This project confirms that the current methods are not sufficient and more sophisticated and fair methods needs to be made. A list of principles will not ensure fairness in machine learning models, but shedding light on the current issues within machine learning, however, will inspire more studies to be done on the topic.
 	
