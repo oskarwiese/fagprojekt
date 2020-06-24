@@ -143,55 +143,52 @@ We had many questions for this meeting too, so a lot of the time will be spent o
 We did not have much to talk about for this meeting, as we had a lot of stuff to do. As such, we had a very short meeting. Permutation cannot directly show bias, so what we have done using permutation is already fine. For the rest of the meeting, we showed that we have fittet the neural network to a completely new dataset and we had a walk-through of section 3 of the report.
 
 \subsection*{Week 12: 29.4.20 - 5.5.20}
-Meeting with Melanie:
+\noindent Meeting with Melanie:\\\\
 
-DATA AND DATA PREPARATION
-How do we show with illustrations that there could be bias in the data?
-She herself has found TP, TPR, FP, FPR for both classes. We can also normalize the plots.
+\noindent DATA AND DATA PREPARATION\\
+\noindent How do we show with illustrations that there could be bias in the data?
+\noindent She herself has found TP, TPR, FP, FPR for both classes. We can also normalize the plots.\\\\
 
+\noindent Do we need to do class balancing to get the right result?
+\noindent In practice, the classes are never equal. This can be taken into account in the loss function.\\\\
 
-Do we need to do class balancing to get the right result?
-In practice, the classes are never equal. This can be taken into account in the loss function.
+\noindent THE BINARY NEURAL NETWORK\\
+\noindent You might need to do standard deviation or cross validation so you can see the error of accuracy.\\
+\noindent The same can be implemented with multiple test sets.\\
+\noindent Do permutation, then the result should be the same accuracy as for a baseline.
 
-THE BINARY NEURAL NETWORK
-You might need to do standard deviation or cross validation so you can see the error of accuracy.
-The same can be implemented with multiple test sets.
-Do permutation, then the result should be the same accuracy as for a baseline.
-
-COMPARISON TO BASELINE
-How to compare a classifier? Do you use a baseline or can you really compare to something like real judges?
-We only need to run the test through baseline.
-
-
-BIAS CORRECTION METHOD
-How is it decided if FP or TP is the most important priority?
-It depends on the application.
-Sensitivity in medicine shows that it depends on the application.
+\noindent COMPARISON TO BASELINE\\
+\noindent How to compare a classifier? Do you use a baseline or can you really compare to something like real judges?\\
+\noindent We only need to run the test through baseline.\\\\
 
 
-Meeting with Sune:
-
-Where does the bias come from?
-We can investigate that because you could think that it comes from the algorithm. In principle, bias comes from an inequality between two groups. Inequality must be "unfair" to be bias.
-
-Investigate: Does a fair process guarantee a fair outcome?
-
-If you want to make a good classifier, you can include the things that give a good result. It also depends on the context, because sometimes sensitive data is not needed.
-There must be a logical connection between what one uses and what one has to decide.
+\noindent BIAS CORRECTION METHOD\\
+\noindent How is it decided if FP or TP is the most important priority?\\
+\noindent It depends on the application.\\
+\noindent Sensitivity in medicine shows that it depends on the application.\\\\
 
 
-You must avoid data being stolen, but there are rules to follow.
+\noindent Meeting with Sune:\\\\
 
-Are facebook and snapchat not be responsible for when data is leaked?
-It is really easy to get data from public social media. So it is also their responsibility.
+\noindent Where does the bias come from?\\
+\noindent We can investigate that because you could think that it comes from the algorithm. In principle, bias comes from an inequality between two groups. Inequality must be "unfair" to be bias.\\\\
 
-How to avoid bias in humans?
-It can be avoided with education and habit, because it is somehow built into our nature.
+\noindent Investigate: Does a fair process guarantee a fair outcome?\\
+\noindent If you want to make a good classifier, you can include the things that give a good result. It also depends on the context, because sometimes sensitive data is not needed.\\
+\noindent There must be a logical connection between what one uses and what one has to decide.\\\\
 
-We use algorithms to gain a better understanding of our own way of thinking.
+\noindent You must avoid data being stolen, but there are rules to follow.\\\\
 
-Are there problems in the way we define bias?
-We must talk about that another time, it is a very complex discussion.
+\noindent Are facebook and snapchat not be responsible for when data is leaked?\\
+\noindent It is really easy to get data from public social media. So it is also their responsibility.\\\\
+
+\noindent How to avoid bias in humans?\\
+\noindent It can be avoided with education and habit, because it is somehow built into our nature.\\\\
+
+\noindent We use algorithms to gain a better understanding of our own way of thinking.\\
+
+\noindent Are there problems in the way we define bias?\\
+\noindent We must talk about that another time, it is a very complex discussion.
 
 \subsection*{Week 13: 6.5.20 - 12.5.20}
 Since the exams are well on their way, we will not be having supervisor meetings untill the first week of the 3-week period. There will also not be much work on the project itself, as the exams have the priority. We have also determined that it could be good practice for us to to present our work for Sune some time before the exam, as this would also help him to better understand the topics used in the project. \\
