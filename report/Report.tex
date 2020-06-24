@@ -455,7 +455,7 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 	
 	\subsection{Permutation Test}\label{permutation_test}
 
-	When the model is trained on the COMPAS dataset with supervised learning and a validation accuracy has been obtained, it is important to know if the model performs significantly better than random. To examine this, a permutation test was conducted by comparing the NN accuracy to a distribution of random model accuracies. These accuracies are found by permuting the output variables \texttt{score\_text} and \texttt{is\_recid} in the dataset and then training and validating on the new dataset, as this will construct a model that approximately predicts randomly. This is done 500 times. 
+	When the model is trained on the COMPAS dataset with supervised learning and a validation accuracy has been obtained, it is important to know if the model performs significantly better than random. To examine this, a permutation test was conducted by comparing the NN accuracy to a distribution of random model accuracies. These accuracies are found by permuting the output variables \texttt{score\_text} and \texttt{is\_recid} in the dataset and then training and validating on the new dataset, as this will construct a model that approximately predicts randomly. This is done 500 times. The constructed models have the same dimension of features which will ensure that the training data of these models and the proposed classifier of this project are equal. Thus, allowing one to compare the accuracies of the models. 
 	
 	For the significance test itself, a null hypothesis $H_{0}$, stating that the NN accuracy comes from the distribution of accuracies from the random model, is set up and evaluated. The 500 accuracies form a distribution and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under the desired level of significance at $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. Intuitively, this is equivalent to the accuracy being significantly far away from this distribution. 
 	This can be evaluated using the \textit{p}-value. For a permutation test, the \textit{p}-value is calculated using the following expression,
@@ -1018,11 +1018,11 @@ In \ref{fig:proirsage}, the relation between age (less than 25 and over) and the
 		\caption{Here, a QQ-plot is used to more accurately test the  distribution of the accuracies. It can be seen that this test unanimously concludes, that the accuracies are in fact normally distributed.}
 		\label{fig:qqplotaccuracies}
 	\end{figure}
+	\newpage
 	
 	\subsection{Significance of Features}
 	
 	To identify if the features of the FFNN are statistically significant, a permutation test was conducted. It is implemented by permuting every variable in the dataset some number of times and then validating the permuted data with a trained classifier. A null hypothesis $H_{0}$, stating that the observed value comes from the distribution of randomized permutations, is set up and evaluated. To attempt to reject the null hypothesis, each input variable was shuffled randomly and the model was evaluated on the randomized data. This was done one thousand times and the accuracy from each of the permutations was compared to the original accuracy from the model that was trained on the non-permuted validation dataset. The thousand accuracies form a distribution and the result from the neural network on the real data is statistically significant if the \textit{p}-value is under the desired level of significance at $ \alpha = 0.05 $, since this allows for the null hypothesis to be rejected. Intuitively, this is equivalent to the accuracy being significantly far away from this distribution. 
-	
 		\begin{figure}[H]
 		%\begin{subfigure}{0.5\textwidth}
 		\centering
